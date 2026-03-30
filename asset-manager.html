@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>資産配分マネージャー</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{
+  --primary:#2563eb;--pdark:#1d4ed8;--success:#16a34a;--danger:#dc2626;
+  --g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g300:#d1d5db;
+  --g400:#9ca3af;--g500:#6b7280;--g600:#4b5563;--g700:#374151;--g900:#111827;
+  --shadow:0 1px 3px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans','Meiryo',sans-serif;background:var(--g100);color:var(--g900);min-height:100vh;}
+header{background:#fff;border-bottom:1px solid var(--g200);padding:13px 22px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:200;box-shadow:var(--shadow);}
+header h1{font-size:18px;font-weight:700;}
+header .sub{font-size:11px;color:var(--g500);margin-top:1px;}
+.icon-h{font-size:24px;}
+.container{max-width:1320px;margin:0 auto;padding:18px 14px;}
+.gap{margin-bottom:16px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+@media(max-width:1050px){.grid2{grid-template-columns:1fr;}}
+@media(max-width:700px){.grid4{grid-template-columns:1fr 1fr;}}
+
+/* ── Page tabs ── */
+.page-tabs{display:flex;gap:0;border-bottom:2px solid var(--g200);margin-bottom:18px;}
+.page-tab{padding:9px 20px;font-size:13px;font-weight:600;color:var(--g500);cursor:pointer;border:none;background:none;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .15s;}
+.page-tab.active{color:var(--primary);border-bottom-color:var(--primary);}
+.page-content{display:none;} .page-content.active{display:block;}
+
+/* ── Cards ── */
+.card{background:#fff;border-radius:11px;padding:16px;box-shadow:var(--shadow);}
+.card-title{font-size:13px;font-weight:700;color:var(--g700);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+.sumcard{background:#fff;border-radius:11px;padding:13px 16px;box-shadow:var(--shadow);}
+.sum-label{font-size:10px;color:var(--g500);font-weight:500;margin-bottom:2px;}
+.sum-value{font-size:18px;font-weight:700;}
+.sum-sub{font-size:10px;color:var(--g400);margin-top:2px;}
+.green{color:var(--success);}.red{color:var(--danger);}
+.flex-between{display:flex;justify-content:space-between;align-items:center;}
+
+/* ── Table ── */
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:11px;}
+th{text-align:left;padding:6px 8px;background:var(--g50);color:var(--g500);font-size:10px;font-weight:600;border-bottom:1px solid var(--g200);white-space:nowrap;}
+td{padding:7px 8px;border-bottom:1px solid var(--g100);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--g50);}
+tr.excluded td{opacity:.38;}
+
+/* ── Badges ── */
+.badge{display:inline-block;padding:2px 6px;border-radius:9999px;font-size:10px;font-weight:600;white-space:nowrap;}
+.maj-0{background:#dbeafe;color:#1d4ed8;}.maj-1{background:#dcfce7;color:#15803d;}.maj-2{background:#fef3c7;color:#92400e;}
+.acct-nisa{background:#d1fae5;color:#065f46;}.acct-oldnisa{background:#e0f2fe;color:#0369a1;}
+.acct-tokutei{background:#ede9fe;color:#5b21b6;}.acct-other{background:var(--g100);color:var(--g600);}
+
+/* ── Buttons ── */
+.btn{display:inline-flex;align-items:center;gap:4px;padding:7px 13px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all .15s;}
+.btn-primary{background:var(--primary);color:#fff;}.btn-primary:hover{background:var(--pdark);}
+.btn-secondary{background:var(--g100);color:var(--g700);}.btn-secondary:hover{background:var(--g200);}
+.btn-success{background:#dcfce7;color:var(--success);}.btn-success:hover{background:#bbf7d0;}
+.btn-danger{background:#fee2e2;color:var(--danger);}.btn-danger:hover{background:#fecaca;}
+.btn-sm{padding:4px 8px;font-size:11px;border-radius:5px;}
+.btn-icon{padding:4px;border-radius:5px;font-size:13px;background:none;cursor:pointer;border:none;transition:background .15s;}.btn-icon:hover{background:var(--g100);}
+.toggle-pill{display:flex;background:var(--g100);border-radius:7px;padding:3px;gap:2px;}
+.toggle-pill button{flex:1;padding:4px 9px;border:none;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;background:none;color:var(--g500);transition:all .15s;}
+.toggle-pill button.active{background:#fff;color:var(--g900);box-shadow:var(--shadow);}
+
+/* ── Filter bar ── */
+.filter-bar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;align-items:center;}
+.filter-label{font-size:10px;font-weight:600;color:var(--g500);}
+.filter-chip{padding:3px 9px;border-radius:9999px;font-size:10px;font-weight:600;cursor:pointer;border:1.5px solid var(--g200);background:#fff;color:var(--g600);transition:all .15s;}
+.filter-chip.active{border-color:var(--primary);background:#eff6ff;color:var(--primary);}
+.filter-sep{width:1px;height:16px;background:var(--g200);}
+
+/* ── Toggle switch ── */
+.tog-wrap{display:flex;align-items:center;gap:5px;}
+.tog{position:relative;width:32px;height:18px;flex-shrink:0;}
+.tog input{opacity:0;width:0;height:0;}
+.tog-sl{position:absolute;cursor:pointer;inset:0;background:var(--g200);border-radius:20px;transition:.2s;}
+.tog-sl:before{content:'';position:absolute;width:12px;height:12px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;}
+.tog input:checked+.tog-sl{background:var(--primary);}
+.tog input:checked+.tog-sl:before{transform:translateX(14px);}
+.tog-label{font-size:11px;color:var(--g600);white-space:nowrap;}
+
+/* ── Form ── */
+.form-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:9px;}
+.fg{display:flex;flex-direction:column;gap:3px;flex:1;min-width:100px;}
+.fg label{font-size:10px;font-weight:600;color:var(--g700);}
+.fg input,.fg select{padding:6px 8px;border:1.5px solid var(--g200);border-radius:6px;font-size:12px;outline:none;transition:border-color .15s;background:#fff;height:32px;}
+.fg input:focus,.fg select:focus{border-color:var(--primary);}
+
+/* ── Chart ── */
+.chart-container{position:relative;max-width:240px;margin:0 auto;}
+.chart-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;}
+.chart-center .ctotal{font-size:10px;color:var(--g500);}
+.chart-center .camount{font-size:13px;font-weight:700;color:var(--g900);}
+.legend{margin-top:10px;display:flex;flex-direction:column;gap:5px;}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;}
+.ldot{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
+.lname{flex:1;color:var(--g700);}
+.lpct{font-weight:700;min-width:34px;text-align:right;}
+.lamt{color:var(--g500);font-size:10px;min-width:80px;text-align:right;}
+
+/* ── Target allocation ── */
+.major-group{margin-bottom:8px;border:1px solid var(--g200);border-radius:8px;overflow:hidden;}
+.major-header{display:flex;align-items:center;gap:7px;padding:8px 10px;background:var(--g50);font-size:11px;font-weight:700;}
+.mhdot{width:9px;height:9px;border-radius:2px;}
+.mhname{flex:1;}
+.mhpct{font-size:11px;font-weight:600;min-width:140px;text-align:right;}
+.sub-row{display:flex;align-items:center;gap:7px;padding:6px 10px 6px 24px;border-top:1px solid var(--g100);}
+.sname{flex:1;font-size:11px;color:var(--g600);}
+.sub-bar-wrap{flex:1;max-width:110px;}
+.sub-bar-bg{background:var(--g100);border-radius:3px;height:5px;overflow:hidden;}
+.sub-bar{height:100%;border-radius:3px;transition:width .4s;}
+.sub-bar-labels{display:flex;justify-content:space-between;font-size:9px;color:var(--g400);margin-top:2px;}
+.tinput-wrap{display:flex;align-items:center;gap:2px;}
+.tinput{width:48px;padding:3px 5px;border:1.5px solid var(--g200);border-radius:5px;font-size:12px;font-weight:600;text-align:right;outline:none;}
+.tinput:focus{border-color:var(--primary);}
+.tpct{font-size:11px;color:var(--g500);}
+.tsum{display:flex;justify-content:flex-end;margin-top:6px;font-size:11px;}
+.tsum span{font-weight:700;}
+.tsum.ok span{color:var(--success);}.tsum.err span{color:var(--danger);}
+
+/* ── Rebalance ── */
+.rb-major{margin-bottom:6px;}
+.rb-major-head{display:flex;gap:7px;padding:7px 9px;background:var(--g50);border-radius:7px 7px 0 0;border:1px solid var(--g200);border-bottom:none;font-size:11px;font-weight:700;align-items:center;}
+.rh-dot{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
+.rb-sub-rows{border:1px solid var(--g200);border-radius:0 0 7px 7px;overflow:hidden;}
+.rb-row{display:grid;grid-template-columns:1.8fr 1fr 1fr 1.3fr;gap:5px;padding:8px 9px 8px 22px;border-bottom:1px solid var(--g100);align-items:center;font-size:11px;}
+.rb-row:last-child{border-bottom:none;}
+.rb-row.hd{font-size:9px;font-weight:600;color:var(--g500);padding:5px 9px 5px 22px;border-bottom:2px solid var(--g200);}
+.rname{font-weight:600;display:flex;align-items:center;gap:4px;}
+.ramount{text-align:right;font-family:'SF Mono','Menlo','Consolas',monospace;}
+.buy{color:var(--success);font-weight:700;}.sell{color:var(--danger);font-weight:700;}.neutral{color:var(--g400);}
+
+/* ── History ── */
+.history-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px;}
+.snapshot-list{display:flex;flex-direction:column;gap:6px;margin-top:12px;}
+.snapshot-item{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--g50);border-radius:7px;border:1px solid var(--g200);font-size:12px;}
+.snapshot-date{font-weight:700;color:var(--g700);min-width:90px;}
+.snapshot-total{color:var(--g900);font-weight:600;min-width:110px;}
+.snapshot-breakdown{flex:1;display:flex;gap:10px;flex-wrap:wrap;}
+.snapshot-maj{font-size:10px;color:var(--g500);}
+.chart-area-hist{position:relative;height:240px;margin-bottom:8px;}
+
+/* ── Empty ── */
+.empty{text-align:center;padding:28px 16px;color:var(--g500);}
+.empty .ei{font-size:32px;margin-bottom:8px;}
+.empty p{font-size:12px;}
+
+/* ── Modal ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;align-items:center;justify-content:center;padding:16px;}
+.modal-overlay.open{display:flex;}
+.modal{background:#fff;border-radius:12px;padding:20px;width:100%;max-width:520px;box-shadow:0 20px 60px rgba(0,0,0,.2);max-height:90vh;overflow-y:auto;}
+.modal-title{font-size:15px;font-weight:700;margin-bottom:12px;}
+.modal-actions{display:flex;gap:7px;justify-content:flex-end;margin-top:14px;}
+.note{background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:8px 12px;font-size:11px;color:#1e40af;margin-top:9px;}
+small{color:var(--g500);font-size:10px;}
+.excl-note{font-size:10px;color:var(--g400);font-style:italic;}
+</style>
+</head>
+<body>
+<header>
+  <span class="icon-h">📊</span>
+  <div><h1>資産配分マネージャー</h1><div class="sub">保有資産の入力・可視化・リバランス管理</div></div>
+</header>
+
+<div class="container">
+
+  <!-- Page tabs -->
+  <div class="page-tabs">
+    <button class="page-tab active" onclick="showPage('current')">📊 現在の状況</button>
+    <button class="page-tab" onclick="showPage('history')">📈 推移グラフ</button>
+  </div>
+
+  <!-- ═══ PAGE: 現在の状況 ═══ -->
+  <div class="page-content active" id="page-current">
+
+    <!-- Summary -->
+    <div class="grid4 gap">
+      <div class="sumcard"><div class="sum-label">総資産（全口座）</div><div class="sum-value" id="sTotal">¥0</div></div>
+      <div class="sumcard"><div class="sum-label">配分計算対象資産</div><div class="sum-value" id="sAlloc">¥0</div><div class="sum-sub" id="sAllocNote"></div></div>
+      <div class="sumcard"><div class="sum-label">登録銘柄数</div><div class="sum-value" id="sCount">0 件</div></div>
+      <div class="sumcard"><div class="sum-label">目標との最大乖離</div><div class="sum-value" id="sDev">—</div></div>
+    </div>
+
+    <!-- Main grid -->
+    <div class="grid2 gap">
+
+      <!-- Left -->
+      <div style="display:flex;flex-direction:column;gap:16px;">
+
+        <!-- Add form -->
+        <div class="card">
+          <div class="card-title">➕ 銘柄・資産を追加</div>
+          <div class="form-row">
+            <div class="fg" style="flex:3;min-width:180px;">
+              <label>銘柄名・名称</label>
+              <input id="iName" type="text" placeholder="例：eMAXIS Slim 全世界株式" maxlength="60">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="fg" style="min-width:120px;">
+              <label>大カテゴリー</label>
+              <select id="iMaj" onchange="updateSubSelect()">
+                <option value="0">📈 株式/投資信託</option>
+                <option value="1">💴 現金/債券</option>
+                <option value="2">🥇 コモディティ</option>
+              </select>
+            </div>
+            <div class="fg" style="min-width:150px;">
+              <label>中カテゴリー</label>
+              <select id="iSub"></select>
+            </div>
+            <div class="fg" style="min-width:110px;">
+              <label>評価額（円）</label>
+              <input id="iAmt" type="number" placeholder="例：1000000" min="0" step="1">
+            </div>
+          </div>
+          <div class="form-row" style="align-items:flex-end;">
+            <div class="fg" style="min-width:100px;">
+              <label>① 口座名義</label>
+              <select id="iOwner">
+                <option>本人</option><option>妻</option><option>長女</option><option>長男</option><option>次男</option>
+              </select>
+            </div>
+            <div class="fg" style="min-width:110px;">
+              <label>② 口座種類</label>
+              <select id="iAcct">
+                <option value="nisa">🌱 NISA</option>
+                <option value="oldnisa">📘 旧NISA</option>
+                <option value="tokutei">🏦 特定口座</option>
+                <option value="other">📂 その他</option>
+              </select>
+            </div>
+            <div class="fg" style="min-width:140px;">
+              <label>③ 配分計算に含める</label>
+              <div style="display:flex;align-items:center;height:32px;">
+                <label class="tog"><input type="checkbox" id="iIncl" checked><span class="tog-sl"></span></label>
+                <span style="margin-left:5px;font-size:11px;color:var(--g600);">含める</span>
+              </div>
+            </div>
+            <div style="flex:0;"><button class="btn btn-primary" onclick="addHolding()">+ 追加</button></div>
+          </div>
+        </div>
+
+        <!-- Holdings list -->
+        <div class="card">
+          <div class="flex-between" style="margin-bottom:10px;">
+            <div class="card-title" style="margin-bottom:0;">📋 保有一覧</div>
+            <div style="display:flex;gap:6px;">
+              <button class="btn btn-success btn-sm" onclick="exportCSV()">📥 CSV出力</button>
+              <button class="btn btn-secondary btn-sm" onclick="openImportModal()">📤 まとめて入力</button>
+            </div>
+          </div>
+          <!-- Filter bar -->
+          <div class="filter-bar" id="filterBar"></div>
+          <div class="table-wrap" id="holdWrap">
+            <div class="empty"><div class="ei">💼</div><p>銘柄をまだ登録していません</p></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right -->
+      <div style="display:flex;flex-direction:column;gap:16px;">
+
+        <!-- Chart -->
+        <div class="card">
+          <div class="flex-between" style="margin-bottom:10px;">
+            <div class="card-title" style="margin-bottom:0;">🍩 現在の資産配分</div>
+            <div class="toggle-pill">
+              <button id="btnMaj" class="active" onclick="setChartView('major')">大カテ</button>
+              <button id="btnSub" onclick="setChartView('sub')">中カテ</button>
+            </div>
+          </div>
+          <div id="chartArea">
+            <div class="empty"><div class="ei">📊</div><p>銘柄を追加するとグラフが表示されます</p></div>
+          </div>
+        </div>
+
+        <!-- Target allocation -->
+        <div class="card">
+          <div class="card-title">🎯 目標配分（中カテゴリー別）</div>
+          <div id="targetArea"></div>
+          <div class="tsum" id="tsum"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Rebalance -->
+    <div class="card gap">
+      <div class="card-title">⚖️ リバランス計算<small style="margin-left:6px;font-weight:400;">（配分計算対象のみ）</small></div>
+      <div id="rbArea"><div class="empty"><div class="ei">⚖️</div><p>銘柄を追加し目標配分を設定するとリバランス計算が表示されます</p></div></div>
+    </div>
+
+  </div><!-- /page-current -->
+
+  <!-- ═══ PAGE: 推移グラフ ═══ -->
+  <div class="page-content" id="page-history">
+    <div class="card gap">
+      <div class="card-title">📈 資産推移グラフ</div>
+      <div class="history-toolbar">
+        <button class="btn btn-primary" onclick="recordSnapshot()">📸 現在の状況を記録する</button>
+        <span style="font-size:11px;color:var(--g500);">記録するたびに推移グラフが更新されます</span>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:10px;">
+        <div class="toggle-pill" style="width:auto;">
+          <button id="btnHistTotal" class="active" onclick="setHistView('total')">総資産</button>
+          <button id="btnHistMaj" onclick="setHistView('major')">大カテ別</button>
+        </div>
+      </div>
+      <div id="histChartWrap">
+        <div class="empty"><div class="ei">📈</div><p>「現在の状況を記録する」ボタンを押すと<br>ここに推移グラフが表示されます</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🗂️ 記録一覧</div>
+      <div id="snapshotList"><div class="empty"><div class="ei">📂</div><p>まだ記録がありません</p></div></div>
+    </div>
+  </div><!-- /page-history -->
+
+</div><!-- /container -->
+
+<!-- Edit Modal -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <div class="modal-title">✏️ 銘柄を編集</div>
+    <div class="form-row">
+      <div class="fg" style="flex:1;"><label>銘柄名・名称</label><input id="eName" type="text" maxlength="60"></div>
+    </div>
+    <div class="form-row">
+      <div class="fg"><label>大カテゴリー</label>
+        <select id="eMaj" onchange="updateEditSubSelect()">
+          <option value="0">📈 株式/投資信託</option><option value="1">💴 現金/債券</option><option value="2">🥇 コモディティ</option>
+        </select>
+      </div>
+      <div class="fg"><label>中カテゴリー</label><select id="eSub"></select></div>
+    </div>
+    <div class="form-row">
+      <div class="fg"><label>口座名義</label>
+        <select id="eOwner"><option>本人</option><option>妻</option><option>長女</option><option>長男</option><option>次男</option></select>
+      </div>
+      <div class="fg"><label>口座種類</label>
+        <select id="eAcct">
+          <option value="nisa">🌱 NISA</option><option value="oldnisa">📘 旧NISA</option>
+          <option value="tokutei">🏦 特定口座</option><option value="other">📂 その他</option>
+        </select>
+      </div>
+      <div class="fg"><label>評価額（円）</label><input id="eAmt" type="number" min="0" step="1"></div>
+    </div>
+    <div class="tog-wrap" style="margin-top:4px;">
+      <label class="tog"><input type="checkbox" id="eIncl"><span class="tog-sl"></span></label>
+      <span class="tog-label">配分計算に含める</span>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeEdit()">キャンセル</button>
+      <button class="btn btn-primary" onclick="saveEdit()">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- Import Modal -->
+<div class="modal-overlay" id="importModal">
+  <div class="modal">
+    <div class="modal-title">📤 まとめて入力</div>
+    <p style="font-size:11px;color:var(--g500);margin-bottom:8px;">
+      「銘柄名, 中カテID, 口座名義, 口座種類, 金額, 含める(1/0)」の形式で入力してください。<br>
+      中カテID: 0=日本株式 1=全世界/先進国株 2=新興国株 3=その他(株) 4=円 5=債券 6=その他(現金) 7=ゴールド 8=その他コモ 9=仮想通貨<br>
+      口座種類: nisa / oldnisa / tokutei / other
+    </p>
+    <div class="fg">
+      <label>データ（CSV形式）</label>
+      <textarea id="importText" rows="7" style="padding:8px;border:1.5px solid var(--g200);border-radius:6px;font-size:11px;font-family:monospace;resize:vertical;width:100%;outline:none;"
+        placeholder="例:
+eMAXIS Slim 全世界株式, 1, 本人, nisa, 2000000, 1
+日本高配当株ETF, 0, 妻, tokutei, 800000, 1
+普通預金, 4, 本人, other, 500000, 0"></textarea>
+    </div>
+    <div class="note">ℹ️ 既存のデータに追加されます。上書きしたい場合は先に「全削除」してください。</div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeImport()">キャンセル</button>
+      <button class="btn btn-primary" onclick="importData()">インポート</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// CONSTANTS
+// ═══════════════════════════════════════
+const OWNERS=['本人','妻','長女','長男','次男'];
+const MAJORS=[
+  {id:0,name:'株式/投資信託',icon:'📈',color:'#3b82f6'},
+  {id:1,name:'現金/債券',    icon:'💴',color:'#22c55e'},
+  {id:2,name:'コモディティ', icon:'🥇',color:'#f59e0b'},
+];
+const SUBS=[
+  {id:0,majorId:0,name:'日本株式',         icon:'🇯🇵',color:'#1d4ed8'},
+  {id:1,majorId:0,name:'全世界/先進国株式',icon:'🌍', color:'#3b82f6'},
+  {id:2,majorId:0,name:'新興国株式',        icon:'🌏', color:'#60a5fa'},
+  {id:3,majorId:0,name:'その他(株式)',      icon:'📊', color:'#93c5fd'},
+  {id:4,majorId:1,name:'円',               icon:'💴', color:'#15803d'},
+  {id:5,majorId:1,name:'債券',             icon:'📋', color:'#22c55e'},
+  {id:6,majorId:1,name:'その他(現金/債券)',icon:'🏦', color:'#4ade80'},
+  {id:7,majorId:2,name:'ゴールド',          icon:'🥇', color:'#b45309'},
+  {id:8,majorId:2,name:'その他コモディティ',icon:'⛽', color:'#f59e0b'},
+  {id:9,majorId:2,name:'仮想通貨',          icon:'₿',  color:'#fcd34d'},
+];
+const ACCT_LABELS={nisa:'NISA',oldnisa:'旧NISA',tokutei:'特定口座',other:'その他'};
+const ACCT_ICONS ={nisa:'🌱',oldnisa:'📘',tokutei:'🏦',other:'📂'};
+const ACCT_CSS   ={nisa:'acct-nisa',oldnisa:'acct-oldnisa',tokutei:'acct-tokutei',other:'acct-other'};
+const MAJ_CSS    =['maj-0','maj-1','maj-2'];
+
+// ═══════════════════════════════════════
+// STATE  ← localStorage keys same as before: holdings3 / targets3
+// ═══════════════════════════════════════
+let holdings = JSON.parse(localStorage.getItem('holdings3')||'[]');
+let targets  = JSON.parse(localStorage.getItem('targets3') ||JSON.stringify([15,20,5,0,10,5,0,5,0,0]));
+let history  = JSON.parse(localStorage.getItem('assetHistory')||'[]');
+let editIdx  = -1;
+let chart    = null;
+let histChart= null;
+let chartView='major';
+let histView ='total';
+// Filter state
+let filterOwner='all';
+let filterAcct ='all';
+
+function save(){
+  localStorage.setItem('holdings3', JSON.stringify(holdings));
+  localStorage.setItem('targets3',  JSON.stringify(targets));
+  localStorage.setItem('assetHistory',JSON.stringify(history));
+}
+
+// ═══════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function fmtFull(n){return '¥'+Math.round(n).toLocaleString('ja-JP');}
+// フィルター適用後の保有一覧を返す（グラフ・数字連動用）
+function filteredHoldings(inclOnly){
+  return holdings.filter(h=>{
+    if(inclOnly&&!h.include)return false;
+    if(filterOwner!=='all'&&(h.owner||'本人')!==filterOwner)return false;
+    if(filterAcct!=='all'&&(h.acct||'other')!==filterAcct)return false;
+    return true;
+  });
+}
+// フィルター無視（履歴記録用）
+function rawHoldings(inclOnly){return holdings.filter(h=>!inclOnly||h.include);}
+
+function calcBySub(inclOnly){
+  const r=new Array(10).fill(0);
+  for(const h of filteredHoldings(inclOnly)){r[h.subId]+=h.amount;}
+  return r;
+}
+function calcByMaj(inclOnly){
+  const bySub=calcBySub(inclOnly);
+  return MAJORS.map(m=>SUBS.filter(s=>s.majorId===m.id).reduce((a,s)=>a+bySub[s.id],0));
+}
+// 履歴記録用（フィルター無視）
+function calcBySubRaw(inclOnly){
+  const r=new Array(10).fill(0);
+  for(const h of rawHoldings(inclOnly)){r[h.subId]+=h.amount;}
+  return r;
+}
+function calcByMajRaw(inclOnly){
+  const bySub=calcBySubRaw(inclOnly);
+  return MAJORS.map(m=>SUBS.filter(s=>s.majorId===m.id).reduce((a,s)=>a+bySub[s.id],0));
+}
+function totalAll(){return filteredHoldings(false).reduce((s,h)=>s+h.amount,0);}
+function totalAlloc(){return filteredHoldings(true).reduce((s,h)=>s+h.amount,0);}
+function totalAllRaw(){return holdings.reduce((s,h)=>s+h.amount,0);}
+function totalAllocRaw(){return holdings.filter(h=>h.include).reduce((s,h)=>s+h.amount,0);}
+function isFiltered(){return filterOwner!=='all'||filterAcct!=='all';}
+
+// ═══════════════════════════════════════
+// PAGE / VIEW TABS
+// ═══════════════════════════════════════
+function showPage(id){
+  document.querySelectorAll('.page-tab').forEach((t,i)=>t.classList.toggle('active',['current','history'][i]===id));
+  document.querySelectorAll('.page-content').forEach(c=>c.classList.toggle('active',c.id==='page-'+id));
+  if(id==='history') renderHistory();
+}
+
+// ═══════════════════════════════════════
+// SUB SELECT
+// ═══════════════════════════════════════
+function buildSubOpts(majId){return SUBS.filter(s=>s.majorId===majId).map(s=>`<option value="${s.id}">${s.icon} ${s.name}</option>`).join('');}
+function updateSubSelect(){document.getElementById('iSub').innerHTML=buildSubOpts(parseInt(document.getElementById('iMaj').value));}
+function updateEditSubSelect(){
+  const maj=parseInt(document.getElementById('eMaj').value);
+  const cur=parseInt(document.getElementById('eSub').dataset.cur||'-1');
+  document.getElementById('eSub').innerHTML=buildSubOpts(maj);
+  if(SUBS[cur]&&SUBS[cur].majorId===maj) document.getElementById('eSub').value=cur;
+}
+
+// ═══════════════════════════════════════
+// ADD / EDIT / DELETE
+// ═══════════════════════════════════════
+function addHolding(){
+  const name=document.getElementById('iName').value.trim();
+  const subId=parseInt(document.getElementById('iSub').value);
+  const owner=document.getElementById('iOwner').value;
+  const acct=document.getElementById('iAcct').value;
+  const amount=parseFloat(document.getElementById('iAmt').value);
+  const include=document.getElementById('iIncl').checked;
+  if(!name){alert('銘柄名を入力してください');return;}
+  if(isNaN(amount)||amount<0){alert('正しい金額を入力してください');return;}
+  holdings.push({name,subId,owner,acct,amount,include});
+  save();render();
+  document.getElementById('iName').value='';
+  document.getElementById('iAmt').value='';
+  document.getElementById('iIncl').checked=true;
+  document.getElementById('iName').focus();
+}
+function deleteHolding(i){
+  if(!confirm(`「${holdings[i].name}」を削除しますか？`))return;
+  holdings.splice(i,1);save();render();
+}
+function openEdit(i){
+  editIdx=i;const h=holdings[i];const sub=SUBS[h.subId];
+  document.getElementById('eName').value=h.name;
+  document.getElementById('eMaj').value=sub.majorId;
+  document.getElementById('eSub').innerHTML=buildSubOpts(sub.majorId);
+  document.getElementById('eSub').value=h.subId;
+  document.getElementById('eSub').dataset.cur=h.subId;
+  document.getElementById('eOwner').value=h.owner||'本人';
+  document.getElementById('eAcct').value=h.acct||'other';
+  document.getElementById('eAmt').value=h.amount;
+  document.getElementById('eIncl').checked=h.include!==false;
+  document.getElementById('editModal').classList.add('open');
+}
+function closeEdit(){document.getElementById('editModal').classList.remove('open');editIdx=-1;}
+function saveEdit(){
+  const name=document.getElementById('eName').value.trim();
+  const subId=parseInt(document.getElementById('eSub').value);
+  const owner=document.getElementById('eOwner').value;
+  const acct=document.getElementById('eAcct').value;
+  const amount=parseFloat(document.getElementById('eAmt').value);
+  const include=document.getElementById('eIncl').checked;
+  if(!name){alert('銘柄名を入力してください');return;}
+  if(isNaN(amount)||amount<0){alert('正しい金額を入力してください');return;}
+  holdings[editIdx]={name,subId,owner,acct,amount,include};
+  save();render();closeEdit();
+}
+
+// ═══════════════════════════════════════
+// IMPORT
+// ═══════════════════════════════════════
+function openImportModal(){document.getElementById('importModal').classList.add('open');}
+function closeImport(){document.getElementById('importModal').classList.remove('open');}
+function importData(){
+  const lines=document.getElementById('importText').value.trim().split('\n');
+  let added=0,errors=0;
+  const vAcct=['nisa','oldnisa','tokutei','other'];
+  for(const line of lines){
+    if(!line.trim()||line.startsWith('#'))continue;
+    const p=line.split(',').map(s=>s.trim());
+    if(p.length<5){errors++;continue;}
+    const [name,subStr,owner,acct,amtStr,inclStr]=p;
+    const subId=parseInt(subStr),amount=parseFloat(amtStr.replace(/[^\d.]/g,''));
+    const include=inclStr===undefined||inclStr==='1'||inclStr.toLowerCase()==='true';
+    if(!name||isNaN(subId)||subId<0||subId>9||isNaN(amount)){errors++;continue;}
+    holdings.push({name,subId,owner:OWNERS.includes(owner)?owner:'本人',acct:vAcct.includes(acct)?acct:'other',amount,include});
+    added++;
+  }
+  save();render();closeImport();
+  document.getElementById('importText').value='';
+  alert(`${added}件インポートしました${errors>0?`（${errors}件スキップ）`:''}`);
+}
+function clearAll(){
+  if(!confirm('全ての銘柄を削除しますか？'))return;
+  holdings=[];save();render();
+}
+
+// ═══════════════════════════════════════
+// CSV EXPORT
+// ═══════════════════════════════════════
+function exportCSV(){
+  if(!holdings.length){alert('データがありません');return;}
+  const BOM='\uFEFF';
+  const header='銘柄名,大カテゴリー,中カテゴリー,口座名義,口座種類,評価額(円),配分計算対象\n';
+  const rows=holdings.map(h=>{
+    const sub=SUBS[h.subId],maj=MAJORS[sub.majorId];
+    const acctL=ACCT_LABELS[h.acct||'other'];
+    return [h.name,maj.name,sub.name,h.owner||'',acctL,h.amount,h.include?'対象':'除外'].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',');
+  }).join('\n');
+  const blob=new Blob([BOM+header+rows],{type:'text/csv;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=`資産配分_${new Date().toISOString().slice(0,10)}.csv`;a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ═══════════════════════════════════════
+// FILTER
+// ═══════════════════════════════════════
+function setFilterOwner(v){filterOwner=v;if(chart){chart.destroy();chart=null;}render();}
+function setFilterAcct(v){filterAcct=v;if(chart){chart.destroy();chart=null;}render();}
+
+function renderFilterBar(){
+  const owners=[...new Set(holdings.map(h=>h.owner||'本人'))];
+  const accts=[...new Set(holdings.map(h=>h.acct||'other'))];
+  let html=`<span class="filter-label">名義：</span>
+    <span class="filter-chip ${filterOwner==='all'?'active':''}" onclick="setFilterOwner('all')">全員</span>`;
+  for(const o of owners){
+    html+=`<span class="filter-chip ${filterOwner===o?'active':''}" onclick="setFilterOwner('${esc(o)}')">${esc(o)}</span>`;
+  }
+  html+=`<div class="filter-sep"></div><span class="filter-label">口座：</span>
+    <span class="filter-chip ${filterAcct==='all'?'active':''}" onclick="setFilterAcct('all')">全口座</span>`;
+  for(const a of accts){
+    html+=`<span class="filter-chip ${filterAcct===a?'active':''}" onclick="setFilterAcct('${a}')">${ACCT_ICONS[a]} ${ACCT_LABELS[a]}</span>`;
+  }
+  document.getElementById('filterBar').innerHTML=html;
+}
+
+// ═══════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════
+function render(){renderSummary();renderFilterBar();renderHoldings();renderChart();renderTargets();renderRebalance();}
+
+// ── Summary ──────────────────────────
+function renderSummary(){
+  const total=totalAll(),alloc=totalAlloc();
+  const filt=isFiltered();
+  // フィルター中は見出しに表示対象を明示
+  const ownerLabel=filterOwner!=='all'?filterOwner:'';
+  const acctLabel=filterAcct!=='all'?(ACCT_LABELS[filterAcct]||''):'';
+  const filtLabel=[ownerLabel,acctLabel].filter(Boolean).join(' / ');
+  document.getElementById('sTotal').textContent=fmtFull(total);
+  document.getElementById('sAlloc').textContent=fmtFull(alloc);
+  document.getElementById('sCount').textContent=filteredHoldings(false).length+(filt?`/${holdings.length}`:'')+' 件';
+  const excl=filteredHoldings(false).filter(h=>!h.include).length;
+  document.getElementById('sAllocNote').textContent=(filt?`【${filtLabel}】 `:'')+(excl>0?`${excl}件を除外中`:'全件対象');
+  const inclH=filteredHoldings(true);
+  if(!inclH.length||!alloc){document.getElementById('sDev').textContent='—';document.getElementById('sDev').className='sum-value';return;}
+  const bySub=calcBySub(true);
+  let maxDev=0;
+  for(let i=0;i<10;i++){const dev=Math.abs(bySub[i]/alloc*100-targets[i]);if(dev>maxDev)maxDev=dev;}
+  const el=document.getElementById('sDev');
+  el.textContent=maxDev.toFixed(1)+' pp';
+  el.className='sum-value '+(maxDev>5?'red':maxDev>2?'':'green');
+}
+
+// ── Holdings table ────────────────────
+function renderHoldings(){
+  const wrap=document.getElementById('holdWrap');
+  if(!holdings.length){wrap.innerHTML='<div class="empty"><div class="ei">💼</div><p>銘柄をまだ登録していません<br>上のフォームから追加してください</p></div>';return;}
+  const filtered=holdings.filter((h,i)=>{
+    if(filterOwner!=='all'&&(h.owner||'本人')!==filterOwner)return false;
+    if(filterAcct!=='all'&&(h.acct||'other')!==filterAcct)return false;
+    return true;
+  });
+  const total=totalAll(),alloc=totalAlloc();
+  let rows='';
+  // map filtered → original index
+  const idxMap=[];
+  holdings.forEach((h,i)=>{
+    if(filterOwner!=='all'&&(h.owner||'本人')!==filterOwner)return;
+    if(filterAcct!=='all'&&(h.acct||'other')!==filterAcct)return;
+    idxMap.push(i);
+  });
+  for(let fi=0;fi<idxMap.length;fi++){
+    const i=idxMap[fi];const h=holdings[i];
+    const sub=SUBS[h.subId],maj=MAJORS[sub.majorId];
+    const pct=total>0?(h.amount/total*100).toFixed(1):'0.0';
+    const acctK=h.acct||'other';
+    const inclCell=h.include?`<span style="color:var(--primary);font-size:10px;font-weight:600;">✓ 対象</span>`:`<span class="excl-note">除外</span>`;
+    rows+=`<tr class="${h.include?'':'excluded'}">
+      <td><span style="font-size:11px;font-weight:600;">${esc(h.owner||'')}</span></td>
+      <td><span class="badge ${ACCT_CSS[acctK]}">${ACCT_ICONS[acctK]} ${ACCT_LABELS[acctK]}</span></td>
+      <td><span class="badge ${MAJ_CSS[sub.majorId]}">${maj.icon} ${maj.name}</span></td>
+      <td><span style="font-size:10px;color:var(--g600);">${sub.icon} ${sub.name}</span></td>
+      <td style="max-width:140px;word-break:break-all;">${esc(h.name)}</td>
+      <td class="ramount">${fmtFull(h.amount)}</td>
+      <td class="ramount" style="color:var(--g500);">${pct}%</td>
+      <td>${inclCell}</td>
+      <td style="white-space:nowrap;">
+        <button class="btn-icon" onclick="openEdit(${i})">✏️</button>
+        <button class="btn-icon" onclick="deleteHolding(${i})">🗑️</button>
+      </td>
+    </tr>`;
+  }
+  const shown=idxMap.length,total_rows=holdings.length;
+  wrap.innerHTML=`<table>
+    <thead><tr><th>名義</th><th>口座</th><th>大カテ</th><th>中カテ</th><th>銘柄名</th>
+    <th style="text-align:right">評価額</th><th style="text-align:right">割合</th><th>配分計算</th><th></th></tr></thead>
+    <tbody>${rows||'<tr><td colspan="9" style="text-align:center;color:var(--g400);padding:20px;">フィルター条件に該当する銘柄がありません</td></tr>'}</tbody>
+  </table>
+  <div style="text-align:right;padding:7px 8px 0;font-size:11px;color:var(--g500);display:flex;justify-content:flex-end;align-items:center;gap:12px;">
+    ${shown<total_rows?`<span style="color:var(--g400);">${shown}/${total_rows}件表示</span>`:''}
+    <span>総資産: <strong style="color:var(--g900);">${fmtFull(total)}</strong></span>
+    <span>計算対象: <strong style="color:var(--primary);">${fmtFull(alloc)}</strong></span>
+    <button class="btn btn-danger btn-sm" onclick="clearAll()">全削除</button>
+  </div>`;
+}
+
+// ── Chart ────────────────────────────
+function setChartView(v){
+  chartView=v;
+  document.getElementById('btnMaj').classList.toggle('active',v==='major');
+  document.getElementById('btnSub').classList.toggle('active',v==='sub');
+  if(chart){chart.destroy();chart=null;}
+  document.getElementById('chartArea').innerHTML='';
+  renderChart();
+}
+function renderChart(){
+  const area=document.getElementById('chartArea'),alloc=totalAlloc();
+  if(!filteredHoldings(true).length||!alloc){
+    if(chart){chart.destroy();chart=null;}
+    area.innerHTML='<div class="empty"><div class="ei">📊</div><p>計算対象の銘柄を追加するとグラフが表示されます</p></div>';
+    return;
+  }
+  let segs=[];
+  if(chartView==='major'){const byMaj=calcByMaj(true);segs=MAJORS.map((m,i)=>({label:m.name,icon:m.icon,color:m.color,val:byMaj[i]})).filter(x=>x.val>0);}
+  else{const bySub=calcBySub(true);segs=SUBS.map(s=>({label:s.name,icon:s.icon,color:s.color,val:bySub[s.id]})).filter(x=>x.val>0);}
+
+  // フィルターバナー
+  const filt=isFiltered();
+  const ownerLabel=filterOwner!=='all'?filterOwner:'';
+  const acctLabel=filterAcct!=='all'?(ACCT_LABELS[filterAcct]||''):'';
+  const filtLabel=[ownerLabel,acctLabel].filter(Boolean).join(' / ');
+  const filtBanner=filt?`<div style="text-align:center;font-size:10px;color:var(--primary);background:#eff6ff;border-radius:5px;padding:3px 8px;margin-bottom:8px;">🔍 フィルター適用中: ${filtLabel}</div>`:'';
+
+  // 常に再構築（フィルター変更に確実対応）
+  area.innerHTML=`${filtBanner}<div class="chart-container"><canvas id="donutChart" width="240" height="240"></canvas>
+      <div class="chart-center"><div class="ctotal">${filt?filtLabel:'計算対象'}</div><div class="camount" id="chartTotal"></div></div></div>
+      <div class="legend" id="chartLegend"></div>`;
+  document.getElementById('chartTotal').textContent=fmtFull(alloc);
+  const data=segs.map(x=>x.val),colors=segs.map(x=>x.color),labels=segs.map(x=>x.label);
+  {  // 常に新規作成（フィルター変更に確実に対応）
+    const ctx=document.getElementById('donutChart').getContext('2d');
+    chart=new Chart(ctx,{type:'doughnut',data:{labels,datasets:[{data,backgroundColor:colors,borderWidth:2,borderColor:'#fff'}]},
+      options:{cutout:'62%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{
+        return ` ${fmtFull(c.parsed)} (${(c.parsed/alloc*100).toFixed(1)}%)`;
+      }}}},animation:{duration:400}}});
+  }
+  let legend='';
+  for(const seg of segs){const pct=(seg.val/alloc*100).toFixed(1);legend+=`<div class="legend-item"><div class="ldot" style="background:${seg.color};"></div><span class="lname">${seg.icon} ${seg.label}</span><span class="lpct" style="color:${seg.color};">${pct}%</span><span class="lamt">${fmtFull(seg.val)}</span></div>`;}
+  document.getElementById('chartLegend').innerHTML=legend;
+}
+
+// ── Target allocation ─────────────────
+function renderTargets(){
+  const alloc=totalAlloc(),bySub=calcBySub(true),byMaj=calcByMaj(true);
+  let html='';
+  for(const maj of MAJORS){
+    const subs=SUBS.filter(s=>s.majorId===maj.id);
+    const majCur=alloc>0?(byMaj[maj.id]/alloc*100).toFixed(1):'0.0';
+    const majTgt=subs.reduce((a,s)=>a+targets[s.id],0).toFixed(1);
+    html+=`<div class="major-group"><div class="major-header"><div class="mhdot" style="background:${maj.color};"></div><div class="mhname">${maj.icon} ${maj.name}</div><div class="mhpct" style="color:${maj.color};">現在 ${majCur}% ／ 目標 <span style="color:var(--g900);">${majTgt}%</span></div></div>`;
+    for(const sub of subs){
+      const curPct=alloc>0?(bySub[sub.id]/alloc*100):0;const tgt=targets[sub.id];
+      html+=`<div class="sub-row"><div class="sname">${sub.icon} ${sub.name}</div>
+        <div class="sub-bar-wrap"><div class="sub-bar-bg"><div class="sub-bar" style="width:${Math.min(curPct,100)}%;background:${sub.color};opacity:.8;"></div></div>
+        <div class="sub-bar-labels"><span>現在 ${curPct.toFixed(1)}%</span><span>目標 ${tgt}%</span></div></div>
+        <div class="tinput-wrap"><input type="number" class="tinput" value="${tgt}" min="0" max="100" oninput="updateTarget(${sub.id},this.value)"><span class="tpct">%</span></div>
+      </div>`;
+    }
+    html+='</div>';
+  }
+  document.getElementById('targetArea').innerHTML=html;
+  renderTSum();
+}
+function renderTSum(){
+  const s=targets.reduce((a,b)=>a+b,0);
+  const el=document.getElementById('tsum');
+  el.className='tsum '+(Math.round(s)===100?'ok':'err');
+  el.innerHTML=`合計: <span>${s.toFixed(1)}%</span>${Math.round(s)!==100?' ← 合計100%に設定してください':' ✓'}`;
+}
+function updateTarget(subId,val){
+  const v=parseFloat(val);if(isNaN(v))return;
+  targets[subId]=Math.max(0,Math.min(100,v));
+  save();renderSummary();renderRebalance();renderTSum();
+  const alloc=totalAlloc(),bySub=calcBySub(true),byMaj=calcByMaj(true);
+  document.querySelectorAll('.sub-row').forEach((row,i)=>{
+    const sub=SUBS[i];const curPct=alloc>0?(bySub[sub.id]/alloc*100):0;
+    const bar=row.querySelector('.sub-bar');if(bar)bar.style.width=Math.min(curPct,100)+'%';
+    const lbl=row.querySelector('.sub-bar-labels');if(lbl)lbl.innerHTML=`<span>現在 ${curPct.toFixed(1)}%</span><span>目標 ${targets[sub.id]}%</span>`;
+  });
+  document.querySelectorAll('.major-header').forEach((hd,mi)=>{
+    const maj=MAJORS[mi];const subs=SUBS.filter(s=>s.majorId===maj.id);
+    const majCur=alloc>0?(byMaj[maj.id]/alloc*100).toFixed(1):'0.0';
+    const majTgt=subs.reduce((a,s)=>a+targets[s.id],0).toFixed(1);
+    const p=hd.querySelector('.mhpct');if(p)p.innerHTML=`現在 ${majCur}% ／ 目標 <span style="color:var(--g900);">${majTgt}%</span>`;
+  });
+}
+
+// ── Rebalance ─────────────────────────
+function renderRebalance(){
+  const area=document.getElementById('rbArea'),alloc=totalAlloc(),tgtSum=targets.reduce((a,b)=>a+b,0);
+  if(!filteredHoldings(true).length||!alloc){
+    area.innerHTML='<div class="empty"><div class="ei">⚖️</div><p>計算対象の銘柄を追加し目標配分を設定してください</p></div>';return;
+  }
+  const filt=isFiltered();
+  const ownerLabel=filterOwner!=='all'?filterOwner:'';
+  const acctLabel=filterAcct!=='all'?(ACCT_LABELS[filterAcct]||''):'';
+  const filtLabel=[ownerLabel,acctLabel].filter(Boolean).join(' / ');
+  const bySub=calcBySub(true);let html=(filt?`<div style="font-size:11px;color:var(--primary);background:#eff6ff;border-radius:5px;padding:5px 10px;margin-bottom:10px;">🔍 フィルター適用中: ${filtLabel} のデータで計算しています</div>`:''),anyAction=false;
+  for(const maj of MAJORS){
+    const subs=SUBS.filter(s=>s.majorId===maj.id);
+    const majCurAmt=subs.reduce((a,s)=>a+bySub[s.id],0);
+    const majTgtAmt=subs.reduce((a,s)=>a+alloc*targets[s.id]/100,0);
+    const majDiff=majTgtAmt-majCurAmt;
+    const majCurPct=alloc>0?(majCurAmt/alloc*100).toFixed(1):'0.0';
+    const majTgtPct=subs.reduce((a,s)=>a+targets[s.id],0).toFixed(1);
+    const majStyle=Math.abs(majDiff)>100?(majDiff>0?'color:var(--success);':'color:var(--danger);'):'color:var(--g400);';
+    const majLabel=Math.abs(majDiff)<100?'変更なし':majDiff>0?'🟢 買い '+fmtFull(majDiff):'🔴 売り '+fmtFull(-majDiff);
+    html+=`<div class="rb-major"><div class="rb-major-head">
+      <div class="rh-dot" style="background:${maj.color};"></div>
+      <div style="flex:1;">${maj.icon} ${maj.name}</div>
+      <div style="font-size:10px;color:var(--g500);">現在 ${majCurPct}% → 目標 ${majTgtPct}%</div>
+      <div style="min-width:120px;text-align:right;font-size:11px;${majStyle}">${majLabel}</div>
+    </div><div class="rb-sub-rows">
+    <div class="rb-row hd"><div>中カテゴリー</div><div style="text-align:right">現在金額</div><div style="text-align:right">目標金額</div><div style="text-align:right">売買金額</div></div>`;
+    for(const sub of subs){
+      const cur=bySub[sub.id],tgt=alloc*targets[sub.id]/100,diff=tgt-cur;
+      const curPct=alloc>0?(cur/alloc*100).toFixed(1):'0.0';
+      let dCls='neutral',dLabel='— 変更なし';
+      if(Math.abs(diff)>100){anyAction=true;if(diff>0){dCls='buy';dLabel='🟢 買い '+fmtFull(diff);}else{dCls='sell';dLabel='🔴 売り '+fmtFull(-diff);}}
+      html+=`<div class="rb-row"><div class="rname">${sub.icon} ${sub.name}</div>
+        <div class="ramount" style="color:var(--g700);">${fmtFull(cur)}<br><small>${curPct}%</small></div>
+        <div class="ramount" style="color:var(--g700);">${fmtFull(tgt)}<br><small>${targets[sub.id]}%</small></div>
+        <div class="ramount ${dCls}">${dLabel}</div></div>`;
+    }
+    html+='</div></div>';
+  }
+  if(!anyAction)html+='<div class="note">✅ 目標配分との乖離が小さく、リバランスは不要です！</div>';
+  else if(Math.round(tgtSum)!==100)html+=`<div class="note">⚠️ 目標配分の合計が${tgtSum.toFixed(1)}%です。100%になるよう調整してください。</div>`;
+  else html+='<div class="note">💡 上記の売買を行うことで目標配分に近づきます。税金・手数料も考慮してください。</div>';
+  area.innerHTML=html;
+}
+
+// ═══════════════════════════════════════
+// HISTORY
+// ═══════════════════════════════════════
+function recordSnapshot(){
+  if(!holdings.length){alert('銘柄が登録されていません');return;}
+  const now=new Date();
+  const label=`${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日`;
+  const dateKey=now.toISOString().slice(0,10);
+  // Prevent duplicate same-day
+  if(history.length>0&&history[history.length-1].dateKey===dateKey){
+    if(!confirm(`本日（${label}）の記録はすでに存在します。上書きしますか？`))return;
+    history.pop();
+  }
+  // 履歴はフィルター無視で全データを記録
+  const bySub=calcBySubRaw(true);
+  const byMaj=calcByMajRaw(true);
+  history.push({dateKey,label,total:totalAllRaw(),alloc:totalAllocRaw(),bySub:[...bySub],byMaj:[...byMaj]});
+  save();
+  // Switch to history tab and render
+  showPage('history');
+  alert(`${label}の資産状況を記録しました！`);
+}
+function deleteSnapshot(i){
+  if(!confirm('この記録を削除しますか？'))return;
+  history.splice(i,1);save();renderHistory();
+}
+
+function setHistView(v){
+  histView=v;
+  document.getElementById('btnHistTotal').classList.toggle('active',v==='total');
+  document.getElementById('btnHistMaj').classList.toggle('active',v==='major');
+  if(histChart){histChart.destroy();histChart=null;}
+  renderHistChart();
+}
+
+function renderHistory(){
+  renderHistChart();
+  renderSnapshotList();
+}
+
+function renderHistChart(){
+  const wrap=document.getElementById('histChartWrap');
+  if(history.length<1){
+    wrap.innerHTML='<div class="empty"><div class="ei">📈</div><p>「現在の状況を記録する」ボタンを押すとここに推移グラフが表示されます</p></div>';
+    return;
+  }
+  if(!document.getElementById('histCanvas')){
+    wrap.innerHTML='<div class="chart-area-hist"><canvas id="histCanvas"></canvas></div>';
+  }
+  const labels=history.map(h=>h.label);
+  let datasets=[];
+  if(histView==='total'){
+    datasets=[
+      {label:'総資産',data:history.map(h=>h.total),borderColor:'#3b82f6',backgroundColor:'rgba(59,130,246,.1)',fill:true,tension:.3,pointRadius:4},
+      {label:'計算対象資産',data:history.map(h=>h.alloc),borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,.08)',fill:true,tension:.3,pointRadius:4,borderDash:[4,3]},
+    ];
+  } else {
+    datasets=MAJORS.map(m=>({
+      label:m.icon+' '+m.name,
+      data:history.map(h=>h.byMaj[m.id]),
+      borderColor:m.color,backgroundColor:m.color+'22',fill:true,tension:.3,pointRadius:3,
+    }));
+  }
+  const ctx=document.getElementById('histCanvas').getContext('2d');
+  if(histChart){histChart.destroy();}
+  histChart=new Chart(ctx,{
+    type:'line',
+    data:{labels,datasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'top',labels:{font:{size:11},boxWidth:14}},
+        tooltip:{callbacks:{label:c=>' '+fmtFull(c.parsed.y)}}},
+      scales:{
+        y:{ticks:{callback:v=>v>=1e8?`${(v/1e8).toFixed(1)}億`:v>=1e4?`${Math.round(v/1e4)}万`:v.toLocaleString()+'円',font:{size:10}},grid:{color:'#f3f4f6'}},
+        x:{ticks:{font:{size:10}},grid:{display:false}}
+      }
+    }
+  });
+}
+
+function renderSnapshotList(){
+  const el=document.getElementById('snapshotList');
+  if(!history.length){el.innerHTML='<div class="empty"><div class="ei">📂</div><p>まだ記録がありません</p></div>';return;}
+  let html='<div class="snapshot-list">';
+  for(let i=history.length-1;i>=0;i--){
+    const h=history[i];
+    const majBreak=MAJORS.map((m,mi)=>{
+      if(!h.byMaj||!h.byMaj[mi])return'';
+      const pct=h.alloc>0?(h.byMaj[mi]/h.alloc*100).toFixed(1):'0.0';
+      return `<span class="snapshot-maj">${m.icon} ${m.name}: ${pct}%（${fmtFull(h.byMaj[mi])}）</span>`;
+    }).join('');
+    html+=`<div class="snapshot-item">
+      <span class="snapshot-date">📅 ${esc(h.label)}</span>
+      <span class="snapshot-total">総資産: <strong>${fmtFull(h.total)}</strong></span>
+      <div class="snapshot-breakdown">${majBreak}</div>
+      <button class="btn btn-danger btn-sm" onclick="deleteSnapshot(${i})">削除</button>
+    </div>`;
+  }
+  html+='</div>';
+  el.innerHTML=html;
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+updateSubSelect();
+document.getElementById('iAmt').addEventListener('keydown',e=>{if(e.key==='Enter')addHolding();});
+document.getElementById('iName').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('iAmt').focus();});
+document.getElementById('editModal').addEventListener('click',e=>{if(e.target===document.getElementById('editModal'))closeEdit();});
+document.getElementById('importModal').addEventListener('click',e=>{if(e.target===document.getElementById('importModal'))closeImport();});
+render();
+</script>
+</body>
+</html>
