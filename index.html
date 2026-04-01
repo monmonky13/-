@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+undefined<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -111,7 +111,7 @@ tr.excluded td{opacity:.38;}
 .sub-bar-labels{display:flex;justify-content:space-between;font-size:9px;color:var(--g400);margin-top:2px;}
 .tinput-wrap{display:flex;align-items:center;gap:2px;}
 .tinput{width:48px;padding:3px 5px;border:1.5px solid var(--g200);border-radius:5px;font-size:12px;font-weight:600;text-align:right;outline:none;}
-.tinput:focus{border-color:var(--primary));}
+.tinput:focus{border-color:var(--primary);});}
 .tpct{font-size:11px;color:var(--g500);}
 .tsum{display:flex;justify-content:flex-end;margin-top:6px;font-size:11px;}
 .tsum span{font-weight:700;}
@@ -168,6 +168,7 @@ small{color:var(--g500);font-size:10px;}
   <div><h1>資産配分マネージャー</h1><div class="sub">保有資産の入力・可視化・リバランス管理</div></div>
   <div class="header-right">
     <div class="sync-status" id="syncStatus"><span style="color:var(--g400);">— GitHub未連携</span></div>
+    <button class="btn btn-primary btn-sm" id="updateBtn" onclick="requestSpreadsheetSync()" title="スプレッドシートから最新の評価額を取得">📊 更新</button>
     <button class="btn btn-secondary btn-sm" onclick="openSettings()">⚙️ GitHub連携</button>
   </div>
 </header>
@@ -458,7 +459,7 @@ const SUBS=[
   {id:3,majorId:0,name:'その他(株式)',      icon:'📊', color:'#93c5fd'},
   {id:4,majorId:1,name:'円',                icon:'💴', color:'#15803d'},
   {id:5,majorId:1,name:'債券',              icon:'📋', color:'#22c55e'},
-  {id:6,majorId:1,name:'その他(現金/債券)',icon:'🏦', color:'#4ade80'},
+  {id:6,majorId:1,name:'その他(現金/債券)',icon:'🏦', color:'4ade80'},
   {id:7,majorId:2,name:'ゴールド',          icon:'🥇', color:'#b45309'},
   {id:8,majorId:2,name:'その他コモディティ',icon:'⛽', color:'#f59e0b'},
   {id:9,majorId:2,name:'仮想通貨',          icon:'₿',  color:'#fcd34d'},
@@ -491,6 +492,8 @@ const GIST_FILENAME = 'asset-manager-data.json';
 let ghToken  = localStorage.getItem('ghToken')  || '';
 let ghGistId = localStorage.getItem('ghGistId') || '';
 let syncTimer= null;
+let syncRequestTime = 0;
+let syncPollTimer   = null;
 
 async function ghApi(method, path, body) {
   const res = await fetch('https://api.github.com' + path, {
@@ -591,6 +594,76 @@ function schedulePush() {
 async function manualSync() {
   await loadFromGist();
   closeSettings();
+}
+
+// ── スプレッドシートから更新 ────────────────
+async function requestSpreadsheetSync() {
+  if (!ghToken) {
+    alert('GitHub連携が設定されていません。\n⚙️ GitHub連携 から設定してください。');
+    return;
+  }
+  const btn = document.getElementById('updateBtn');
+  if (btn) { btn.disabled = true; btn.textContent = '📊 更新中...'; }
+  try {
+    if (!ghGistId) {
+      ghGistId = await findOrCreateGist();
+      localStorage.setItem('ghGistId', ghGistId);
+    }
+    syncRequestTime = Date.now();
+    const data = { holdings, targets, history, syncRequest: syncRequestTime };
+    await ghApi('PATCH', `/gists/${ghGistId}`, {
+      files: { [GIST_FILENAME]: { content: JSON.stringify(data, null, 2) } }
+    });
+    const el = document.getElementById('syncStatus');
+    if (el) el.innerHTML = '<span style="color:#d97706;">📊 Coworkがスプレッドシートを読み込み中... (自動で完了)</span>';
+    clearTimeout(syncPollTimer);
+    syncPollTimer = setTimeout(pollSyncCompletion, 20000);
+  } catch(e) {
+    setSyncStatus('error', e.message);
+    if (btn) { btn.disabled = false; btn.textContent = '📊 更新'; }
+  }
+}
+
+async function pollSyncCompletion() {
+  if (!ghToken || !ghGistId || !syncRequestTime) return;
+  try {
+    const gist = await ghApi('GET', `/gists/${ghGistId}`);
+    const content = gist.files[GIST_FILENAME]?.content;
+    if (!content) { syncPollTimer = setTimeout(pollSyncCompletion, 20000); return; }
+    const data = JSON.parse(content);
+    if (data.syncComplete && data.syncComplete > syncRequestTime) {
+      if (Array.isArray(data.holdings)) holdings = data.holdings;
+      if (Array.isArray(data.targets))  targets  = data.targets;
+      if (Array.isArray(data.history))  history  = data.history;
+      localStorage.setItem('holdings3',    JSON.stringify(holdings));
+      localStorage.setItem('targets3',     JSON.stringify(targets));
+      localStorage.setItem('assetHistory', JSON.stringify(history));
+      render();
+      syncRequestTime = 0;
+      const cleanData = { holdings, targets, history };
+      await ghApi('PATCH', `/gists/${ghGistId}`, {
+        files: { [GIST_FILENAME]: { content: JSON.stringify(cleanData, null, 2) } }
+      });
+      const now = new Date();
+      const t = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+      const el = document.getElementById('syncStatus');
+      if (el) el.innerHTML = `<span style="color:#16a34a;">✅ スプレッドシートから更新完了 ${t}</span>`;
+      const btn = document.getElementById('updateBtn');
+      if (btn) { btn.disabled = false; btn.textContent = '📊 更新'; }
+      setTimeout(() => setSyncStatus('ok'), 8000);
+    } else if (data.syncRequest && Date.now() - data.syncRequest > 7200000) {
+      // Timed out after 2 hours
+      syncRequestTime = 0;
+      setSyncStatus('error', '更新タイムアウト');
+      const btn = document.getElementById('updateBtn');
+      if (btn) { btn.disabled = false; btn.textContent = '📊 更新'; }
+    } else {
+      syncPollTimer = setTimeout(pollSyncCompletion, 20000);
+    }
+  } catch(e) {
+    console.error('pollSyncCompletion:', e);
+    syncPollTimer = setTimeout(pollSyncCompletion, 30000);
+  }
 }
 
 function setSyncStatus(status, msg) {
