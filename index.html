@@ -18,19 +18,20 @@ header{background:#fff;border-bottom:1px solid var(--g200);padding:13px 22px;dis
 header h1{font-size:18px;font-weight:700;}
 header .sub{font-size:11px;color:var(--g500);margin-top:1px;}
 .icon-h{font-size:24px;}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+.sync-status{font-size:11px;white-space:nowrap;}
 .container{max-width:1320px;margin:0 auto;padding:18px 14px;}
 .gap{margin-bottom:16px;}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
 @media(max-width:1050px){.grid2{grid-template-columns:1fr;}}
 @media(max-width:700px){.grid4{grid-template-columns:1fr 1fr;}}
-
 /* ── Page tabs ── */
 .page-tabs{display:flex;gap:0;border-bottom:2px solid var(--g200);margin-bottom:18px;}
 .page-tab{padding:9px 20px;font-size:13px;font-weight:600;color:var(--g500);cursor:pointer;border:none;background:none;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .15s;}
 .page-tab.active{color:var(--primary);border-bottom-color:var(--primary);}
-.page-content{display:none;} .page-content.active{display:block;}
-
+.page-content{display:none;}
+.page-content.active{display:block;}
 /* ── Cards ── */
 .card{background:#fff;border-radius:11px;padding:16px;box-shadow:var(--shadow);}
 .card-title{font-size:13px;font-weight:700;color:var(--g700);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
@@ -40,7 +41,6 @@ header .sub{font-size:11px;color:var(--g500);margin-top:1px;}
 .sum-sub{font-size:10px;color:var(--g400);margin-top:2px;}
 .green{color:var(--success);}.red{color:var(--danger);}
 .flex-between{display:flex;justify-content:space-between;align-items:center;}
-
 /* ── Table ── */
 .table-wrap{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;font-size:11px;}
@@ -49,13 +49,11 @@ td{padding:7px 8px;border-bottom:1px solid var(--g100);vertical-align:middle;}
 tr:last-child td{border-bottom:none;}
 tr:hover td{background:var(--g50);}
 tr.excluded td{opacity:.38;}
-
 /* ── Badges ── */
 .badge{display:inline-block;padding:2px 6px;border-radius:9999px;font-size:10px;font-weight:600;white-space:nowrap;}
 .maj-0{background:#dbeafe;color:#1d4ed8;}.maj-1{background:#dcfce7;color:#15803d;}.maj-2{background:#fef3c7;color:#92400e;}
 .acct-nisa{background:#d1fae5;color:#065f46;}.acct-oldnisa{background:#e0f2fe;color:#0369a1;}
 .acct-tokutei{background:#ede9fe;color:#5b21b6;}.acct-other{background:var(--g100);color:var(--g600);}
-
 /* ── Buttons ── */
 .btn{display:inline-flex;align-items:center;gap:4px;padding:7px 13px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all .15s;}
 .btn-primary{background:var(--primary);color:#fff;}.btn-primary:hover{background:var(--pdark);}
@@ -67,14 +65,12 @@ tr.excluded td{opacity:.38;}
 .toggle-pill{display:flex;background:var(--g100);border-radius:7px;padding:3px;gap:2px;}
 .toggle-pill button{flex:1;padding:4px 9px;border:none;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;background:none;color:var(--g500);transition:all .15s;}
 .toggle-pill button.active{background:#fff;color:var(--g900);box-shadow:var(--shadow);}
-
 /* ── Filter bar ── */
 .filter-bar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;align-items:center;}
 .filter-label{font-size:10px;font-weight:600;color:var(--g500);}
 .filter-chip{padding:3px 9px;border-radius:9999px;font-size:10px;font-weight:600;cursor:pointer;border:1.5px solid var(--g200);background:#fff;color:var(--g600);transition:all .15s;}
 .filter-chip.active{border-color:var(--primary);background:#eff6ff;color:var(--primary);}
 .filter-sep{width:1px;height:16px;background:var(--g200);}
-
 /* ── Toggle switch ── */
 .tog-wrap{display:flex;align-items:center;gap:5px;}
 .tog{position:relative;width:32px;height:18px;flex-shrink:0;}
@@ -84,14 +80,12 @@ tr.excluded td{opacity:.38;}
 .tog input:checked+.tog-sl{background:var(--primary);}
 .tog input:checked+.tog-sl:before{transform:translateX(14px);}
 .tog-label{font-size:11px;color:var(--g600);white-space:nowrap;}
-
 /* ── Form ── */
 .form-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:9px;}
 .fg{display:flex;flex-direction:column;gap:3px;flex:1;min-width:100px;}
 .fg label{font-size:10px;font-weight:600;color:var(--g700);}
 .fg input,.fg select{padding:6px 8px;border:1.5px solid var(--g200);border-radius:6px;font-size:12px;outline:none;transition:border-color .15s;background:#fff;height:32px;}
 .fg input:focus,.fg select:focus{border-color:var(--primary);}
-
 /* ── Chart ── */
 .chart-container{position:relative;max-width:240px;margin:0 auto;}
 .chart-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;}
@@ -103,7 +97,6 @@ tr.excluded td{opacity:.38;}
 .lname{flex:1;color:var(--g700);}
 .lpct{font-weight:700;min-width:34px;text-align:right;}
 .lamt{color:var(--g500);font-size:10px;min-width:80px;text-align:right;}
-
 /* ── Target allocation ── */
 .major-group{margin-bottom:8px;border:1px solid var(--g200);border-radius:8px;overflow:hidden;}
 .major-header{display:flex;align-items:center;gap:7px;padding:8px 10px;background:var(--g50);font-size:11px;font-weight:700;}
@@ -118,12 +111,11 @@ tr.excluded td{opacity:.38;}
 .sub-bar-labels{display:flex;justify-content:space-between;font-size:9px;color:var(--g400);margin-top:2px;}
 .tinput-wrap{display:flex;align-items:center;gap:2px;}
 .tinput{width:48px;padding:3px 5px;border:1.5px solid var(--g200);border-radius:5px;font-size:12px;font-weight:600;text-align:right;outline:none;}
-.tinput:focus{border-color:var(--primary);}
+.tinput:focus{border-color:var(--primary));}
 .tpct{font-size:11px;color:var(--g500);}
 .tsum{display:flex;justify-content:flex-end;margin-top:6px;font-size:11px;}
 .tsum span{font-weight:700;}
 .tsum.ok span{color:var(--success);}.tsum.err span{color:var(--danger);}
-
 /* ── Rebalance ── */
 .rb-major{margin-bottom:6px;}
 .rb-major-head{display:flex;gap:7px;padding:7px 9px;background:var(--g50);border-radius:7px 7px 0 0;border:1px solid var(--g200);border-bottom:none;font-size:11px;font-weight:700;align-items:center;}
@@ -135,7 +127,6 @@ tr.excluded td{opacity:.38;}
 .rname{font-weight:600;display:flex;align-items:center;gap:4px;}
 .ramount{text-align:right;font-family:'SF Mono','Menlo','Consolas',monospace;}
 .buy{color:var(--success);font-weight:700;}.sell{color:var(--danger);font-weight:700;}.neutral{color:var(--g400);}
-
 /* ── History ── */
 .history-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px;}
 .snapshot-list{display:flex;flex-direction:column;gap:6px;margin-top:12px;}
@@ -145,12 +136,10 @@ tr.excluded td{opacity:.38;}
 .snapshot-breakdown{flex:1;display:flex;gap:10px;flex-wrap:wrap;}
 .snapshot-maj{font-size:10px;color:var(--g500);}
 .chart-area-hist{position:relative;height:240px;margin-bottom:8px;}
-
 /* ── Empty ── */
 .empty{text-align:center;padding:28px 16px;color:var(--g500);}
 .empty .ei{font-size:32px;margin-bottom:8px;}
 .empty p{font-size:12px;}
-
 /* ── Modal ── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;align-items:center;justify-content:center;padding:16px;}
 .modal-overlay.open{display:flex;}
@@ -158,18 +147,32 @@ tr.excluded td{opacity:.38;}
 .modal-title{font-size:15px;font-weight:700;margin-bottom:12px;}
 .modal-actions{display:flex;gap:7px;justify-content:flex-end;margin-top:14px;}
 .note{background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:8px 12px;font-size:11px;color:#1e40af;margin-top:9px;}
+.note-warn{background:#fefce8;border:1px solid #fde047;border-radius:6px;padding:8px 12px;font-size:11px;color:#854d0e;margin-top:9px;}
 small{color:var(--g500);font-size:10px;}
 .excl-note{font-size:10px;color:var(--g400);font-style:italic;}
+/* ── Token input ── */
+.token-input-wrap{position:relative;display:flex;align-items:center;}
+.token-input-wrap input{flex:1;font-family:'SF Mono','Menlo','Consolas',monospace;font-size:11px;padding-right:70px;}
+.token-show-btn{position:absolute;right:6px;font-size:10px;padding:2px 6px;border:1px solid var(--g200);border-radius:4px;background:#fff;cursor:pointer;color:var(--g500);}
+.steps{counter-reset:step;display:flex;flex-direction:column;gap:10px;margin:12px 0;}
+.step{display:flex;gap:10px;align-items:flex-start;font-size:12px;}
+.step-num{background:var(--primary);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px;}
+.step a{color:var(--primary);text-decoration:none;}
+.step a:hover{text-decoration:underline;}
 </style>
 </head>
 <body>
+
 <header>
   <span class="icon-h">📊</span>
   <div><h1>資産配分マネージャー</h1><div class="sub">保有資産の入力・可視化・リバランス管理</div></div>
+  <div class="header-right">
+    <div class="sync-status" id="syncStatus"><span style="color:var(--g400);">— GitHub未連携</span></div>
+    <button class="btn btn-secondary btn-sm" onclick="openSettings()">⚙️ GitHub連携</button>
+  </div>
 </header>
 
 <div class="container">
-
   <!-- Page tabs -->
   <div class="page-tabs">
     <button class="page-tab active" onclick="showPage('current')">📊 現在の状況</button>
@@ -178,7 +181,6 @@ small{color:var(--g500);font-size:10px;}
 
   <!-- ═══ PAGE: 現在の状況 ═══ -->
   <div class="page-content active" id="page-current">
-
     <!-- Summary -->
     <div class="grid4 gap">
       <div class="sumcard"><div class="sum-label">総資産（全口座）</div><div class="sum-value" id="sTotal">¥0</div></div>
@@ -186,13 +188,10 @@ small{color:var(--g500);font-size:10px;}
       <div class="sumcard"><div class="sum-label">登録銘柄数</div><div class="sum-value" id="sCount">0 件</div></div>
       <div class="sumcard"><div class="sum-label">目標との最大乖離</div><div class="sum-value" id="sDev">—</div></div>
     </div>
-
     <!-- Main grid -->
     <div class="grid2 gap">
-
       <!-- Left -->
       <div style="display:flex;flex-direction:column;gap:16px;">
-
         <!-- Add form -->
         <div class="card">
           <div class="card-title">➕ 銘柄・資産を追加</div>
@@ -246,7 +245,6 @@ small{color:var(--g500);font-size:10px;}
             <div style="flex:0;"><button class="btn btn-primary" onclick="addHolding()">+ 追加</button></div>
           </div>
         </div>
-
         <!-- Holdings list -->
         <div class="card">
           <div class="flex-between" style="margin-bottom:10px;">
@@ -256,18 +254,14 @@ small{color:var(--g500);font-size:10px;}
               <button class="btn btn-secondary btn-sm" onclick="openImportModal()">📤 まとめて入力</button>
             </div>
           </div>
-          <!-- Filter bar -->
           <div class="filter-bar" id="filterBar"></div>
           <div class="table-wrap" id="holdWrap">
             <div class="empty"><div class="ei">💼</div><p>銘柄をまだ登録していません</p></div>
           </div>
         </div>
-
       </div>
-
       <!-- Right -->
       <div style="display:flex;flex-direction:column;gap:16px;">
-
         <!-- Chart -->
         <div class="card">
           <div class="flex-between" style="margin-bottom:10px;">
@@ -278,26 +272,22 @@ small{color:var(--g500);font-size:10px;}
             </div>
           </div>
           <div id="chartArea">
-            <div class="empty"><div class="ei">📊</div><p>銘柄を追加するとグラフが表示されます</p></div>
+            <div class="empty"><div class="ei">📊</div><p>計算対象の銘柄を追加するとグラフが表示されます</p></div>
           </div>
         </div>
-
         <!-- Target allocation -->
         <div class="card">
           <div class="card-title">🎯 目標配分（中カテゴリー別）</div>
           <div id="targetArea"></div>
           <div class="tsum" id="tsum"></div>
         </div>
-
       </div>
     </div>
-
     <!-- Rebalance -->
     <div class="card gap">
       <div class="card-title">⚖️ リバランス計算<small style="margin-left:6px;font-weight:400;">（配分計算対象のみ）</small></div>
       <div id="rbArea"><div class="empty"><div class="ei">⚖️</div><p>銘柄を追加し目標配分を設定するとリバランス計算が表示されます</p></div></div>
     </div>
-
   </div><!-- /page-current -->
 
   <!-- ═══ PAGE: 推移グラフ ═══ -->
@@ -376,8 +366,7 @@ small{color:var(--g500);font-size:10px;}
     <div class="fg">
       <label>データ（CSV形式）</label>
       <textarea id="importText" rows="7" style="padding:8px;border:1.5px solid var(--g200);border-radius:6px;font-size:11px;font-family:monospace;resize:vertical;width:100%;outline:none;"
-        placeholder="例:
-eMAXIS Slim 全世界株式, 1, 本人, nisa, 2000000, 1
+        placeholder="例: eMAXIS Slim 全世界株式, 1, 本人, nisa, 2000000, 1
 日本高配当株ETF, 0, 妻, tokutei, 800000, 1
 普通預金, 4, 本人, other, 500000, 0"></textarea>
     </div>
@@ -386,6 +375,69 @@ eMAXIS Slim 全世界株式, 1, 本人, nisa, 2000000, 1
       <button class="btn btn-secondary" onclick="closeImport()">キャンセル</button>
       <button class="btn btn-primary" onclick="importData()">インポート</button>
     </div>
+  </div>
+</div>
+
+<!-- Settings Modal -->
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal">
+    <div class="modal-title">⚙️ GitHub連携設定</div>
+
+    <div id="settingsConnected" style="display:none;">
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px;margin-bottom:12px;">
+        <div style="font-size:12px;font-weight:700;color:#15803d;margin-bottom:4px;">✅ GitHub に接続中</div>
+        <div style="font-size:11px;color:#166534;" id="connectedInfo"></div>
+      </div>
+      <div class="modal-actions" style="justify-content:space-between;">
+        <button class="btn btn-danger btn-sm" onclick="disconnectGist()">🔌 連携を解除</button>
+        <div style="display:flex;gap:6px;">
+          <button class="btn btn-secondary" onclick="closeSettings()">閉じる</button>
+          <button class="btn btn-primary" onclick="manualSync()">🔄 今すぐ同期</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="settingsForm">
+      <p style="font-size:12px;color:var(--g600);margin-bottom:12px;">
+        GitHub Personal Access Token を登録すると、どのPCからでも同じデータを使えるようになります。
+      </p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div>
+            <a href="https://github.com/settings/tokens/new?scopes=gist&description=%E8%B3%87%E7%94%A3%E9%85%8D%E5%88%86%E3%83%9E%E3%83%8D%E3%83%BC%E3%82%B8%E3%83%A3%E3%83%BC" target="_blank">
+              こちらをクリック → GitHubのToken発行ページを開く
+            </a>
+            <div style="font-size:10px;color:var(--g400);margin-top:2px;">「Gist」にチェックが入っていることを確認して「Generate token」をクリック</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>表示されたToken（ghp_で始まる文字列）をコピーして下に貼り付ける</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>「保存して連携」ボタンを押す（全PCで同じ手順を繰り返す）</div>
+        </div>
+      </div>
+
+      <div class="fg" style="margin-bottom:8px;">
+        <label>Personal Access Token</label>
+        <div class="token-input-wrap">
+          <input id="tokenInput" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+          <button class="token-show-btn" onclick="toggleTokenVisibility()">表示</button>
+        </div>
+      </div>
+
+      <div class="note-warn">⚠️ Tokenは他人に見せないでください。このデータはこの端末のブラウザにのみ保存され、外部には送信されません（GitHubのAPIのみ使用）。</div>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeSettings()">キャンセル</button>
+        <button class="btn btn-primary" id="saveTokenBtn" onclick="saveSettings()">保存して連携</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -400,12 +452,12 @@ const MAJORS=[
   {id:2,name:'コモディティ', icon:'🥇',color:'#f59e0b'},
 ];
 const SUBS=[
-  {id:0,majorId:0,name:'日本株式',         icon:'🇯🇵',color:'#1d4ed8'},
-  {id:1,majorId:0,name:'全世界/先進国株式',icon:'🌍', color:'#3b82f6'},
+  {id:0,majorId:0,name:'日本株式',          icon:'🇯🇵',color:'#1d4ed8'},
+  {id:1,majorId:0,name:'全世界/先進国株式', icon:'🌍', color:'#3b82f6'},
   {id:2,majorId:0,name:'新興国株式',        icon:'🌏', color:'#60a5fa'},
   {id:3,majorId:0,name:'その他(株式)',      icon:'📊', color:'#93c5fd'},
-  {id:4,majorId:1,name:'円',               icon:'💴', color:'#15803d'},
-  {id:5,majorId:1,name:'債券',             icon:'📋', color:'#22c55e'},
+  {id:4,majorId:1,name:'円',                icon:'💴', color:'#15803d'},
+  {id:5,majorId:1,name:'債券',              icon:'📋', color:'#22c55e'},
   {id:6,majorId:1,name:'その他(現金/債券)',icon:'🏦', color:'#4ade80'},
   {id:7,majorId:2,name:'ゴールド',          icon:'🥇', color:'#b45309'},
   {id:8,majorId:2,name:'その他コモディティ',icon:'⛽', color:'#f59e0b'},
@@ -417,7 +469,7 @@ const ACCT_CSS   ={nisa:'acct-nisa',oldnisa:'acct-oldnisa',tokutei:'acct-tokutei
 const MAJ_CSS    =['maj-0','maj-1','maj-2'];
 
 // ═══════════════════════════════════════
-// STATE  ← localStorage keys same as before: holdings3 / targets3
+// STATE
 // ═══════════════════════════════════════
 let holdings = JSON.parse(localStorage.getItem('holdings3')||'[]');
 let targets  = JSON.parse(localStorage.getItem('targets3') ||JSON.stringify([15,20,5,0,10,5,0,5,0,0]));
@@ -427,14 +479,205 @@ let chart    = null;
 let histChart= null;
 let chartView='major';
 let histView ='total';
-// Filter state
 let filterOwner='all';
 let filterAcct ='all';
 
-function save(){
-  localStorage.setItem('holdings3', JSON.stringify(holdings));
-  localStorage.setItem('targets3',  JSON.stringify(targets));
+// ═══════════════════════════════════════
+// GITHUB GIST SYNC
+// ═══════════════════════════════════════
+const GIST_DESC     = '資産配分マネージャーデータ';
+const GIST_FILENAME = 'asset-manager-data.json';
+
+let ghToken  = localStorage.getItem('ghToken')  || '';
+let ghGistId = localStorage.getItem('ghGistId') || '';
+let syncTimer= null;
+
+async function ghApi(method, path, body) {
+  const res = await fetch('https://api.github.com' + path, {
+    method,
+    headers: {
+      'Authorization': 'Bearer ' + ghToken,
+      'Accept': 'application/vnd.github+json',
+      'Content-Type': 'application/json',
+      'X-GitHub-Api-Version': '2022-11-28'
+    },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(()=>({}));
+    throw new Error(err.message || `HTTP ${res.status}`);
+  }
+  if (res.status === 204) return {};
+  return res.json();
+}
+
+async function findOrCreateGist() {
+  // ページネーションしながら全Gistを検索
+  let page = 1;
+  while (true) {
+    const gists = await ghApi('GET', `/gists?per_page=100&page=${page}`);
+    if (!gists.length) break;
+    const found = gists.find(g => g.description === GIST_DESC && g.files && g.files[GIST_FILENAME]);
+    if (found) return found.id;
+    if (gists.length < 100) break;
+    page++;
+  }
+  // 既存Gistなし → 新規作成
+  const data = { holdings, targets, history };
+  const gist = await ghApi('POST', '/gists', {
+    description: GIST_DESC,
+    public: false,
+    files: { [GIST_FILENAME]: { content: JSON.stringify(data, null, 2) } }
+  });
+  return gist.id;
+}
+
+async function loadFromGist() {
+  if (!ghToken) return;
+  setSyncStatus('syncing');
+  try {
+    if (!ghGistId) {
+      ghGistId = await findOrCreateGist();
+      localStorage.setItem('ghGistId', ghGistId);
+    }
+    const gist = await ghApi('GET', `/gists/${ghGistId}`);
+    const content = gist.files[GIST_FILENAME]?.content;
+    if (content) {
+      const data = JSON.parse(content);
+      if (Array.isArray(data.holdings)) holdings = data.holdings;
+      if (Array.isArray(data.targets))  targets  = data.targets;
+      if (Array.isArray(data.history))  history  = data.history;
+      localStorage.setItem('holdings3',   JSON.stringify(holdings));
+      localStorage.setItem('targets3',    JSON.stringify(targets));
+      localStorage.setItem('assetHistory',JSON.stringify(history));
+      render();
+    }
+    setSyncStatus('ok');
+  } catch(e) {
+    console.error('loadFromGist:', e);
+    if (e.message.includes('404') || e.message.includes('Not Found')) {
+      ghGistId = '';
+      localStorage.removeItem('ghGistId');
+    }
+    setSyncStatus('error', e.message);
+  }
+}
+
+async function pushToGist() {
+  if (!ghToken) return;
+  setSyncStatus('syncing');
+  try {
+    if (!ghGistId) {
+      ghGistId = await findOrCreateGist();
+      localStorage.setItem('ghGistId', ghGistId);
+    }
+    const data = { holdings, targets, history };
+    await ghApi('PATCH', `/gists/${ghGistId}`, {
+      files: { [GIST_FILENAME]: { content: JSON.stringify(data, null, 2) } }
+    });
+    setSyncStatus('ok');
+  } catch(e) {
+    console.error('pushToGist:', e);
+    setSyncStatus('error', e.message);
+  }
+}
+
+function schedulePush() {
+  if (!ghToken) return;
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(() => pushToGist(), 1500);
+}
+
+async function manualSync() {
+  await loadFromGist();
+  closeSettings();
+}
+
+function setSyncStatus(status, msg) {
+  const el = document.getElementById('syncStatus');
+  if (!el) return;
+  const now = new Date();
+  const t = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+  if (status === 'syncing') {
+    el.innerHTML = '<span style="color:#6b7280;">🔄 同期中...</span>';
+  } else if (status === 'ok') {
+    el.innerHTML = `<span style="color:#16a34a;">✅ 同期済み ${t}</span>`;
+  } else if (status === 'error') {
+    el.innerHTML = `<span style="color:#dc2626;" title="${msg||''}">❌ 同期エラー（${msg||''}）</span>`;
+  } else {
+    el.innerHTML = '<span style="color:#9ca3af;">— GitHub未連携</span>';
+  }
+}
+
+// ── Settings Modal ────────────────────
+function openSettings() {
+  const form = document.getElementById('settingsForm');
+  const conn = document.getElementById('settingsConnected');
+  if (ghToken) {
+    form.style.display = 'none';
+    conn.style.display = 'block';
+    document.getElementById('connectedInfo').textContent =
+      `Gist ID: ${ghGistId || '（検索中）'}`;
+  } else {
+    form.style.display = 'block';
+    conn.style.display = 'none';
+    document.getElementById('tokenInput').value = '';
+  }
+  document.getElementById('settingsModal').classList.add('open');
+}
+function closeSettings() {
+  document.getElementById('settingsModal').classList.remove('open');
+}
+
+function toggleTokenVisibility() {
+  const input = document.getElementById('tokenInput');
+  const btn   = document.querySelector('.token-show-btn');
+  if (input.type === 'password') { input.type = 'text'; btn.textContent = '隠す'; }
+  else                           { input.type = 'password'; btn.textContent = '表示'; }
+}
+
+async function saveSettings() {
+  const token = document.getElementById('tokenInput').value.trim();
+  if (!token) { alert('Tokenを入力してください'); return; }
+  if (!token.startsWith('ghp_') && !token.startsWith('github_pat_')) {
+    if (!confirm('入力されたTokenの形式が通常と異なります（ghp_ または github_pat_ で始まるはずです）。このまま保存しますか？')) return;
+  }
+  const btn = document.getElementById('saveTokenBtn');
+  btn.disabled = true;
+  btn.textContent = '接続中...';
+  try {
+    ghToken  = token;
+    ghGistId = '';
+    localStorage.setItem('ghToken', ghToken);
+    localStorage.removeItem('ghGistId');
+    closeSettings();
+    await loadFromGist();
+  } catch(e) {
+    alert('接続に失敗しました: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '保存して連携';
+  }
+}
+
+function disconnectGist() {
+  if (!confirm('GitHub連携を解除しますか？\n（この端末のブラウザに保存されたデータは残ります）')) return;
+  ghToken  = '';
+  ghGistId = '';
+  localStorage.removeItem('ghToken');
+  localStorage.removeItem('ghGistId');
+  setSyncStatus('none');
+  closeSettings();
+}
+
+// ═══════════════════════════════════════
+// SAVE (localStorage + Gist)
+// ═══════════════════════════════════════
+function save() {
+  localStorage.setItem('holdings3',   JSON.stringify(holdings));
+  localStorage.setItem('targets3',    JSON.stringify(targets));
   localStorage.setItem('assetHistory',JSON.stringify(history));
+  schedulePush();
 }
 
 // ═══════════════════════════════════════
@@ -442,7 +685,7 @@ function save(){
 // ═══════════════════════════════════════
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function fmtFull(n){return '¥'+Math.round(n).toLocaleString('ja-JP');}
-// フィルター適用後の保有一覧を返す（グラフ・数字連動用）
+
 function filteredHoldings(inclOnly){
   return holdings.filter(h=>{
     if(inclOnly&&!h.include)return false;
@@ -451,28 +694,11 @@ function filteredHoldings(inclOnly){
     return true;
   });
 }
-// フィルター無視（履歴記録用）
 function rawHoldings(inclOnly){return holdings.filter(h=>!inclOnly||h.include);}
-
-function calcBySub(inclOnly){
-  const r=new Array(10).fill(0);
-  for(const h of filteredHoldings(inclOnly)){r[h.subId]+=h.amount;}
-  return r;
-}
-function calcByMaj(inclOnly){
-  const bySub=calcBySub(inclOnly);
-  return MAJORS.map(m=>SUBS.filter(s=>s.majorId===m.id).reduce((a,s)=>a+bySub[s.id],0));
-}
-// 履歴記録用（フィルター無視）
-function calcBySubRaw(inclOnly){
-  const r=new Array(10).fill(0);
-  for(const h of rawHoldings(inclOnly)){r[h.subId]+=h.amount;}
-  return r;
-}
-function calcByMajRaw(inclOnly){
-  const bySub=calcBySubRaw(inclOnly);
-  return MAJORS.map(m=>SUBS.filter(s=>s.majorId===m.id).reduce((a,s)=>a+bySub[s.id],0));
-}
+function calcBySub(inclOnly){const r=new Array(10).fill(0);for(const h of filteredHoldings(inclOnly)){r[h.subId]+=h.amount;}return r;}
+function calcByMaj(inclOnly){const bySub=calcBySub(inclOnly);return MAJORS.map(m=>SUBS.filter(s=>s.majorId===m.id).reduce((a,s)=>a+bySub[s.id],0));}
+function calcBySubRaw(inclOnly){const r=new Array(10).fill(0);for(const h of rawHoldings(inclOnly)){r[h.subId]+=h.amount;}return r;}
+function calcByMajRaw(inclOnly){const bySub=calcBySubRaw(inclOnly);return MAJORS.map(m=>SUBS.filter(s=>s.majorId===m.id).reduce((a,s)=>a+bySub[s.id],0));}
 function totalAll(){return filteredHoldings(false).reduce((s,h)=>s+h.amount,0);}
 function totalAlloc(){return filteredHoldings(true).reduce((s,h)=>s+h.amount,0);}
 function totalAllRaw(){return holdings.reduce((s,h)=>s+h.amount,0);}
@@ -603,20 +829,15 @@ function exportCSV(){
 // ═══════════════════════════════════════
 function setFilterOwner(v){filterOwner=v;if(chart){chart.destroy();chart=null;}render();}
 function setFilterAcct(v){filterAcct=v;if(chart){chart.destroy();chart=null;}render();}
-
 function renderFilterBar(){
   const owners=[...new Set(holdings.map(h=>h.owner||'本人'))];
   const accts=[...new Set(holdings.map(h=>h.acct||'other'))];
   let html=`<span class="filter-label">名義：</span>
     <span class="filter-chip ${filterOwner==='all'?'active':''}" onclick="setFilterOwner('all')">全員</span>`;
-  for(const o of owners){
-    html+=`<span class="filter-chip ${filterOwner===o?'active':''}" onclick="setFilterOwner('${esc(o)}')">${esc(o)}</span>`;
-  }
+  for(const o of owners){html+=`<span class="filter-chip ${filterOwner===o?'active':''}" onclick="setFilterOwner('${esc(o)}')">${esc(o)}</span>`;}
   html+=`<div class="filter-sep"></div><span class="filter-label">口座：</span>
     <span class="filter-chip ${filterAcct==='all'?'active':''}" onclick="setFilterAcct('all')">全口座</span>`;
-  for(const a of accts){
-    html+=`<span class="filter-chip ${filterAcct===a?'active':''}" onclick="setFilterAcct('${a}')">${ACCT_ICONS[a]} ${ACCT_LABELS[a]}</span>`;
-  }
+  for(const a of accts){html+=`<span class="filter-chip ${filterAcct===a?'active':''}" onclick="setFilterAcct('${a}')">${ACCT_ICONS[a]} ${ACCT_LABELS[a]}</span>`;}
   document.getElementById('filterBar').innerHTML=html;
 }
 
@@ -625,11 +846,9 @@ function renderFilterBar(){
 // ═══════════════════════════════════════
 function render(){renderSummary();renderFilterBar();renderHoldings();renderChart();renderTargets();renderRebalance();}
 
-// ── Summary ──────────────────────────
 function renderSummary(){
   const total=totalAll(),alloc=totalAlloc();
   const filt=isFiltered();
-  // フィルター中は見出しに表示対象を明示
   const ownerLabel=filterOwner!=='all'?filterOwner:'';
   const acctLabel=filterAcct!=='all'?(ACCT_LABELS[filterAcct]||''):'';
   const filtLabel=[ownerLabel,acctLabel].filter(Boolean).join(' / ');
@@ -648,24 +867,17 @@ function renderSummary(){
   el.className='sum-value '+(maxDev>5?'red':maxDev>2?'':'green');
 }
 
-// ── Holdings table ────────────────────
 function renderHoldings(){
   const wrap=document.getElementById('holdWrap');
   if(!holdings.length){wrap.innerHTML='<div class="empty"><div class="ei">💼</div><p>銘柄をまだ登録していません<br>上のフォームから追加してください</p></div>';return;}
-  const filtered=holdings.filter((h,i)=>{
-    if(filterOwner!=='all'&&(h.owner||'本人')!==filterOwner)return false;
-    if(filterAcct!=='all'&&(h.acct||'other')!==filterAcct)return false;
-    return true;
-  });
   const total=totalAll(),alloc=totalAlloc();
-  let rows='';
-  // map filtered → original index
   const idxMap=[];
   holdings.forEach((h,i)=>{
     if(filterOwner!=='all'&&(h.owner||'本人')!==filterOwner)return;
     if(filterAcct!=='all'&&(h.acct||'other')!==filterAcct)return;
     idxMap.push(i);
   });
+  let rows='';
   for(let fi=0;fi<idxMap.length;fi++){
     const i=idxMap[fi];const h=holdings[i];
     const sub=SUBS[h.subId],maj=MAJORS[sub.majorId];
@@ -701,7 +913,6 @@ function renderHoldings(){
   </div>`;
 }
 
-// ── Chart ────────────────────────────
 function setChartView(v){
   chartView=v;
   document.getElementById('btnMaj').classList.toggle('active',v==='major');
@@ -710,6 +921,7 @@ function setChartView(v){
   document.getElementById('chartArea').innerHTML='';
   renderChart();
 }
+
 function renderChart(){
   const area=document.getElementById('chartArea'),alloc=totalAlloc();
   if(!filteredHoldings(true).length||!alloc){
@@ -720,33 +932,24 @@ function renderChart(){
   let segs=[];
   if(chartView==='major'){const byMaj=calcByMaj(true);segs=MAJORS.map((m,i)=>({label:m.name,icon:m.icon,color:m.color,val:byMaj[i]})).filter(x=>x.val>0);}
   else{const bySub=calcBySub(true);segs=SUBS.map(s=>({label:s.name,icon:s.icon,color:s.color,val:bySub[s.id]})).filter(x=>x.val>0);}
-
-  // フィルターバナー
   const filt=isFiltered();
   const ownerLabel=filterOwner!=='all'?filterOwner:'';
   const acctLabel=filterAcct!=='all'?(ACCT_LABELS[filterAcct]||''):'';
   const filtLabel=[ownerLabel,acctLabel].filter(Boolean).join(' / ');
   const filtBanner=filt?`<div style="text-align:center;font-size:10px;color:var(--primary);background:#eff6ff;border-radius:5px;padding:3px 8px;margin-bottom:8px;">🔍 フィルター適用中: ${filtLabel}</div>`:'';
-
-  // 常に再構築（フィルター変更に確実対応）
   area.innerHTML=`${filtBanner}<div class="chart-container"><canvas id="donutChart" width="240" height="240"></canvas>
-      <div class="chart-center"><div class="ctotal">${filt?filtLabel:'計算対象'}</div><div class="camount" id="chartTotal"></div></div></div>
-      <div class="legend" id="chartLegend"></div>`;
+    <div class="chart-center"><div class="ctotal">${filt?filtLabel:'計算対象'}</div><div class="camount" id="chartTotal"></div></div></div>
+    <div class="legend" id="chartLegend"></div>`;
   document.getElementById('chartTotal').textContent=fmtFull(alloc);
   const data=segs.map(x=>x.val),colors=segs.map(x=>x.color),labels=segs.map(x=>x.label);
-  {  // 常に新規作成（フィルター変更に確実に対応）
-    const ctx=document.getElementById('donutChart').getContext('2d');
-    chart=new Chart(ctx,{type:'doughnut',data:{labels,datasets:[{data,backgroundColor:colors,borderWidth:2,borderColor:'#fff'}]},
-      options:{cutout:'62%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{
-        return ` ${fmtFull(c.parsed)} (${(c.parsed/alloc*100).toFixed(1)}%)`;
-      }}}},animation:{duration:400}}});
-  }
+  const ctx=document.getElementById('donutChart').getContext('2d');
+  chart=new Chart(ctx,{type:'doughnut',data:{labels,datasets:[{data,backgroundColor:colors,borderWidth:2,borderColor:'#fff'}]},
+    options:{cutout:'62%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{return ` ${fmtFull(c.parsed)} (${(c.parsed/alloc*100).toFixed(1)}%)`;}}}},animation:{duration:400}}});
   let legend='';
   for(const seg of segs){const pct=(seg.val/alloc*100).toFixed(1);legend+=`<div class="legend-item"><div class="ldot" style="background:${seg.color};"></div><span class="lname">${seg.icon} ${seg.label}</span><span class="lpct" style="color:${seg.color};">${pct}%</span><span class="lamt">${fmtFull(seg.val)}</span></div>`;}
   document.getElementById('chartLegend').innerHTML=legend;
 }
 
-// ── Target allocation ─────────────────
 function renderTargets(){
   const alloc=totalAlloc(),bySub=calcBySub(true),byMaj=calcByMaj(true);
   let html='';
@@ -792,12 +995,9 @@ function updateTarget(subId,val){
   });
 }
 
-// ── Rebalance ─────────────────────────
 function renderRebalance(){
   const area=document.getElementById('rbArea'),alloc=totalAlloc(),tgtSum=targets.reduce((a,b)=>a+b,0);
-  if(!filteredHoldings(true).length||!alloc){
-    area.innerHTML='<div class="empty"><div class="ei">⚖️</div><p>計算対象の銘柄を追加し目標配分を設定してください</p></div>';return;
-  }
+  if(!filteredHoldings(true).length||!alloc){area.innerHTML='<div class="empty"><div class="ei">⚖️</div><p>計算対象の銘柄を追加し目標配分を設定してください</p></div>';return;}
   const filt=isFiltered();
   const ownerLabel=filterOwner!=='all'?filterOwner:'';
   const acctLabel=filterAcct!=='all'?(ACCT_LABELS[filterAcct]||''):'';
@@ -845,17 +1045,14 @@ function recordSnapshot(){
   const now=new Date();
   const label=`${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日`;
   const dateKey=now.toISOString().slice(0,10);
-  // Prevent duplicate same-day
   if(history.length>0&&history[history.length-1].dateKey===dateKey){
     if(!confirm(`本日（${label}）の記録はすでに存在します。上書きしますか？`))return;
     history.pop();
   }
-  // 履歴はフィルター無視で全データを記録
   const bySub=calcBySubRaw(true);
   const byMaj=calcByMajRaw(true);
   history.push({dateKey,label,total:totalAllRaw(),alloc:totalAllocRaw(),bySub:[...bySub],byMaj:[...byMaj]});
   save();
-  // Switch to history tab and render
   showPage('history');
   alert(`${label}の資産状況を記録しました！`);
 }
@@ -863,7 +1060,6 @@ function deleteSnapshot(i){
   if(!confirm('この記録を削除しますか？'))return;
   history.splice(i,1);save();renderHistory();
 }
-
 function setHistView(v){
   histView=v;
   document.getElementById('btnHistTotal').classList.toggle('active',v==='total');
@@ -871,21 +1067,11 @@ function setHistView(v){
   if(histChart){histChart.destroy();histChart=null;}
   renderHistChart();
 }
-
-function renderHistory(){
-  renderHistChart();
-  renderSnapshotList();
-}
-
+function renderHistory(){renderHistChart();renderSnapshotList();}
 function renderHistChart(){
   const wrap=document.getElementById('histChartWrap');
-  if(history.length<1){
-    wrap.innerHTML='<div class="empty"><div class="ei">📈</div><p>「現在の状況を記録する」ボタンを押すとここに推移グラフが表示されます</p></div>';
-    return;
-  }
-  if(!document.getElementById('histCanvas')){
-    wrap.innerHTML='<div class="chart-area-hist"><canvas id="histCanvas"></canvas></div>';
-  }
+  if(history.length<1){wrap.innerHTML='<div class="empty"><div class="ei">📈</div><p>「現在の状況を記録する」ボタンを押すとここに推移グラフが表示されます</p></div>';return;}
+  if(!document.getElementById('histCanvas')){wrap.innerHTML='<div class="chart-area-hist"><canvas id="histCanvas"></canvas></div>';}
   const labels=history.map(h=>h.label);
   let datasets=[];
   if(histView==='total'){
@@ -908,7 +1094,7 @@ function renderHistChart(){
     options:{
       responsive:true,maintainAspectRatio:false,
       plugins:{legend:{position:'top',labels:{font:{size:11},boxWidth:14}},
-        tooltip:{callbacks:{label:c=>' '+fmtFull(c.parsed.y)}}},
+               tooltip:{callbacks:{label:c=>' '+fmtFull(c.parsed.y)}}},
       scales:{
         y:{ticks:{callback:v=>v>=1e8?`${(v/1e8).toFixed(1)}億`:v>=1e4?`${Math.round(v/1e4)}万`:v.toLocaleString()+'円',font:{size:10}},grid:{color:'#f3f4f6'}},
         x:{ticks:{font:{size:10}},grid:{display:false}}
@@ -916,7 +1102,6 @@ function renderHistChart(){
     }
   });
 }
-
 function renderSnapshotList(){
   const el=document.getElementById('snapshotList');
   if(!history.length){el.innerHTML='<div class="empty"><div class="ei">📂</div><p>まだ記録がありません</p></div>';return;}
@@ -947,7 +1132,13 @@ document.getElementById('iAmt').addEventListener('keydown',e=>{if(e.key==='Enter
 document.getElementById('iName').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('iAmt').focus();});
 document.getElementById('editModal').addEventListener('click',e=>{if(e.target===document.getElementById('editModal'))closeEdit();});
 document.getElementById('importModal').addEventListener('click',e=>{if(e.target===document.getElementById('importModal'))closeImport();});
+document.getElementById('settingsModal').addEventListener('click',e=>{if(e.target===document.getElementById('settingsModal'))closeSettings();});
 render();
+
+// GitHubトークンがあれば起動時に自動読み込み
+if(ghToken){
+  loadFromGist();
+}
 </script>
 </body>
 </html>
