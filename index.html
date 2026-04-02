@@ -492,8 +492,7 @@ const GIST_FILENAME = 'asset-manager-data.json';
 let ghToken  = localStorage.getItem('ghToken')  || '';
 let ghGistId = localStorage.getItem('ghGistId') || '';
 let syncTimer= null;
-let syncRequestTime = 0;
-let syncPollTimer   = null;
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzA8LSlXnL3pCVmNABlRtNXPmghovVVVI-Ti-oINurL-ziLEXZ-gaQ52TmK4Dpjq89f/exec';
 
 async function ghApi(method, path, body) {
   const res = await fetch('https://api.github.com' + path, {
@@ -596,73 +595,42 @@ async function manualSync() {
   closeSettings();
 }
 
-// ── スプレッドシートから更新 ────────────────
+// ── スプレッドシートから更新（Apps Script直接fetch）────────────────
 async function requestSpreadsheetSync() {
-  if (!ghToken) {
-    alert('GitHub連携が設定されていません。\n⚙️ GitHub連携 から設定してください。');
-    return;
-  }
   const btn = document.getElementById('updateBtn');
   if (btn) { btn.disabled = true; btn.textContent = '📊 更新中...'; }
+  const el = document.getElementById('syncStatus');
+  if (el) el.innerHTML = '<span style="color:#d97706;">📊 スプレッドシートから取得中...</span>';
   try {
-    if (!ghGistId) {
-      ghGistId = await findOrCreateGist();
-      localStorage.setItem('ghGistId', ghGistId);
+    const res = await fetch(APPS_SCRIPT_URL);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    for (let i = 0; i <= 15; i++) {
+      if (holdings[i] && data[i] !== undefined && data[i] !== null) {
+        holdings[i].amount = Number(data[i]) || 0;
+      }
     }
-    syncRequestTime = Date.now();
-    const data = { holdings, targets, history, syncRequest: syncRequestTime };
-    await ghApi('PATCH', `/gists/${ghGistId}`, {
-      files: { [GIST_FILENAME]: { content: JSON.stringify(data, null, 2) } }
-    });
-    const el = document.getElementById('syncStatus');
-    if (el) el.innerHTML = '<span style="color:#d97706;">📊 Coworkがスプレッドシートを読み込み中... (自動で完了)</span>';
-    clearTimeout(syncPollTimer);
-    syncPollTimer = setTimeout(pollSyncCompletion, 20000);
-  } catch(e) {
-    setSyncStatus('error', e.message);
-    if (btn) { btn.disabled = false; btn.textContent = '📊 更新'; }
-  }
-}
-
-async function pollSyncCompletion() {
-  if (!ghToken || !ghGistId || !syncRequestTime) return;
-  try {
-    const gist = await ghApi('GET', `/gists/${ghGistId}`);
-    const content = gist.files[GIST_FILENAME]?.content;
-    if (!content) { syncPollTimer = setTimeout(pollSyncCompletion, 20000); return; }
-    const data = JSON.parse(content);
-    if (data.syncComplete && data.syncComplete > syncRequestTime) {
-      if (Array.isArray(data.holdings)) holdings = data.holdings;
-      if (Array.isArray(data.targets))  targets  = data.targets;
-      if (Array.isArray(data.history))  history  = data.history;
-      localStorage.setItem('holdings3',    JSON.stringify(holdings));
-      localStorage.setItem('targets3',     JSON.stringify(targets));
-      localStorage.setItem('assetHistory', JSON.stringify(history));
-      render();
-      syncRequestTime = 0;
-      const cleanData = { holdings, targets, history };
+    localStorage.setItem('holdings3', JSON.stringify(holdings));
+    render();
+    if (ghToken) {
+      if (!ghGistId) {
+        ghGistId = await findOrCreateGist();
+        localStorage.setItem('ghGistId', ghGistId);
+      }
+      const saveData = { holdings, targets, history };
       await ghApi('PATCH', `/gists/${ghGistId}`, {
-        files: { [GIST_FILENAME]: { content: JSON.stringify(cleanData, null, 2) } }
+        files: { [GIST_FILENAME]: { content: JSON.stringify(saveData, null, 2) } }
       });
-      const now = new Date();
-      const t = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
-      const el = document.getElementById('syncStatus');
-      if (el) el.innerHTML = `<span style="color:#16a34a;">✅ スプレッドシートから更新完了 ${t}</span>`;
-      const btn = document.getElementById('updateBtn');
-      if (btn) { btn.disabled = false; btn.textContent = '📊 更新'; }
-      setTimeout(() => setSyncStatus('ok'), 8000);
-    } else if (data.syncRequest && Date.now() - data.syncRequest > 7200000) {
-      // Timed out after 2 hours
-      syncRequestTime = 0;
-      setSyncStatus('error', '更新タイムアウト');
-      const btn = document.getElementById('updateBtn');
-      if (btn) { btn.disabled = false; btn.textContent = '📊 更新'; }
-    } else {
-      syncPollTimer = setTimeout(pollSyncCompletion, 20000);
     }
+    const now = new Date();
+    const t = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+    if (el) el.innerHTML = `<span style="color:#16a34a;">✅ スプレッドシートから更新完了 ${t}</span>`;
+    setTimeout(() => setSyncStatus(ghToken ? 'ok' : 'none'), 8000);
   } catch(e) {
-    console.error('pollSyncCompletion:', e);
-    syncPollTimer = setTimeout(pollSyncCompletion, 30000);
+    console.error('requestSpreadsheetSync:', e);
+    setSyncStatus('error', e.message);
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '📊 更新'; }
   }
 }
 
