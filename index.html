@@ -492,7 +492,7 @@ const GIST_FILENAME = 'asset-manager-data.json';
 let ghToken  = localStorage.getItem('ghToken')  || '';
 let ghGistId = localStorage.getItem('ghGistId') || '';
 let syncTimer= null;
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzA8LSlXnL3pCVmNABlRtNXPmghovVVVI-Ti-oINurL-ziLEXZ-gaQ52TmK4Dpjq89f/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyU8GNsonMquypTzadjZ6GAlg3vsAVhw3yIc-BVi3CS6ZaSTeW147r4ZVC55UpwrHNk/exec';
 
 async function ghApi(method, path, body) {
   const res = await fetch('https://api.github.com' + path, {
