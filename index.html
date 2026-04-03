@@ -605,7 +605,7 @@ async function requestSpreadsheetSync() {
     const res = await fetch(APPS_SCRIPT_URL);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    for (let i = 0; i <= 15; i++) {
+    for (let i = 0; i <= 17; i++) {
       if (holdings[i] && data[i] !== undefined && data[i] !== null) {
         holdings[i].amount = Number(data[i]) || 0;
       }
