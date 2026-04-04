@@ -524,6 +524,8 @@ let chartView='major';
 let histView ='total';
 let filterOwner='all';
 let filterAcct ='all';
+let filterMajor='all';
+let filterSub  ='all';
 
 // ═══════════════════════════════════════
 // GITHUB GIST SYNC
@@ -775,6 +777,8 @@ function filteredHoldings(inclOnly){
     if(inclOnly&&!h.include)return false;
     if(filterOwner!=='all'&&(h.owner||'本人')!==filterOwner)return false;
     if(filterAcct!=='all'&&(h.acct||'other')!==filterAcct)return false;
+    if(filterMajor!=='all'&&(SUBS.find(s=>s.id===h.subId)||{majorId:-1}).majorId!==filterMajor)return false;
+    if(filterSub!=='all'&&h.subId!==filterSub)return false;
     return true;
   });
 }
@@ -787,7 +791,7 @@ function totalAll(){return filteredHoldings(false).reduce((s,h)=>s+h.amount,0);}
 function totalAlloc(){return filteredHoldings(true).reduce((s,h)=>s+h.amount,0);}
 function totalAllRaw(){return holdings.reduce((s,h)=>s+h.amount,0);}
 function totalAllocRaw(){return holdings.filter(h=>h.include).reduce((s,h)=>s+h.amount,0);}
-function isFiltered(){return filterOwner!=='all'||filterAcct!=='all';}
+function isFiltered(){return filterOwner!=='all'||filterAcct!=='all'||filterMajor!=='all'||filterSub!=='all';}
 
 // ═══════════════════════════════════════
 // PAGE / VIEW TABS
@@ -913,6 +917,8 @@ function exportCSV(){
 // ═══════════════════════════════════════
 function setFilterOwner(v){filterOwner=v;if(chart){chart.destroy();chart=null;}render();}
 function setFilterAcct(v){filterAcct=v;if(chart){chart.destroy();chart=null;}render();}
+function setFilterMajor(v){filterMajor=v;filterSub='all';if(chart){chart.destroy();chart=null;}render();}
+function setFilterSub(v){filterSub=v;if(chart){chart.destroy();chart=null;}render();}
 function renderFilterBar(){
   const owners=[...new Set(holdings.map(h=>h.owner||'本人'))];
   const accts=[...new Set(holdings.map(h=>h.acct||'other'))];
@@ -922,6 +928,12 @@ function renderFilterBar(){
   html+=`<div class="filter-sep"></div><span class="filter-label">口座：</span>
     <span class="filter-chip ${filterAcct==='all'?'active':''}" onclick="setFilterAcct('all')">全口座</span>`;
   for(const a of accts){html+=`<span class="filter-chip ${filterAcct===a?'active':''}" onclick="setFilterAcct('${a}')">${ACCT_ICONS[a]} ${ACCT_LABELS[a]}</span>`;}
+  // 大カテゴリ・中カテゴリ
+  html+=`<div class="filter-sep"></div><span class="filter-label">大カテゴリ：</span>\n    <span class="filter-chip ${filterMajor==='all'?'active':''}" onclick="setFilterMajor('all')">全て</span>`;
+  for(const m of MAJORS){html+=`<span class="filter-chip ${filterMajor===m.id?'active':''}" onclick="setFilterMajor(${m.id})">${m.icon} ${m.name}</span>`;}
+  const visSubs=filterMajor==='all'?SUBS:SUBS.filter(s=>s.majorId===filterMajor);
+  html+=`<div class="filter-sep"></div><span class="filter-label">中カテゴリ：</span>\n    <span class="filter-chip ${filterSub==='all'?'active':''}" onclick="setFilterSub('all')">全て</span>`;
+  for(const s of visSubs){html+=`<span class="filter-chip ${filterSub===s.id?'active':''}" onclick="setFilterSub(${s.id})">${s.icon} ${s.name}</span>`;}
   document.getElementById('filterBar').innerHTML=html;
 }
 
