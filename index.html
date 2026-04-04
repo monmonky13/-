@@ -761,6 +761,7 @@ function save() {
   localStorage.setItem('targets3',    JSON.stringify(targets));
   localStorage.setItem('assetHistory',JSON.stringify(history));
   schedulePush();
+  autoSyncToGist();
 }
 
 // ═══════════════════════════════════════
@@ -1208,6 +1209,27 @@ function renderSnapshotList(){
 }
 
 // ═══════════════════════════════════════
+
+// ═══════════════════════════════════════
+// AUTO SYNC（自動同期）
+// ═══════════════════════════════════════
+let _autoSyncTimer = null;
+function autoSyncToGist() {
+  if (!ghToken) return;
+  clearTimeout(_autoSyncTimer);
+  _autoSyncTimer = setTimeout(async () => {
+    try {
+      await saveToGist();
+    } catch(e) {}
+  }, 1500);
+}
+// タブがアクティブになったとき自動で最新データを読み込む
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && ghToken) {
+    loadFromGist();
+  }
+});
+
 // INIT
 // ═══════════════════════════════════════
 updateSubSelect();
