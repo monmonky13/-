@@ -10,14 +10,15 @@
   --primary:#2563eb;--pdark:#1d4ed8;--success:#16a34a;--danger:#dc2626;
   --g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g300:#d1d5db;
   --g400:#9ca3af;--g500:#6b7280;--g600:#4b5563;--g700:#374151;--g900:#111827;
-  --shadow:0 1px 3px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06);
-}
+  --shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.06);
+  --shadow-lg:0 10px 15px -3px rgba(0,0,0,.15),0 4px 6px -4px rgba(0,0,0,.1);
+  --c1:#6366f1;--c2:#ec4899;--c3:#f59e0b;--c4:#10b981;--c5:#3b82f6;}
 *{box-sizing:border-box;margin:0;padding:0;}
 <body>
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans','Meiryo',sans-serif;background:var(--g100);color:var(--g900);min-height:100vh;}
-header{background:#fff;border-bottom:1px solid var(--g200);padding:13px 22px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:200;box-shadow:var(--shadow);}
-header h1{font-size:18px;font-weight:700;}
-header .sub{font-size:11px;color:var(--g500);margin-top:1px;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Hiragino Sans','Meiryo',sans-serif;background:#eef2ff;color:var(--g900);min-height:100vh;}
+header{background:linear-gradient(135deg,#1e3a5f 0%,#0d2137 100%);border-bottom:none;padding:13px 22px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 16px rgba(0,0,0,.3);}
+header h1{font-size:18px;font-weight:700;color:#fff;}
+header .sub{font-size:11px;color:rgba(255,255,255,.6);margin-top:2px;}
 .icon-h{font-size:24px;}
 .header-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
 .sync-status{font-size:11px;white-space:nowrap;}
@@ -34,11 +35,11 @@ header .sub{font-size:11px;color:var(--g500);margin-top:1px;}
 .page-content{display:none;}
 .page-content.active{display:block;}
 /* ── Cards ── */
-.card{background:#fff;border-radius:11px;padding:16px;box-shadow:var(--shadow);}
+.card{background:#fff;border-radius:16px;padding:16px;box-shadow:var(--shadow-lg);}
 .card-title{font-size:13px;font-weight:700;color:var(--g700);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
-.sumcard{background:#fff;border-radius:11px;padding:13px 16px;box-shadow:var(--shadow);}
-.sum-label{font-size:10px;color:var(--g500);font-weight:500;margin-bottom:2px;}
-.sum-value{font-size:18px;font-weight:700;}
+.sumcard{background:#fff;border-radius:16px;padding:14px 16px;box-shadow:var(--shadow);border-top:4px solid var(--primary);transition:transform .15s,box-shadow .15s;}
+.sum-label{font-size:10px;color:var(--g500);font-weight:600;margin-bottom:3px;text-transform:uppercase;letter-spacing:.3px;}
+.sum-value{font-size:20px;font-weight:700;color:var(--g900);}
 .sum-sub{font-size:10px;color:var(--g400);margin-top:2px;}
 .green{color:var(--success);}.red{color:var(--danger);}
 .flex-between{display:flex;justify-content:space-between;align-items:center;}
@@ -67,11 +68,11 @@ tr.excluded td{opacity:.38;}
 .toggle-pill button{flex:1;padding:4px 9px;border:none;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;background:none;color:var(--g500);transition:all .15s;}
 .toggle-pill button.active{background:#fff;color:var(--g900);box-shadow:var(--shadow);}
 /* ── Filter bar ── */
-.filter-bar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;align-items:center;}
-.filter-label{font-size:10px;font-weight:600;color:var(--g500);}
-.filter-chip{padding:3px 9px;border-radius:9999px;font-size:10px;font-weight:600;cursor:pointer;border:1.5px solid var(--g200);background:#fff;color:var(--g600);transition:all .15s;}
-.filter-chip.active{border-color:var(--primary);background:#eff6ff;color:var(--primary);}
-.filter-sep{width:1px;height:16px;background:var(--g200);}
+.filter-bar{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
+.filter-label{font-size:10px;font-weight:700;color:var(--g500);min-width:52px;flex-shrink:0;letter-spacing:.3px;}
+.filter-chip{padding:4px 10px;border-radius:9999px;font-size:10px;font-weight:600;cursor:pointer;border:1.5px solid var(--g200);background:#fff;color:var(--g600);transition:all .15s;white-space:nowrap;}
+.filter-chip.active{border-color:var(--primary);background:var(--primary);color:#fff;box-shadow:0 2px 6px rgba(37,99,235,.35);}
+.filter-sep{display:none;}
 /* ── Toggle switch ── */
 .tog-wrap{display:flex;align-items:center;gap:5px;}
 .tog{position:relative;width:32px;height:18px;flex-shrink:0;}
@@ -201,6 +202,11 @@ td{padding:5px 6px;}
 .modal{width:100%!important;max-width:100%!important;border-radius:16px 16px 0 0!important;margin:0!important;padding:20px 16px!important;max-height:90vh;overflow-y:auto;}
 .chart-area-hist{height:180px!important;}
 }
+.filter-row{display:flex;flex-wrap:wrap;gap:4px;align-items:center;}
+.sumcard:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+.sync-status{font-size:11px;color:rgba(255,255,255,.65);}
+.icon-h{font-size:22px;}
 </style>
 </head>
 <body>
@@ -920,26 +926,19 @@ function setFilterAcct(v){filterAcct=v;if(chart){chart.destroy();chart=null;}ren
 function setFilterMajor(v){filterMajor=v;filterSub='all';if(chart){chart.destroy();chart=null;}render();}
 function setFilterSub(v){filterSub=v;if(chart){chart.destroy();chart=null;}render();}
 function renderFilterBar(){
-  const owners=[...new Set(holdings.map(h=>h.owner||'本人'))];
+  const owners=[...new Set(holdings.map(h=>h.owner||'全体'))];
   const accts=[...new Set(holdings.map(h=>h.acct||'other'))];
-  let html=`<span class="filter-label">名義：</span>
-    <span class="filter-chip ${filterOwner==='all'?'active':''}" onclick="setFilterOwner('all')">全員</span>`;
-  for(const o of owners){html+=`<span class="filter-chip ${filterOwner===o?'active':''}" onclick="setFilterOwner('${esc(o)}')">${esc(o)}</span>`;}
-  html+=`<div class="filter-sep"></div><span class="filter-label">口座：</span>
-    <span class="filter-chip ${filterAcct==='all'?'active':''}" onclick="setFilterAcct('all')">全口座</span>`;
-  for(const a of accts){html+=`<span class="filter-chip ${filterAcct===a?'active':''}" onclick="setFilterAcct('${a}')">${ACCT_ICONS[a]} ${ACCT_LABELS[a]}</span>`;}
-  // 大カテゴリ・中カテゴリ
-  html+=`<div class="filter-sep"></div><span class="filter-label">大カテゴリ：</span>\n    <span class="filter-chip ${filterMajor==='all'?'active':''}" onclick="setFilterMajor('all')">全て</span>`;
-  for(const m of MAJORS){html+=`<span class="filter-chip ${filterMajor===m.id?'active':''}" onclick="setFilterMajor(${m.id})">${m.icon} ${m.name}</span>`;}
   const visSubs=filterMajor==='all'?SUBS:SUBS.filter(s=>s.majorId===filterMajor);
-  html+=`<div class="filter-sep"></div><span class="filter-label">中カテゴリ：</span>\n    <span class="filter-chip ${filterSub==='all'?'active':''}" onclick="setFilterSub('all')">全て</span>`;
-  for(const s of visSubs){html+=`<span class="filter-chip ${filterSub===s.id?'active':''}" onclick="setFilterSub(${s.id})">${s.icon} ${s.name}</span>`;}
-  document.getElementById('filterBar').innerHTML=html;
+  let ownerH=`<span class="filter-chip ${filterOwner==='all'?'active':''}" onclick="setFilterOwner('all')">すべて</span>`;
+  for(const o of owners){ownerH+=`<span class="filter-chip ${filterOwner===o?'active':''}" onclick="setFilterOwner('${o}')">${o}</span>`;}
+  let acctH=`<span class="filter-chip ${filterAcct==='all'?'active':''}" onclick="setFilterAcct('all')">すべて</span>`;
+  for(const a of accts){acctH+=`<span class="filter-chip ${filterAcct===a?'active':''}" onclick="setFilterAcct('${a}')">${ACCT_ICONS[a]||''}${ACCT_LABELS[a]||a}</span>`;}
+  let majorH=`<span class="filter-chip ${filterMajor==='all'?'active':''}" onclick="setFilterMajor('all')">すべて</span>`;
+  for(const m of MAJORS){majorH+=`<span class="filter-chip ${filterMajor===m.id?'active':''}" onclick="setFilterMajor(${m.id})">${m.icon} ${m.name}</span>`;}
+  let subH=`<span class="filter-chip ${filterSub==='all'?'active':''}" onclick="setFilterSub('all')">すべて</span>`;
+  for(const s of visSubs){subH+=`<span class="filter-chip ${filterSub===s.id?'active':''}" onclick="setFilterSub(${s.id})">${s.icon} ${s.name}</span>`;}
+  document.getElementById('filterBar').innerHTML=`<div class="filter-row"><span class="filter-label">名義</span>${ownerH}</div><div class="filter-row"><span class="filter-label">口座</span>${acctH}</div><div class="filter-row"><span class="filter-label">大カテゴリ</span>${majorH}</div><div class="filter-row"><span class="filter-label">中カテゴリ</span>${subH}</div>`;
 }
-
-// ═══════════════════════════════════════
-// RENDER
-// ═══════════════════════════════════════
 function render(){renderSummary();renderFilterBar();renderHoldings();renderChart();renderTargets();renderRebalance();}
 
 function renderSummary(){
