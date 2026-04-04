@@ -1214,22 +1214,40 @@ function renderSnapshotList(){
 // AUTO SYNC（自動同期）
 // ═══════════════════════════════════════
 let _autoSyncTimer = null;
+let _lastGistUpdatedAt = null;
+let _pollTimer = null;
 function autoSyncToGist() {
   if (!ghToken) return;
   clearTimeout(_autoSyncTimer);
   _autoSyncTimer = setTimeout(async () => {
     try {
       await saveToGist();
+      if (ghGistId) {
+        const g = await ghApi('GET', `/gists/${ghGistId}`);
+        _lastGistUpdatedAt = g.updated_at;
+      }
     } catch(e) {}
   }, 1500);
 }
-// タブがアクティブになったとき自動で最新データを読み込む
+async function pollGistUpdate() {
+  if (!ghToken || !ghGistId) return;
+  try {
+    const g = await ghApi('GET', `/gists/${ghGistId}`);
+    if (_lastGistUpdatedAt && g.updated_at !== _lastGistUpdatedAt) {
+      await loadFromGist();
+    }
+    _lastGistUpdatedAt = g.updated_at;
+  } catch(e) {}
+}
+function startGistPolling() {
+  if (_pollTimer) clearInterval(_pollTimer);
+  _pollTimer = setInterval(pollGistUpdate, 15000);
+}
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible' && ghToken) {
     loadFromGist();
   }
 });
-
 // INIT
 // ═══════════════════════════════════════
 updateSubSelect();
@@ -1243,6 +1261,8 @@ render();
 // GitHubトークンがあれば起動時に自動読み込み
 if(ghToken){
   loadFromGist();
+  pollGistUpdate();
+  startGistPolling();
 }
 </script>
 </body>
