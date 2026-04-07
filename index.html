@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>資産配分マネージャー</title>
+<title>è³ç£éåããã¼ã¸ã£ã¼</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root{
@@ -28,13 +28,13 @@ header .sub{font-size:11px;color:rgba(255,255,255,.6);margin-top:2px;}
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
 @media(max-width:1050px){.grid2{grid-template-columns:1fr;}}
 @media(max-width:700px){.grid4{grid-template-columns:1fr 1fr;}}
-/* ── Page tabs ── */
+/* ââ Page tabs ââ */
 .page-tabs{display:flex;gap:0;border-bottom:2px solid var(--g200);margin-bottom:18px;}
 .page-tab{padding:9px 20px;font-size:13px;font-weight:600;color:var(--g500);cursor:pointer;border:none;background:none;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .15s;}
 .page-tab.active{color:var(--primary);border-bottom-color:var(--primary);}
 .page-content{display:none;}
 .page-content.active{display:block;}
-/* ── Cards ── */
+/* ââ Cards ââ */
 .card{background:#fff;border-radius:16px;padding:16px;box-shadow:var(--shadow-lg);}
 .card-title{font-size:13px;font-weight:700;color:var(--g700);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
 .sumcard{background:#fff;border-radius:16px;padding:14px 16px;box-shadow:var(--shadow);border-top:4px solid var(--primary);transition:transform .15s,box-shadow .15s;}
@@ -43,7 +43,7 @@ header .sub{font-size:11px;color:rgba(255,255,255,.6);margin-top:2px;}
 .sum-sub{font-size:10px;color:var(--g400);margin-top:2px;}
 .green{color:var(--success);}.red{color:var(--danger);}
 .flex-between{display:flex;justify-content:space-between;align-items:center;}
-/* ── Table ── */
+/* ââ Table ââ */
 .table-wrap{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;font-size:11px;}
 th{text-align:left;padding:6px 8px;background:var(--g50);color:var(--g500);font-size:10px;font-weight:600;border-bottom:1px solid var(--g200);white-space:nowrap;}
@@ -51,12 +51,12 @@ td{padding:7px 8px;border-bottom:1px solid var(--g100);vertical-align:middle;}
 tr:last-child td{border-bottom:none;}
 tr:hover td{background:var(--g50);}
 tr.excluded td{opacity:.38;}
-/* ── Badges ── */
+/* ââ Badges ââ */
 .badge{display:inline-block;padding:2px 6px;border-radius:9999px;font-size:10px;font-weight:600;white-space:nowrap;}
 .maj-0{background:#dbeafe;color:#1d4ed8;}.maj-1{background:#dcfce7;color:#15803d;}.maj-2{background:#fef3c7;color:#92400e;}
 .acct-nisa{background:#d1fae5;color:#065f46;}.acct-oldnisa{background:#e0f2fe;color:#0369a1;}
 .acct-tokutei{background:#ede9fe;color:#5b21b6;}.acct-other{background:var(--g100);color:var(--g600);}
-/* ── Buttons ── */
+/* ââ Buttons ââ */
 .btn{display:inline-flex;align-items:center;gap:4px;padding:7px 13px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all .15s;}
 .btn-primary{background:var(--primary);color:#fff;}.btn-primary:hover{background:var(--pdark);}
 .btn-secondary{background:var(--g100);color:var(--g700);}.btn-secondary:hover{background:var(--g200);}
@@ -67,13 +67,13 @@ tr.excluded td{opacity:.38;}
 .toggle-pill{display:flex;background:var(--g100);border-radius:7px;padding:3px;gap:2px;}
 .toggle-pill button{flex:1;padding:4px 9px;border:none;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;background:none;color:var(--g500);transition:all .15s;}
 .toggle-pill button.active{background:#fff;color:var(--g900);box-shadow:var(--shadow);}
-/* ── Filter bar ── */
+/* ââ Filter bar ââ */
 .filter-bar{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
 .filter-label{font-size:10px;font-weight:700;color:var(--g500);min-width:52px;flex-shrink:0;letter-spacing:.3px;}
 .filter-chip{padding:4px 10px;border-radius:9999px;font-size:10px;font-weight:600;cursor:pointer;border:1.5px solid var(--g200);background:#fff;color:var(--g600);transition:all .15s;white-space:nowrap;}
 .filter-chip.active{border-color:var(--primary);background:var(--primary);color:#fff;box-shadow:0 2px 6px rgba(37,99,235,.35);}
 .filter-sep{display:none;}
-/* ── Toggle switch ── */
+/* ââ Toggle switch ââ */
 .tog-wrap{display:flex;align-items:center;gap:5px;}
 .tog{position:relative;width:32px;height:18px;flex-shrink:0;}
 .tog input{opacity:0;width:0;height:0;}
@@ -82,13 +82,13 @@ tr.excluded td{opacity:.38;}
 .tog input:checked+.tog-sl{background:var(--primary);}
 .tog input:checked+.tog-sl:before{transform:translateX(14px);}
 .tog-label{font-size:11px;color:var(--g600);white-space:nowrap;}
-/* ── Form ── */
+/* ââ Form ââ */
 .form-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:9px;}
 .fg{display:flex;flex-direction:column;gap:3px;flex:1;min-width:100px;}
 .fg label{font-size:10px;font-weight:600;color:var(--g700);}
 .fg input,.fg select{padding:6px 8px;border:1.5px solid var(--g200);border-radius:6px;font-size:12px;outline:none;transition:border-color .15s;background:#fff;height:32px;}
 .fg input:focus,.fg select:focus{border-color:var(--primary);}
-/* ── Chart ── */
+/* ââ Chart ââ */
 .chart-container{position:relative;max-width:240px;margin:0 auto;}
 .chart-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;}
 .chart-center .ctotal{font-size:10px;color:var(--g500);}
@@ -99,7 +99,7 @@ tr.excluded td{opacity:.38;}
 .lname{flex:1;color:var(--g700);}
 .lpct{font-weight:700;min-width:34px;text-align:right;}
 .lamt{color:var(--g500);font-size:10px;min-width:80px;text-align:right;}
-/* ── Target allocation ── */
+/* ââ Target allocation ââ */
 .major-group{margin-bottom:8px;border:1px solid var(--g200);border-radius:8px;overflow:hidden;}
 .major-header{display:flex;align-items:center;gap:7px;padding:8px 10px;background:var(--g50);font-size:11px;font-weight:700;}
 .mhdot{width:9px;height:9px;border-radius:2px;}
@@ -118,7 +118,7 @@ tr.excluded td{opacity:.38;}
 .tsum{display:flex;justify-content:flex-end;margin-top:6px;font-size:11px;}
 .tsum span{font-weight:700;}
 .tsum.ok span{color:var(--success);}.tsum.err span{color:var(--danger);}
-/* ── Rebalance ── */
+/* ââ Rebalance ââ */
 .rb-major{margin-bottom:6px;}
 .rb-major-head{display:flex;gap:7px;padding:7px 9px;background:var(--g50);border-radius:7px 7px 0 0;border:1px solid var(--g200);border-bottom:none;font-size:11px;font-weight:700;align-items:center;}
 .rh-dot{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
@@ -129,7 +129,7 @@ tr.excluded td{opacity:.38;}
 .rname{font-weight:600;display:flex;align-items:center;gap:4px;}
 .ramount{text-align:right;font-family:'SF Mono','Menlo','Consolas',monospace;}
 .buy{color:var(--success);font-weight:700;}.sell{color:var(--danger);font-weight:700;}.neutral{color:var(--g400);}
-/* ── History ── */
+/* ââ History ââ */
 .history-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px;}
 .snapshot-list{display:flex;flex-direction:column;gap:6px;margin-top:12px;}
 .snapshot-item{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--g50);border-radius:7px;border:1px solid var(--g200);font-size:12px;}
@@ -138,11 +138,11 @@ tr.excluded td{opacity:.38;}
 .snapshot-breakdown{flex:1;display:flex;gap:10px;flex-wrap:wrap;}
 .snapshot-maj{font-size:10px;color:var(--g500);}
 .chart-area-hist{position:relative;height:240px;margin-bottom:8px;}
-/* ── Empty ── */
+/* ââ Empty ââ */
 .empty{text-align:center;padding:28px 16px;color:var(--g500);}
 .empty .ei{font-size:32px;margin-bottom:8px;}
 .empty p{font-size:12px;}
-/* ── Modal ── */
+/* ââ Modal ââ */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;align-items:center;justify-content:center;padding:16px;}
 .modal-overlay.open{display:flex;}
 .modal{background:#fff;border-radius:12px;padding:20px;width:100%;max-width:520px;box-shadow:0 20px 60px rgba(0,0,0,.2);max-height:90vh;overflow-y:auto;}
@@ -152,7 +152,7 @@ tr.excluded td{opacity:.38;}
 .note-warn{background:#fefce8;border:1px solid #fde047;border-radius:6px;padding:8px 12px;font-size:11px;color:#854d0e;margin-top:9px;}
 small{color:var(--g500);font-size:10px;}
 .excl-note{font-size:10px;color:var(--g400);font-style:italic;}
-/* ── Token input ── */
+/* ââ Token input ââ */
 .token-input-wrap{position:relative;display:flex;align-items:center;}
 .token-input-wrap input{flex:1;font-family:'SF Mono','Menlo','Consolas',monospace;font-size:11px;padding-right:70px;}
 .token-show-btn{position:absolute;right:6px;font-size:10px;padding:2px 6px;border:1px solid var(--g200);border-radius:4px;background:#fff;cursor:pointer;color:var(--g500);}
@@ -162,7 +162,7 @@ small{color:var(--g500);font-size:10px;}
 .step a{color:var(--primary);text-decoration:none;}
 .step a:hover{text-decoration:underline;}
 
-/* ===== iPhone / スマホ対応 ===== */
+/* ===== iPhone / ã¹ããå¯¾å¿ ===== */
 @media(max-width:480px){
 body{overflow-x:hidden;padding-bottom:env(safe-area-inset-bottom,0px);}
 header{padding:10px 14px;padding-top:max(10px,env(safe-area-inset-top,0px));}
@@ -228,109 +228,124 @@ body[data-theme="mint"] .sumcard:nth-child(3){border-top-color:#84cc16;}
 body[data-theme="mint"] .sumcard:nth-child(4){border-top-color:#f59e0b;}
 body[data-theme="mint"] .filter-chip.active{background:linear-gradient(135deg,#059669,#0284c7);border-color:#059669;}
 body[data-theme="mint"] .card{border-top:3px solid #059669;}
+
+.collapsible-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:10px 16px;background:#fff;border-radius:16px;font-weight:700;font-size:13px;color:var(--g700);box-shadow:var(--shadow-lg);transition:all .15s;margin-bottom:16px;user-select:none;}
+.collapsible-toggle:hover{box-shadow:var(--shadow-lg);background:var(--g50);}
+.collapsible-toggle .arrow{font-size:14px;transition:transform .3s;color:var(--g400);}
+.collapsible-toggle.open .arrow{transform:rotate(180deg);}
+.collapsible-body{max-height:0;overflow:hidden;transition:max-height .3s ease-out,opacity .3s;opacity:0;}
+.collapsible-body.open{max-height:500px;opacity:1;}
+body[data-theme="colorful"] .collapsible-toggle{border-top:3px solid #7c3aed;}
+body[data-theme="mint"] .collapsible-toggle{border-top:3px solid #059669;}
 </style>
 </head>
 <body>
 
 <header>
-  <span class="icon-h">📊</span>
-  <div><h1>資産配分マネージャー</h1><div class="sub">保有資産の入力・可視化・リバランス管理</div></div>
+  <span class="icon-h">ð</span>
+  <div><h1>è³ç£éåããã¼ã¸ã£ã¼</h1><div class="sub">ä¿æè³ç£ã®å¥åã»å¯è¦åã»ãªãã©ã³ã¹ç®¡ç</div></div>
   <div class="header-right">
-    <div class="sync-status" id="syncStatus"><span style="color:var(--g400);">— GitHub未連携</span></div>
-    <button class="btn btn-primary btn-sm" id="updateBtn" onclick="requestSpreadsheetSync()" title="スプレッドシートから最新の評価額を取得">📊 更新</button>
-    <button class="btn btn-secondary btn-sm" onclick="openSettings()">⚙️ GitHub連携</button>
+    <div class="sync-status" id="syncStatus"><span style="color:var(--g400);">â GitHubæªé£æº</span></div>
+    <button class="btn btn-primary btn-sm" id="updateBtn" onclick="requestSpreadsheetSync()" title="ã¹ãã¬ããã·ã¼ãããææ°ã®è©ä¾¡é¡ãåå¾">ð æ´æ°</button>
+    <button class="btn btn-secondary btn-sm" onclick="openSettings()">âï¸ GitHubé£æº</button>
   </div>
-<div class="theme-switcher" title="テーマ切り替え">
-    <span class="theme-dot active" data-t="dashboard" style="background:linear-gradient(135deg,#1e3a5f,#0d2137)" onclick="setTheme('dashboard')" title="ダッシュボード"></span>
-    <span class="theme-dot" data-t="colorful" style="background:linear-gradient(135deg,#7c3aed,#db2777)" onclick="setTheme('colorful')" title="カラフルポップ"></span>
-    <span class="theme-dot" data-t="mint" style="background:linear-gradient(135deg,#059669,#0284c7)" onclick="setTheme('mint')" title="ミント"></span>
+<div class="theme-switcher" title="ãã¼ãåãæ¿ã">
+    <span class="theme-dot active" data-t="dashboard" style="background:linear-gradient(135deg,#1e3a5f,#0d2137)" onclick="setTheme('dashboard')" title="ããã·ã¥ãã¼ã"></span>
+    <span class="theme-dot" data-t="colorful" style="background:linear-gradient(135deg,#7c3aed,#db2777)" onclick="setTheme('colorful')" title="ã«ã©ãã«ããã"></span>
+    <span class="theme-dot" data-t="mint" style="background:linear-gradient(135deg,#059669,#0284c7)" onclick="setTheme('mint')" title="ãã³ã"></span>
   </div></header>
 
 <div class="container">
   <!-- Page tabs -->
   <div class="page-tabs">
-    <button class="page-tab active" onclick="showPage('current')">📊 現在の状況</button>
-    <button class="page-tab" onclick="showPage('history')">📈 推移グラフ</button>
+    <button class="page-tab active" onclick="showPage('current')">ð ç¾å¨ã®ç¶æ³</button>
+    <button class="page-tab" onclick="showPage('history')">ð æ¨ç§»ã°ã©ã</button>
   </div>
 
-  <!-- ═══ PAGE: 現在の状況 ═══ -->
+  <!-- âââ PAGE: ç¾å¨ã®ç¶æ³ âââ -->
   <div class="page-content active" id="page-current">
     <!-- Summary -->
     <div class="grid4 gap">
-      <div class="sumcard"><div class="sum-label">総資産（全口座）</div><div class="sum-value" id="sTotal">¥0</div></div>
-      <div class="sumcard"><div class="sum-label">配分計算対象資産</div><div class="sum-value" id="sAlloc">¥0</div><div class="sum-sub" id="sAllocNote"></div></div>
-      <div class="sumcard"><div class="sum-label">登録銘柄数</div><div class="sum-value" id="sCount">0 件</div></div>
-      <div class="sumcard"><div class="sum-label">目標との最大乖離</div><div class="sum-value" id="sDev">—</div></div>
+      <div class="sumcard"><div class="sum-label">ç·è³ç£ï¼å¨å£åº§ï¼</div><div class="sum-value" id="sTotal">Â¥0</div></div>
+      <div class="sumcard"><div class="sum-label">éåè¨ç®å¯¾è±¡è³ç£</div><div class="sum-value" id="sAlloc">Â¥0</div><div class="sum-sub" id="sAllocNote"></div></div>
+      <div class="sumcard"><div class="sum-label">ç»é²éææ°</div><div class="sum-value" id="sCount">0 ä»¶</div></div>
+      <div class="sumcard"><div class="sum-label">ç®æ¨ã¨ã®æå¤§ä¹é¢</div><div class="sum-value" id="sDev">â</div></div>
     </div>
     <!-- Main grid -->
     <div class="grid2 gap">
       <!-- Left -->
       <div style="display:flex;flex-direction:column;gap:16px;">
         <!-- Add form -->
+                <div class="collapsible-toggle" id="addFormToggle" onclick="toggleAddForm()">
+          <span>➕ 鋘柄・資産を追加</span><span class="arrow">▼</span>
+        </div>
+        <div class="collapsible-body" id="addFormBody">
         <div class="card">
-          <div class="card-title">➕ 銘柄・資産を追加</div>
+          <div class="card-title">â éæã»è³ç£ãè¿½å </div>
+
           <div class="form-row">
             <div class="fg" style="flex:3;min-width:180px;">
-              <label>銘柄名・名称</label>
-              <input id="iName" type="text" placeholder="例：eMAXIS Slim 全世界株式" maxlength="60">
+              <label>éæåã»åç§°</label>
+              <input id="iName" type="text" placeholder="ä¾ï¼eMAXIS Slim å¨ä¸çæ ªå¼" maxlength="60">
             </div>
           </div>
           <div class="form-row">
             <div class="fg" style="min-width:120px;">
-              <label>大カテゴリー</label>
+              <label>å¤§ã«ãã´ãªã¼</label>
               <select id="iMaj" onchange="updateSubSelect()">
-                <option value="0">📈 株式/投資信託</option>
-                <option value="1">💴 現金/債券</option>
-                <option value="2">🥇 コモディティ</option>
+                <option value="0">ð æ ªå¼/æè³ä¿¡è¨</option>
+                <option value="1">ð´ ç¾é/åµå¸</option>
+                <option value="2">ð¥ ã³ã¢ãã£ãã£</option>
               </select>
             </div>
             <div class="fg" style="min-width:150px;">
-              <label>中カテゴリー</label>
+              <label>ä¸­ã«ãã´ãªã¼</label>
               <select id="iSub"></select>
             </div>
             <div class="fg" style="min-width:110px;">
-              <label>評価額（円）</label>
-              <input id="iAmt" type="number" placeholder="例：1000000" min="0" step="1">
+              <label>è©ä¾¡é¡ï¼åï¼</label>
+              <input id="iAmt" type="number" placeholder="ä¾ï¼1000000" min="0" step="1">
             </div>
           </div>
           <div class="form-row" style="align-items:flex-end;">
             <div class="fg" style="min-width:100px;">
-              <label>① 口座名義</label>
+              <label>â  å£åº§åç¾©</label>
               <select id="iOwner">
-                <option>本人</option><option>妻</option><option>長女</option><option>長男</option><option>次男</option>
+                <option>æ¬äºº</option><option>å¦»</option><option>é·å¥³</option><option>é·ç·</option><option>æ¬¡ç·</option>
               </select>
             </div>
             <div class="fg" style="min-width:110px;">
-              <label>② 口座種類</label>
+              <label>â¡ å£åº§ç¨®é¡</label>
               <select id="iAcct">
-                <option value="nisa">🌱 NISA</option>
-                <option value="oldnisa">📘 旧NISA</option>
-                <option value="tokutei">🏦 特定口座</option>
-                <option value="other">📂 その他</option>
+                <option value="nisa">ð± NISA</option>
+                <option value="oldnisa">ð æ§NISA</option>
+                <option value="tokutei">ð¦ ç¹å®å£åº§</option>
+                <option value="other">ð ãã®ä»</option>
               </select>
             </div>
             <div class="fg" style="min-width:140px;">
-              <label>③ 配分計算に含める</label>
+              <label>â¢ éåè¨ç®ã«å«ãã</label>
               <div style="display:flex;align-items:center;height:32px;">
                 <label class="tog"><input type="checkbox" id="iIncl" checked><span class="tog-sl"></span></label>
-                <span style="margin-left:5px;font-size:11px;color:var(--g600);">含める</span>
+                <span style="margin-left:5px;font-size:11px;color:var(--g600);">å«ãã</span>
               </div>
             </div>
-            <div style="flex:0;"><button class="btn btn-primary" onclick="addHolding()">+ 追加</button></div>
+            <div style="flex:0;"><button class="btn btn-primary" onclick="addHolding()">+ è¿½å </button></div>
           </div>
+        </div>        </div>
         </div>
         <!-- Holdings list -->
         <div class="card">
           <div class="flex-between" style="margin-bottom:10px;">
-            <div class="card-title" style="margin-bottom:0;">📋 保有一覧</div>
+            <div class="card-title" style="margin-bottom:0;">ð ä¿æä¸è¦§</div>
             <div style="display:flex;gap:6px;">
-              <button class="btn btn-success btn-sm" onclick="exportCSV()">📥 CSV出力</button>
-              <button class="btn btn-secondary btn-sm" onclick="openImportModal()">📤 まとめて入力</button>
+              <button class="btn btn-success btn-sm" onclick="exportCSV()">ð¥ CSVåºå</button>
+              <button class="btn btn-secondary btn-sm" onclick="openImportModal()">ð¤ ã¾ã¨ãã¦å¥å</button>
             </div>
           </div>
           <div class="filter-bar" id="filterBar"></div>
           <div class="table-wrap" id="holdWrap">
-            <div class="empty"><div class="ei">💼</div><p>銘柄をまだ登録していません</p></div>
+            <div class="empty"><div class="ei">ð¼</div><p>éæãã¾ã ç»é²ãã¦ãã¾ãã</p></div>
           </div>
         </div>
       </div>
@@ -339,19 +354,19 @@ body[data-theme="mint"] .card{border-top:3px solid #059669;}
         <!-- Chart -->
         <div class="card">
           <div class="flex-between" style="margin-bottom:10px;">
-            <div class="card-title" style="margin-bottom:0;">🍩 現在の資産配分</div>
+            <div class="card-title" style="margin-bottom:0;">ð© ç¾å¨ã®è³ç£éå</div>
             <div class="toggle-pill">
-              <button id="btnMaj" class="active" onclick="setChartView('major')">大カテ</button>
-              <button id="btnSub" onclick="setChartView('sub')">中カテ</button>
+              <button id="btnMaj" class="active" onclick="setChartView('major')">å¤§ã«ã</button>
+              <button id="btnSub" onclick="setChartView('sub')">ä¸­ã«ã</button>
             </div>
           </div>
           <div id="chartArea">
-            <div class="empty"><div class="ei">📊</div><p>計算対象の銘柄を追加するとグラフが表示されます</p></div>
+            <div class="empty"><div class="ei">ð</div><p>è¨ç®å¯¾è±¡ã®éæãè¿½å ããã¨ã°ã©ããè¡¨ç¤ºããã¾ã</p></div>
           </div>
         </div>
         <!-- Target allocation -->
         <div class="card">
-          <div class="card-title">🎯 目標配分（中カテゴリー別）</div>
+          <div class="card-title">ð¯ ç®æ¨éåï¼ä¸­ã«ãã´ãªã¼å¥ï¼</div>
           <div id="targetArea"></div>
           <div class="tsum" id="tsum"></div>
         </div>
@@ -359,32 +374,32 @@ body[data-theme="mint"] .card{border-top:3px solid #059669;}
     </div>
     <!-- Rebalance -->
     <div class="card gap">
-      <div class="card-title">⚖️ リバランス計算<small style="margin-left:6px;font-weight:400;">（配分計算対象のみ）</small></div>
-      <div id="rbArea"><div class="empty"><div class="ei">⚖️</div><p>銘柄を追加し目標配分を設定するとリバランス計算が表示されます</p></div></div>
+      <div class="card-title">âï¸ ãªãã©ã³ã¹è¨ç®<small style="margin-left:6px;font-weight:400;">ï¼éåè¨ç®å¯¾è±¡ã®ã¿ï¼</small></div>
+      <div id="rbArea"><div class="empty"><div class="ei">âï¸</div><p>éæãè¿½å ãç®æ¨éåãè¨­å®ããã¨ãªãã©ã³ã¹è¨ç®ãè¡¨ç¤ºããã¾ã</p></div></div>
     </div>
   </div><!-- /page-current -->
 
-  <!-- ═══ PAGE: 推移グラフ ═══ -->
+  <!-- âââ PAGE: æ¨ç§»ã°ã©ã âââ -->
   <div class="page-content" id="page-history">
     <div class="card gap">
-      <div class="card-title">📈 資産推移グラフ</div>
+      <div class="card-title">ð è³ç£æ¨ç§»ã°ã©ã</div>
       <div class="history-toolbar">
-        <button class="btn btn-primary" onclick="recordSnapshot()">📸 現在の状況を記録する</button>
-        <span style="font-size:11px;color:var(--g500);">記録するたびに推移グラフが更新されます</span>
+        <button class="btn btn-primary" onclick="recordSnapshot()">ð¸ ç¾å¨ã®ç¶æ³ãè¨é²ãã</button>
+        <span style="font-size:11px;color:var(--g500);">è¨é²ãããã³ã«æ¨ç§»ã°ã©ããæ´æ°ããã¾ã</span>
       </div>
       <div style="display:flex;gap:8px;margin-bottom:10px;">
         <div class="toggle-pill" style="width:auto;">
-          <button id="btnHistTotal" class="active" onclick="setHistView('total')">総資産</button>
-          <button id="btnHistMaj" onclick="setHistView('major')">大カテ別</button>
+          <button id="btnHistTotal" class="active" onclick="setHistView('total')">ç·è³ç£</button>
+          <button id="btnHistMaj" onclick="setHistView('major')">å¤§ã«ãå¥</button>
         </div>
       </div>
       <div id="histChartWrap">
-        <div class="empty"><div class="ei">📈</div><p>「現在の状況を記録する」ボタンを押すと<br>ここに推移グラフが表示されます</p></div>
+        <div class="empty"><div class="ei">ð</div><p>ãç¾å¨ã®ç¶æ³ãè¨é²ããããã¿ã³ãæ¼ãã¨<br>ããã«æ¨ç§»ã°ã©ããè¡¨ç¤ºããã¾ã</p></div>
       </div>
     </div>
     <div class="card">
-      <div class="card-title">🗂️ 記録一覧</div>
-      <div id="snapshotList"><div class="empty"><div class="ei">📂</div><p>まだ記録がありません</p></div></div>
+      <div class="card-title">ðï¸ è¨é²ä¸è¦§</div>
+      <div id="snapshotList"><div class="empty"><div class="ei">ð</div><p>ã¾ã è¨é²ãããã¾ãã</p></div></div>
     </div>
   </div><!-- /page-history -->
 
@@ -393,37 +408,37 @@ body[data-theme="mint"] .card{border-top:3px solid #059669;}
 <!-- Edit Modal -->
 <div class="modal-overlay" id="editModal">
   <div class="modal">
-    <div class="modal-title">✏️ 銘柄を編集</div>
+    <div class="modal-title">âï¸ éæãç·¨é</div>
     <div class="form-row">
-      <div class="fg" style="flex:1;"><label>銘柄名・名称</label><input id="eName" type="text" maxlength="60"></div>
+      <div class="fg" style="flex:1;"><label>éæåã»åç§°</label><input id="eName" type="text" maxlength="60"></div>
     </div>
     <div class="form-row">
-      <div class="fg"><label>大カテゴリー</label>
+      <div class="fg"><label>å¤§ã«ãã´ãªã¼</label>
         <select id="eMaj" onchange="updateEditSubSelect()">
-          <option value="0">📈 株式/投資信託</option><option value="1">💴 現金/債券</option><option value="2">🥇 コモディティ</option>
+          <option value="0">ð æ ªå¼/æè³ä¿¡è¨</option><option value="1">ð´ ç¾é/åµå¸</option><option value="2">ð¥ ã³ã¢ãã£ãã£</option>
         </select>
       </div>
-      <div class="fg"><label>中カテゴリー</label><select id="eSub"></select></div>
+      <div class="fg"><label>ä¸­ã«ãã´ãªã¼</label><select id="eSub"></select></div>
     </div>
     <div class="form-row">
-      <div class="fg"><label>口座名義</label>
-        <select id="eOwner"><option>本人</option><option>妻</option><option>長女</option><option>長男</option><option>次男</option></select>
+      <div class="fg"><label>å£åº§åç¾©</label>
+        <select id="eOwner"><option>æ¬äºº</option><option>å¦»</option><option>é·å¥³</option><option>é·ç·</option><option>æ¬¡ç·</option></select>
       </div>
-      <div class="fg"><label>口座種類</label>
+      <div class="fg"><label>å£åº§ç¨®é¡</label>
         <select id="eAcct">
-          <option value="nisa">🌱 NISA</option><option value="oldnisa">📘 旧NISA</option>
-          <option value="tokutei">🏦 特定口座</option><option value="other">📂 その他</option>
+          <option value="nisa">ð± NISA</option><option value="oldnisa">ð æ§NISA</option>
+          <option value="tokutei">ð¦ ç¹å®å£åº§</option><option value="other">ð ãã®ä»</option>
         </select>
       </div>
-      <div class="fg"><label>評価額（円）</label><input id="eAmt" type="number" min="0" step="1"></div>
+      <div class="fg"><label>è©ä¾¡é¡ï¼åï¼</label><input id="eAmt" type="number" min="0" step="1"></div>
     </div>
     <div class="tog-wrap" style="margin-top:4px;">
       <label class="tog"><input type="checkbox" id="eIncl"><span class="tog-sl"></span></label>
-      <span class="tog-label">配分計算に含める</span>
+      <span class="tog-label">éåè¨ç®ã«å«ãã</span>
     </div>
     <div class="modal-actions">
-      <button class="btn btn-secondary" onclick="closeEdit()">キャンセル</button>
-      <button class="btn btn-primary" onclick="saveEdit()">保存</button>
+      <button class="btn btn-secondary" onclick="closeEdit()">ã­ã£ã³ã»ã«</button>
+      <button class="btn btn-primary" onclick="saveEdit()">ä¿å­</button>
     </div>
   </div>
 </div>
@@ -431,23 +446,23 @@ body[data-theme="mint"] .card{border-top:3px solid #059669;}
 <!-- Import Modal -->
 <div class="modal-overlay" id="importModal">
   <div class="modal">
-    <div class="modal-title">📤 まとめて入力</div>
+    <div class="modal-title">ð¤ ã¾ã¨ãã¦å¥å</div>
     <p style="font-size:11px;color:var(--g500);margin-bottom:8px;">
-      「銘柄名, 中カテID, 口座名義, 口座種類, 金額, 含める(1/0)」の形式で入力してください。<br>
-      中カテID: 0=日本株式 1=全世界/先進国株 2=新興国株 3=その他(株) 4=円 5=債券 6=その他(現金) 7=ゴールド 8=その他コモ 9=仮想通貨<br>
-      口座種類: nisa / oldnisa / tokutei / other
+      ãéæå, ä¸­ã«ãID, å£åº§åç¾©, å£åº§ç¨®é¡, éé¡, å«ãã(1/0)ãã®å½¢å¼ã§å¥åãã¦ãã ããã<br>
+      ä¸­ã«ãID: 0=æ¥æ¬æ ªå¼ 1=å¨ä¸ç/åé²å½æ ª 2=æ°èå½æ ª 3=ãã®ä»(æ ª) 4=å 5=åµå¸ 6=ãã®ä»(ç¾é) 7=ã´ã¼ã«ã 8=ãã®ä»ã³ã¢ 9=ä»®æ³éè²¨<br>
+      å£åº§ç¨®é¡: nisa / oldnisa / tokutei / other
     </p>
     <div class="fg">
-      <label>データ（CSV形式）</label>
+      <label>ãã¼ã¿ï¼CSVå½¢å¼ï¼</label>
       <textarea id="importText" rows="7" style="padding:8px;border:1.5px solid var(--g200);border-radius:6px;font-size:11px;font-family:monospace;resize:vertical;width:100%;outline:none;"
-        placeholder="例: eMAXIS Slim 全世界株式, 1, 本人, nisa, 2000000, 1
-日本高配当株ETF, 0, 妻, tokutei, 800000, 1
-普通預金, 4, 本人, other, 500000, 0"></textarea>
+        placeholder="ä¾: eMAXIS Slim å¨ä¸çæ ªå¼, 1, æ¬äºº, nisa, 2000000, 1
+æ¥æ¬é«éå½æ ªETF, 0, å¦», tokutei, 800000, 1
+æ®éé é, 4, æ¬äºº, other, 500000, 0"></textarea>
     </div>
-    <div class="note">ℹ️ 既存のデータに追加されます。上書きしたい場合は先に「全削除」してください。</div>
+    <div class="note">â¹ï¸ æ¢å­ã®ãã¼ã¿ã«è¿½å ããã¾ããä¸æ¸ããããå ´åã¯åã«ãå¨åé¤ããã¦ãã ããã</div>
     <div class="modal-actions">
-      <button class="btn btn-secondary" onclick="closeImport()">キャンセル</button>
-      <button class="btn btn-primary" onclick="importData()">インポート</button>
+      <button class="btn btn-secondary" onclick="closeImport()">ã­ã£ã³ã»ã«</button>
+      <button class="btn btn-primary" onclick="importData()">ã¤ã³ãã¼ã</button>
     </div>
   </div>
 </div>
@@ -455,25 +470,25 @@ body[data-theme="mint"] .card{border-top:3px solid #059669;}
 <!-- Settings Modal -->
 <div class="modal-overlay" id="settingsModal">
   <div class="modal">
-    <div class="modal-title">⚙️ GitHub連携設定</div>
+    <div class="modal-title">âï¸ GitHubé£æºè¨­å®</div>
 
     <div id="settingsConnected" style="display:none;">
       <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px;margin-bottom:12px;">
-        <div style="font-size:12px;font-weight:700;color:#15803d;margin-bottom:4px;">✅ GitHub に接続中</div>
+        <div style="font-size:12px;font-weight:700;color:#15803d;margin-bottom:4px;">â GitHub ã«æ¥ç¶ä¸­</div>
         <div style="font-size:11px;color:#166534;" id="connectedInfo"></div>
       </div>
       <div class="modal-actions" style="justify-content:space-between;">
-        <button class="btn btn-danger btn-sm" onclick="disconnectGist()">🔌 連携を解除</button>
+        <button class="btn btn-danger btn-sm" onclick="disconnectGist()">ð é£æºãè§£é¤</button>
         <div style="display:flex;gap:6px;">
-          <button class="btn btn-secondary" onclick="closeSettings()">閉じる</button>
-          <button class="btn btn-primary" onclick="manualSync()">🔄 今すぐ同期</button>
+          <button class="btn btn-secondary" onclick="closeSettings()">éãã</button>
+          <button class="btn btn-primary" onclick="manualSync()">ð ä»ããåæ</button>
         </div>
       </div>
     </div>
 
     <div id="settingsForm">
       <p style="font-size:12px;color:var(--g600);margin-bottom:12px;">
-        GitHub Personal Access Token を登録すると、どのPCからでも同じデータを使えるようになります。
+        GitHub Personal Access Token ãç»é²ããã¨ãã©ã®PCããã§ãåããã¼ã¿ãä½¿ããããã«ãªãã¾ãã
       </p>
 
       <div class="steps">
@@ -481,18 +496,18 @@ body[data-theme="mint"] .card{border-top:3px solid #059669;}
           <div class="step-num">1</div>
           <div>
             <a href="https://github.com/settings/tokens/new?scopes=gist&description=%E8%B3%87%E7%94%A3%E9%85%8D%E5%88%86%E3%83%9E%E3%83%8D%E3%83%BC%E3%82%B8%E3%83%A3%E3%83%BC" target="_blank">
-              こちらをクリック → GitHubのToken発行ページを開く
+              ãã¡ããã¯ãªãã¯ â GitHubã®Tokençºè¡ãã¼ã¸ãéã
             </a>
-            <div style="font-size:10px;color:var(--g400);margin-top:2px;">「Gist」にチェックが入っていることを確認して「Generate token」をクリック</div>
+            <div style="font-size:10px;color:var(--g400);margin-top:2px;">ãGistãã«ãã§ãã¯ãå¥ã£ã¦ãããã¨ãç¢ºèªãã¦ãGenerate tokenããã¯ãªãã¯</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">2</div>
-          <div>表示されたToken（ghp_で始まる文字列）をコピーして下に貼り付ける</div>
+          <div>è¡¨ç¤ºãããTokenï¼ghp_ã§å§ã¾ãæå­åï¼ãã³ãã¼ãã¦ä¸ã«è²¼ãä»ãã</div>
         </div>
         <div class="step">
           <div class="step-num">3</div>
-          <div>「保存して連携」ボタンを押す（全PCで同じ手順を繰り返す）</div>
+          <div>ãä¿å­ãã¦é£æºããã¿ã³ãæ¼ãï¼å¨PCã§åãæé ãç¹°ãè¿ãï¼</div>
         </div>
       </div>
 
@@ -500,15 +515,15 @@ body[data-theme="mint"] .card{border-top:3px solid #059669;}
         <label>Personal Access Token</label>
         <div class="token-input-wrap">
           <input id="tokenInput" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
-          <button class="token-show-btn" onclick="toggleTokenVisibility()">表示</button>
+          <button class="token-show-btn" onclick="toggleTokenVisibility()">è¡¨ç¤º</button>
         </div>
       </div>
 
-      <div class="note-warn">⚠️ Tokenは他人に見せないでください。このデータはこの端末のブラウザにのみ保存され、外部には送信されません（GitHubのAPIのみ使用）。</div>
+      <div class="note-warn">â ï¸ Tokenã¯ä»äººã«è¦ããªãã§ãã ããããã®ãã¼ã¿ã¯ãã®ç«¯æ«ã®ãã©ã¦ã¶ã«ã®ã¿ä¿å­ãããå¤é¨ã«ã¯éä¿¡ããã¾ããï¼GitHubã®APIã®ã¿ä½¿ç¨ï¼ã</div>
 
       <div class="modal-actions">
-        <button class="btn btn-secondary" onclick="closeSettings()">キャンセル</button>
-        <button class="btn btn-primary" id="saveTokenBtn" onclick="saveSettings()">保存して連携</button>
+        <button class="btn btn-secondary" onclick="closeSettings()">ã­ã£ã³ã»ã«</button>
+        <button class="btn btn-primary" id="saveTokenBtn" onclick="saveSettings()">ä¿å­ãã¦é£æº</button>
       </div>
     </div>
 
@@ -516,35 +531,35 @@ body[data-theme="mint"] .card{border-top:3px solid #059669;}
 </div>
 
 <script>
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 // CONSTANTS
-// ═══════════════════════════════════════
-const OWNERS=['本人','妻','長女','長男','次男'];
+// âââââââââââââââââââââââââââââââââââââââ
+const OWNERS=['æ¬äºº','å¦»','é·å¥³','é·ç·','æ¬¡ç·'];
 const MAJORS=[
-  {id:0,name:'株式/投資信託',icon:'📈',color:'#3b82f6'},
-  {id:1,name:'現金/債券',    icon:'💴',color:'#22c55e'},
-  {id:2,name:'コモディティ', icon:'🥇',color:'#f59e0b'},
+  {id:0,name:'æ ªå¼/æè³ä¿¡è¨',icon:'ð',color:'#3b82f6'},
+  {id:1,name:'ç¾é/åµå¸',    icon:'ð´',color:'#22c55e'},
+  {id:2,name:'ã³ã¢ãã£ãã£', icon:'ð¥',color:'#f59e0b'},
 ];
 const SUBS=[
-  {id:0,majorId:0,name:'日本株式',          icon:'🇯🇵',color:'#1d4ed8'},
-  {id:1,majorId:0,name:'全世界/先進国株式', icon:'🌍', color:'#3b82f6'},
-  {id:2,majorId:0,name:'新興国株式',        icon:'🌏', color:'#60a5fa'},
-  {id:3,majorId:0,name:'その他(株式)',      icon:'📊', color:'#93c5fd'},
-  {id:4,majorId:1,name:'円',                icon:'💴', color:'#15803d'},
-  {id:5,majorId:1,name:'債券',              icon:'📋', color:'#22c55e'},
-  {id:6,majorId:1,name:'その他(現金/債券)',icon:'🏦', color:'4ade80'},
-  {id:7,majorId:2,name:'ゴールド',          icon:'🥇', color:'#b45309'},
-  {id:8,majorId:2,name:'その他コモディティ',icon:'⛽', color:'#f59e0b'},
-  {id:9,majorId:2,name:'仮想通貨',          icon:'₿',  color:'#fcd34d'},
+  {id:0,majorId:0,name:'æ¥æ¬æ ªå¼',          icon:'ð¯ðµ',color:'#1d4ed8'},
+  {id:1,majorId:0,name:'å¨ä¸ç/åé²å½æ ªå¼', icon:'ð', color:'#3b82f6'},
+  {id:2,majorId:0,name:'æ°èå½æ ªå¼',        icon:'ð', color:'#60a5fa'},
+  {id:3,majorId:0,name:'ãã®ä»(æ ªå¼)',      icon:'ð', color:'#93c5fd'},
+  {id:4,majorId:1,name:'å',                icon:'ð´', color:'#15803d'},
+  {id:5,majorId:1,name:'åµå¸',              icon:'ð', color:'#22c55e'},
+  {id:6,majorId:1,name:'ãã®ä»(ç¾é/åµå¸)',icon:'ð¦', color:'4ade80'},
+  {id:7,majorId:2,name:'ã´ã¼ã«ã',          icon:'ð¥', color:'#b45309'},
+  {id:8,majorId:2,name:'ãã®ä»ã³ã¢ãã£ãã£',icon:'â½', color:'#f59e0b'},
+  {id:9,majorId:2,name:'ä»®æ³éè²¨',          icon:'â¿',  color:'#fcd34d'},
 ];
-const ACCT_LABELS={nisa:'NISA',oldnisa:'旧NISA',tokutei:'特定口座',other:'その他'};
-const ACCT_ICONS ={nisa:'🌱',oldnisa:'📘',tokutei:'🏦',other:'📂'};
+const ACCT_LABELS={nisa:'NISA',oldnisa:'æ§NISA',tokutei:'ç¹å®å£åº§',other:'ãã®ä»'};
+const ACCT_ICONS ={nisa:'ð±',oldnisa:'ð',tokutei:'ð¦',other:'ð'};
 const ACCT_CSS   ={nisa:'acct-nisa',oldnisa:'acct-oldnisa',tokutei:'acct-tokutei',other:'acct-other'};
 const MAJ_CSS    =['maj-0','maj-1','maj-2'];
 
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 // STATE
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 let holdings = JSON.parse(localStorage.getItem('holdings3')||'[]');
 let targets  = JSON.parse(localStorage.getItem('targets3') ||JSON.stringify([15,20,5,0,10,5,0,5,0,0]));
 let history  = JSON.parse(localStorage.getItem('assetHistory')||'[]');
@@ -558,10 +573,10 @@ let filterAcct ='all';
 let filterMajor='all';
 let filterSub  ='all';
 
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 // GITHUB GIST SYNC
-// ═══════════════════════════════════════
-const GIST_DESC     = '資産配分マネージャーデータ';
+// âââââââââââââââââââââââââââââââââââââââ
+const GIST_DESC     = 'è³ç£éåããã¼ã¸ã£ã¼ãã¼ã¿';
 const GIST_FILENAME = 'asset-manager-data.json';
 
 let ghToken  = localStorage.getItem('ghToken')  || '';
@@ -589,7 +604,7 @@ async function ghApi(method, path, body) {
 }
 
 async function findOrCreateGist() {
-  // ページネーションしながら全Gistを検索
+  // ãã¼ã¸ãã¼ã·ã§ã³ããªããå¨Gistãæ¤ç´¢
   let page = 1;
   while (true) {
     const gists = await ghApi('GET', `/gists?per_page=100&page=${page}`);
@@ -599,7 +614,7 @@ async function findOrCreateGist() {
     if (gists.length < 100) break;
     page++;
   }
-  // 既存Gistなし → 新規作成
+  // æ¢å­Gistãªã â æ°è¦ä½æ
   const data = { holdings, targets, history };
   const gist = await ghApi('POST', '/gists', {
     description: GIST_DESC,
@@ -670,12 +685,12 @@ async function manualSync() {
   closeSettings();
 }
 
-// ── スプレッドシートから更新（Apps Script直接fetch）────────────────
+// ââ ã¹ãã¬ããã·ã¼ãããæ´æ°ï¼Apps Scriptç´æ¥fetchï¼ââââââââââââââââ
 async function requestSpreadsheetSync() {
   const btn = document.getElementById('updateBtn');
-  if (btn) { btn.disabled = true; btn.textContent = '📊 更新中...'; }
+  if (btn) { btn.disabled = true; btn.textContent = 'ð æ´æ°ä¸­...'; }
   const el = document.getElementById('syncStatus');
-  if (el) el.innerHTML = '<span style="color:#d97706;">📊 スプレッドシートから取得中...</span>';
+  if (el) el.innerHTML = '<span style="color:#d97706;">ð ã¹ãã¬ããã·ã¼ãããåå¾ä¸­...</span>';
   try {
     const res = await fetch(APPS_SCRIPT_URL);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -699,13 +714,13 @@ async function requestSpreadsheetSync() {
     }
     const now = new Date();
     const t = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
-    if (el) el.innerHTML = `<span style="color:#16a34a;">✅ スプレッドシートから更新完了 ${t}</span>`;
+    if (el) el.innerHTML = `<span style="color:#16a34a;">â ã¹ãã¬ããã·ã¼ãããæ´æ°å®äº ${t}</span>`;
     setTimeout(() => setSyncStatus(ghToken ? 'ok' : 'none'), 8000);
   } catch(e) {
     console.error('requestSpreadsheetSync:', e);
     setSyncStatus('error', e.message);
   } finally {
-    if (btn) { btn.disabled = false; btn.textContent = '📊 更新'; }
+    if (btn) { btn.disabled = false; btn.textContent = 'ð æ´æ°'; }
   }
 }
 
@@ -715,17 +730,17 @@ function setSyncStatus(status, msg) {
   const now = new Date();
   const t = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
   if (status === 'syncing') {
-    el.innerHTML = '<span style="color:#6b7280;">🔄 同期中...</span>';
+    el.innerHTML = '<span style="color:#6b7280;">ð åæä¸­...</span>';
   } else if (status === 'ok') {
-    el.innerHTML = `<span style="color:#16a34a;">✅ 同期済み ${t}</span>`;
+    el.innerHTML = `<span style="color:#16a34a;">â åææ¸ã¿ ${t}</span>`;
   } else if (status === 'error') {
-    el.innerHTML = `<span style="color:#dc2626;" title="${msg||''}">❌ 同期エラー（${msg||''}）</span>`;
+    el.innerHTML = `<span style="color:#dc2626;" title="${msg||''}">â åæã¨ã©ã¼ï¼${msg||''}ï¼</span>`;
   } else {
-    el.innerHTML = '<span style="color:#9ca3af;">— GitHub未連携</span>';
+    el.innerHTML = '<span style="color:#9ca3af;">â GitHubæªé£æº</span>';
   }
 }
 
-// ── Settings Modal ────────────────────
+// ââ Settings Modal ââââââââââââââââââââ
 function openSettings() {
   const form = document.getElementById('settingsForm');
   const conn = document.getElementById('settingsConnected');
@@ -733,7 +748,7 @@ function openSettings() {
     form.style.display = 'none';
     conn.style.display = 'block';
     document.getElementById('connectedInfo').textContent =
-      `Gist ID: ${ghGistId || '（検索中）'}`;
+      `Gist ID: ${ghGistId || 'ï¼æ¤ç´¢ä¸­ï¼'}`;
   } else {
     form.style.display = 'block';
     conn.style.display = 'none';
@@ -748,19 +763,19 @@ function closeSettings() {
 function toggleTokenVisibility() {
   const input = document.getElementById('tokenInput');
   const btn   = document.querySelector('.token-show-btn');
-  if (input.type === 'password') { input.type = 'text'; btn.textContent = '隠す'; }
-  else                           { input.type = 'password'; btn.textContent = '表示'; }
+  if (input.type === 'password') { input.type = 'text'; btn.textContent = 'é ã'; }
+  else                           { input.type = 'password'; btn.textContent = 'è¡¨ç¤º'; }
 }
 
 async function saveSettings() {
   const token = document.getElementById('tokenInput').value.trim();
-  if (!token) { alert('Tokenを入力してください'); return; }
+  if (!token) { alert('Tokenãå¥åãã¦ãã ãã'); return; }
   if (!token.startsWith('ghp_') && !token.startsWith('github_pat_')) {
-    if (!confirm('入力されたTokenの形式が通常と異なります（ghp_ または github_pat_ で始まるはずです）。このまま保存しますか？')) return;
+    if (!confirm('å¥åãããTokenã®å½¢å¼ãéå¸¸ã¨ç°ãªãã¾ãï¼ghp_ ã¾ãã¯ github_pat_ ã§å§ã¾ãã¯ãã§ãï¼ããã®ã¾ã¾ä¿å­ãã¾ããï¼')) return;
   }
   const btn = document.getElementById('saveTokenBtn');
   btn.disabled = true;
-  btn.textContent = '接続中...';
+  btn.textContent = 'æ¥ç¶ä¸­...';
   try {
     ghToken  = token;
     ghGistId = '';
@@ -769,15 +784,15 @@ async function saveSettings() {
     closeSettings();
     await loadFromGist();
   } catch(e) {
-    alert('接続に失敗しました: ' + e.message);
+    alert('æ¥ç¶ã«å¤±æãã¾ãã: ' + e.message);
   } finally {
     btn.disabled = false;
-    btn.textContent = '保存して連携';
+    btn.textContent = 'ä¿å­ãã¦é£æº';
   }
 }
 
 function disconnectGist() {
-  if (!confirm('GitHub連携を解除しますか？\n（この端末のブラウザに保存されたデータは残ります）')) return;
+  if (!confirm('GitHubé£æºãè§£é¤ãã¾ããï¼\nï¼ãã®ç«¯æ«ã®ãã©ã¦ã¶ã«ä¿å­ããããã¼ã¿ã¯æ®ãã¾ãï¼')) return;
   ghToken  = '';
   ghGistId = '';
   localStorage.removeItem('ghToken');
@@ -786,9 +801,9 @@ function disconnectGist() {
   closeSettings();
 }
 
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 // SAVE (localStorage + Gist)
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 function save() {
   localStorage.setItem('holdings3',   JSON.stringify(holdings));
   localStorage.setItem('targets3',    JSON.stringify(targets));
@@ -797,16 +812,16 @@ function save() {
   autoSyncToGist();
 }
 
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 // HELPERS
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function fmtFull(n){return '¥'+Math.round(n).toLocaleString('ja-JP');}
+function fmtFull(n){return 'Â¥'+Math.round(n).toLocaleString('ja-JP');}
 
 function filteredHoldings(inclOnly){
   return holdings.filter(h=>{
     if(inclOnly&&!h.include)return false;
-    if(filterOwner!=='all'&&(h.owner||'本人')!==filterOwner)return false;
+    if(filterOwner!=='all'&&(h.owner||'æ¬äºº')!==filterOwner)return false;
     if(filterAcct!=='all'&&(h.acct||'other')!==filterAcct)return false;
     if(filterMajor!=='all'&&(SUBS.find(s=>s.id===h.subId)||{majorId:-1}).majorId!==filterMajor)return false;
     if(filterSub!=='all'&&h.subId!==filterSub)return false;
@@ -824,19 +839,26 @@ function totalAllRaw(){return holdings.reduce((s,h)=>s+h.amount,0);}
 function totalAllocRaw(){return holdings.filter(h=>h.include).reduce((s,h)=>s+h.amount,0);}
 function isFiltered(){return filterOwner!=='all'||filterAcct!=='all'||filterMajor!=='all'||filterSub!=='all';}
 
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 // PAGE / VIEW TABS
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 function showPage(id){
   document.querySelectorAll('.page-tab').forEach((t,i)=>t.classList.toggle('active',['current','history'][i]===id));
   document.querySelectorAll('.page-content').forEach(c=>c.classList.toggle('active',c.id==='page-'+id));
   if(id==='history') renderHistory();
 }
 
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 // SUB SELECT
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 function buildSubOpts(majId){return SUBS.filter(s=>s.majorId===majId).map(s=>`<option value="${s.id}">${s.icon} ${s.name}</option>`).join('');}
+
+function toggleAddForm(){
+  const t=document.getElementById('addFormToggle');
+  const b=document.getElementById('addFormBody');
+  t.classList.toggle('open');
+  b.classList.toggle('open');
+}
 function updateSubSelect(){document.getElementById('iSub').innerHTML=buildSubOpts(parseInt(document.getElementById('iMaj').value));}
 function updateEditSubSelect(){
   const maj=parseInt(document.getElementById('eMaj').value);
@@ -845,9 +867,9 @@ function updateEditSubSelect(){
   if(SUBS[cur]&&SUBS[cur].majorId===maj) document.getElementById('eSub').value=cur;
 }
 
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 // ADD / EDIT / DELETE
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 function addHolding(){
   const name=document.getElementById('iName').value.trim();
   const subId=parseInt(document.getElementById('iSub').value);
@@ -855,8 +877,8 @@ function addHolding(){
   const acct=document.getElementById('iAcct').value;
   const amount=parseFloat(document.getElementById('iAmt').value);
   const include=document.getElementById('iIncl').checked;
-  if(!name){alert('銘柄名を入力してください');return;}
-  if(isNaN(amount)||amount<0){alert('正しい金額を入力してください');return;}
+  if(!name){alert('éæåãå¥åãã¦ãã ãã');return;}
+  if(isNaN(amount)||amount<0){alert('æ­£ããéé¡ãå¥åãã¦ãã ãã');return;}
   holdings.push({name,subId,owner,acct,amount,include});
   save();render();
   document.getElementById('iName').value='';
@@ -865,7 +887,7 @@ function addHolding(){
   document.getElementById('iName').focus();
 }
 function deleteHolding(i){
-  if(!confirm(`「${holdings[i].name}」を削除しますか？`))return;
+  if(!confirm(`ã${holdings[i].name}ããåé¤ãã¾ããï¼`))return;
   holdings.splice(i,1);save();render();
 }
 function openEdit(i){
@@ -875,7 +897,7 @@ function openEdit(i){
   document.getElementById('eSub').innerHTML=buildSubOpts(sub.majorId);
   document.getElementById('eSub').value=h.subId;
   document.getElementById('eSub').dataset.cur=h.subId;
-  document.getElementById('eOwner').value=h.owner||'本人';
+  document.getElementById('eOwner').value=h.owner||'æ¬äºº';
   document.getElementById('eAcct').value=h.acct||'other';
   document.getElementById('eAmt').value=h.amount;
   document.getElementById('eIncl').checked=h.include!==false;
@@ -889,15 +911,15 @@ function saveEdit(){
   const acct=document.getElementById('eAcct').value;
   const amount=parseFloat(document.getElementById('eAmt').value);
   const include=document.getElementById('eIncl').checked;
-  if(!name){alert('銘柄名を入力してください');return;}
-  if(isNaN(amount)||amount<0){alert('正しい金額を入力してください');return;}
+  if(!name){alert('éæåãå¥åãã¦ãã ãã');return;}
+  if(isNaN(amount)||amount<0){alert('æ­£ããéé¡ãå¥åãã¦ãã ãã');return;}
   holdings[editIdx]={name,subId,owner,acct,amount,include};
   save();render();closeEdit();
 }
 
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 // IMPORT
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 function openImportModal(){document.getElementById('importModal').classList.add('open');}
 function closeImport(){document.getElementById('importModal').classList.remove('open');}
 function importData(){
@@ -912,57 +934,57 @@ function importData(){
     const subId=parseInt(subStr),amount=parseFloat(amtStr.replace(/[^\d.]/g,''));
     const include=inclStr===undefined||inclStr==='1'||inclStr.toLowerCase()==='true';
     if(!name||isNaN(subId)||subId<0||subId>9||isNaN(amount)){errors++;continue;}
-    holdings.push({name,subId,owner:OWNERS.includes(owner)?owner:'本人',acct:vAcct.includes(acct)?acct:'other',amount,include});
+    holdings.push({name,subId,owner:OWNERS.includes(owner)?owner:'æ¬äºº',acct:vAcct.includes(acct)?acct:'other',amount,include});
     added++;
   }
   save();render();closeImport();
   document.getElementById('importText').value='';
-  alert(`${added}件インポートしました${errors>0?`（${errors}件スキップ）`:''}`);
+  alert(`${added}ä»¶ã¤ã³ãã¼ããã¾ãã${errors>0?`ï¼${errors}ä»¶ã¹ã­ããï¼`:''}`);
 }
 function clearAll(){
-  if(!confirm('全ての銘柄を削除しますか？'))return;
+  if(!confirm('å¨ã¦ã®éæãåé¤ãã¾ããï¼'))return;
   holdings=[];save();render();
 }
 
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 // CSV EXPORT
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 function exportCSV(){
-  if(!holdings.length){alert('データがありません');return;}
+  if(!holdings.length){alert('ãã¼ã¿ãããã¾ãã');return;}
   const BOM='\uFEFF';
-  const header='銘柄名,大カテゴリー,中カテゴリー,口座名義,口座種類,評価額(円),配分計算対象\n';
+  const header='éæå,å¤§ã«ãã´ãªã¼,ä¸­ã«ãã´ãªã¼,å£åº§åç¾©,å£åº§ç¨®é¡,è©ä¾¡é¡(å),éåè¨ç®å¯¾è±¡\n';
   const rows=holdings.map(h=>{
     const sub=SUBS[h.subId],maj=MAJORS[sub.majorId];
     const acctL=ACCT_LABELS[h.acct||'other'];
-    return [h.name,maj.name,sub.name,h.owner||'',acctL,h.amount,h.include?'対象':'除外'].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',');
+    return [h.name,maj.name,sub.name,h.owner||'',acctL,h.amount,h.include?'å¯¾è±¡':'é¤å¤'].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',');
   }).join('\n');
   const blob=new Blob([BOM+header+rows],{type:'text/csv;charset=utf-8'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
-  a.href=url;a.download=`資産配分_${new Date().toISOString().slice(0,10)}.csv`;a.click();
+  a.href=url;a.download=`è³ç£éå_${new Date().toISOString().slice(0,10)}.csv`;a.click();
   URL.revokeObjectURL(url);
 }
 
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 // FILTER
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 function setFilterOwner(v){filterOwner=v;if(chart){chart.destroy();chart=null;}render();}
 function setFilterAcct(v){filterAcct=v;if(chart){chart.destroy();chart=null;}render();}
 function setFilterMajor(v){filterMajor=v;filterSub='all';if(chart){chart.destroy();chart=null;}render();}
 function setFilterSub(v){filterSub=v;if(chart){chart.destroy();chart=null;}render();}
 function renderFilterBar(){
-  const owners=[...new Set(holdings.map(h=>h.owner||'全体'))];
+  const owners=[...new Set(holdings.map(h=>h.owner||'å¨ä½'))];
   const accts=[...new Set(holdings.map(h=>h.acct||'other'))];
   const visSubs=filterMajor==='all'?SUBS:SUBS.filter(s=>s.majorId===filterMajor);
-  let ownerH=`<span class="filter-chip ${filterOwner==='all'?'active':''}" onclick="setFilterOwner('all')">すべて</span>`;
+  let ownerH=`<span class="filter-chip ${filterOwner==='all'?'active':''}" onclick="setFilterOwner('all')">ãã¹ã¦</span>`;
   for(const o of owners){ownerH+=`<span class="filter-chip ${filterOwner===o?'active':''}" onclick="setFilterOwner('${o}')">${o}</span>`;}
-  let acctH=`<span class="filter-chip ${filterAcct==='all'?'active':''}" onclick="setFilterAcct('all')">すべて</span>`;
+  let acctH=`<span class="filter-chip ${filterAcct==='all'?'active':''}" onclick="setFilterAcct('all')">ãã¹ã¦</span>`;
   for(const a of accts){acctH+=`<span class="filter-chip ${filterAcct===a?'active':''}" onclick="setFilterAcct('${a}')">${ACCT_ICONS[a]||''}${ACCT_LABELS[a]||a}</span>`;}
-  let majorH=`<span class="filter-chip ${filterMajor==='all'?'active':''}" onclick="setFilterMajor('all')">すべて</span>`;
+  let majorH=`<span class="filter-chip ${filterMajor==='all'?'active':''}" onclick="setFilterMajor('all')">ãã¹ã¦</span>`;
   for(const m of MAJORS){majorH+=`<span class="filter-chip ${filterMajor===m.id?'active':''}" onclick="setFilterMajor(${m.id})">${m.icon} ${m.name}</span>`;}
-  let subH=`<span class="filter-chip ${filterSub==='all'?'active':''}" onclick="setFilterSub('all')">すべて</span>`;
+  let subH=`<span class="filter-chip ${filterSub==='all'?'active':''}" onclick="setFilterSub('all')">ãã¹ã¦</span>`;
   for(const s of visSubs){subH+=`<span class="filter-chip ${filterSub===s.id?'active':''}" onclick="setFilterSub(${s.id})">${s.icon} ${s.name}</span>`;}
-  document.getElementById('filterBar').innerHTML=`<div class="filter-row"><span class="filter-label">名義</span>${ownerH}</div><div class="filter-row"><span class="filter-label">口座</span>${acctH}</div><div class="filter-row"><span class="filter-label">大カテゴリ</span>${majorH}</div><div class="filter-row"><span class="filter-label">中カテゴリ</span>${subH}</div>`;
+  document.getElementById('filterBar').innerHTML=`<div class="filter-row"><span class="filter-label">åç¾©</span>${ownerH}</div><div class="filter-row"><span class="filter-label">å£åº§</span>${acctH}</div><div class="filter-row"><span class="filter-label">å¤§ã«ãã´ãª</span>${majorH}</div><div class="filter-row"><span class="filter-label">ä¸­ã«ãã´ãª</span>${subH}</div>`;
 }
 function render(){renderSummary();renderFilterBar();renderHoldings();renderChart();renderTargets();renderRebalance();}
 
@@ -974,11 +996,11 @@ function renderSummary(){
   const filtLabel=[ownerLabel,acctLabel].filter(Boolean).join(' / ');
   document.getElementById('sTotal').textContent=fmtFull(total);
   document.getElementById('sAlloc').textContent=fmtFull(alloc);
-  document.getElementById('sCount').textContent=filteredHoldings(false).length+(filt?`/${holdings.length}`:'')+' 件';
+  document.getElementById('sCount').textContent=filteredHoldings(false).length+(filt?`/${holdings.length}`:'')+' ä»¶';
   const excl=filteredHoldings(false).filter(h=>!h.include).length;
-  document.getElementById('sAllocNote').textContent=(filt?`【${filtLabel}】 `:'')+(excl>0?`${excl}件を除外中`:'全件対象');
+  document.getElementById('sAllocNote').textContent=(filt?`ã${filtLabel}ã `:'')+(excl>0?`${excl}ä»¶ãé¤å¤ä¸­`:'å¨ä»¶å¯¾è±¡');
   const inclH=filteredHoldings(true);
-  if(!inclH.length||!alloc){document.getElementById('sDev').textContent='—';document.getElementById('sDev').className='sum-value';return;}
+  if(!inclH.length||!alloc){document.getElementById('sDev').textContent='â';document.getElementById('sDev').className='sum-value';return;}
   const bySub=calcBySub(true);
   let maxDev=0;
   for(let i=0;i<10;i++){const dev=Math.abs(bySub[i]/alloc*100-targets[i]);if(dev>maxDev)maxDev=dev;}
@@ -989,11 +1011,11 @@ function renderSummary(){
 
 function renderHoldings(){
   const wrap=document.getElementById('holdWrap');
-  if(!holdings.length){wrap.innerHTML='<div class="empty"><div class="ei">💼</div><p>銘柄をまだ登録していません<br>上のフォームから追加してください</p></div>';return;}
+  if(!holdings.length){wrap.innerHTML='<div class="empty"><div class="ei">ð¼</div><p>éæãã¾ã ç»é²ãã¦ãã¾ãã<br>ä¸ã®ãã©ã¼ã ããè¿½å ãã¦ãã ãã</p></div>';return;}
   const total=totalAll(),alloc=totalAlloc();
   const idxMap=[];
   holdings.forEach((h,i)=>{
-    if(filterOwner!=='all'&&(h.owner||'本人')!==filterOwner)return;
+    if(filterOwner!=='all'&&(h.owner||'æ¬äºº')!==filterOwner)return;
     if(filterAcct!=='all'&&(h.acct||'other')!==filterAcct)return;
     idxMap.push(i);
   });
@@ -1003,7 +1025,7 @@ function renderHoldings(){
     const sub=SUBS[h.subId],maj=MAJORS[sub.majorId];
     const pct=total>0?(h.amount/total*100).toFixed(1):'0.0';
     const acctK=h.acct||'other';
-    const inclCell=h.include?`<span style="color:var(--primary);font-size:10px;font-weight:600;">✓ 対象</span>`:`<span class="excl-note">除外</span>`;
+    const inclCell=h.include?`<span style="color:var(--primary);font-size:10px;font-weight:600;">â å¯¾è±¡</span>`:`<span class="excl-note">é¤å¤</span>`;
     rows+=`<tr class="${h.include?'':'excluded'}">
       <td><span style="font-size:11px;font-weight:600;">${esc(h.owner||'')}</span></td>
       <td><span class="badge ${ACCT_CSS[acctK]}">${ACCT_ICONS[acctK]} ${ACCT_LABELS[acctK]}</span></td>
@@ -1014,22 +1036,22 @@ function renderHoldings(){
       <td class="ramount" style="color:var(--g500);">${pct}%</td>
       <td>${inclCell}</td>
       <td style="white-space:nowrap;">
-        <button class="btn-icon" onclick="openEdit(${i})">✏️</button>
-        <button class="btn-icon" onclick="deleteHolding(${i})">🗑️</button>
+        <button class="btn-icon" onclick="openEdit(${i})">âï¸</button>
+        <button class="btn-icon" onclick="deleteHolding(${i})">ðï¸</button>
       </td>
     </tr>`;
   }
   const shown=idxMap.length,total_rows=holdings.length;
   wrap.innerHTML=`<table>
-    <thead><tr><th>名義</th><th>口座</th><th>大カテ</th><th>中カテ</th><th>銘柄名</th>
-    <th style="text-align:right">評価額</th><th style="text-align:right">割合</th><th>配分計算</th><th></th></tr></thead>
-    <tbody>${rows||'<tr><td colspan="9" style="text-align:center;color:var(--g400);padding:20px;">フィルター条件に該当する銘柄がありません</td></tr>'}</tbody>
+    <thead><tr><th>åç¾©</th><th>å£åº§</th><th>å¤§ã«ã</th><th>ä¸­ã«ã</th><th>éæå</th>
+    <th style="text-align:right">è©ä¾¡é¡</th><th style="text-align:right">å²å</th><th>éåè¨ç®</th><th></th></tr></thead>
+    <tbody>${rows||'<tr><td colspan="9" style="text-align:center;color:var(--g400);padding:20px;">ãã£ã«ã¿ã¼æ¡ä»¶ã«è©²å½ããéæãããã¾ãã</td></tr>'}</tbody>
   </table>
   <div style="text-align:right;padding:7px 8px 0;font-size:11px;color:var(--g500);display:flex;justify-content:flex-end;align-items:center;gap:12px;">
-    ${shown<total_rows?`<span style="color:var(--g400);">${shown}/${total_rows}件表示</span>`:''}
-    <span>総資産: <strong style="color:var(--g900);">${fmtFull(total)}</strong></span>
-    <span>計算対象: <strong style="color:var(--primary);">${fmtFull(alloc)}</strong></span>
-    <button class="btn btn-danger btn-sm" onclick="clearAll()">全削除</button>
+    ${shown<total_rows?`<span style="color:var(--g400);">${shown}/${total_rows}ä»¶è¡¨ç¤º</span>`:''}
+    <span>ç·è³ç£: <strong style="color:var(--g900);">${fmtFull(total)}</strong></span>
+    <span>è¨ç®å¯¾è±¡: <strong style="color:var(--primary);">${fmtFull(alloc)}</strong></span>
+    <button class="btn btn-danger btn-sm" onclick="clearAll()">å¨åé¤</button>
   </div>`;
 }
 
@@ -1046,7 +1068,7 @@ function renderChart(){
   const area=document.getElementById('chartArea'),alloc=totalAlloc();
   if(!filteredHoldings(true).length||!alloc){
     if(chart){chart.destroy();chart=null;}
-    area.innerHTML='<div class="empty"><div class="ei">📊</div><p>計算対象の銘柄を追加するとグラフが表示されます</p></div>';
+    area.innerHTML='<div class="empty"><div class="ei">ð</div><p>è¨ç®å¯¾è±¡ã®éæãè¿½å ããã¨ã°ã©ããè¡¨ç¤ºããã¾ã</p></div>';
     return;
   }
   let segs=[];
@@ -1056,9 +1078,9 @@ function renderChart(){
   const ownerLabel=filterOwner!=='all'?filterOwner:'';
   const acctLabel=filterAcct!=='all'?(ACCT_LABELS[filterAcct]||''):'';
   const filtLabel=[ownerLabel,acctLabel].filter(Boolean).join(' / ');
-  const filtBanner=filt?`<div style="text-align:center;font-size:10px;color:var(--primary);background:#eff6ff;border-radius:5px;padding:3px 8px;margin-bottom:8px;">🔍 フィルター適用中: ${filtLabel}</div>`:'';
+  const filtBanner=filt?`<div style="text-align:center;font-size:10px;color:var(--primary);background:#eff6ff;border-radius:5px;padding:3px 8px;margin-bottom:8px;">ð ãã£ã«ã¿ã¼é©ç¨ä¸­: ${filtLabel}</div>`:'';
   area.innerHTML=`${filtBanner}<div class="chart-container"><canvas id="donutChart" width="240" height="240"></canvas>
-    <div class="chart-center"><div class="ctotal">${filt?filtLabel:'計算対象'}</div><div class="camount" id="chartTotal"></div></div></div>
+    <div class="chart-center"><div class="ctotal">${filt?filtLabel:'è¨ç®å¯¾è±¡'}</div><div class="camount" id="chartTotal"></div></div></div>
     <div class="legend" id="chartLegend"></div>`;
   document.getElementById('chartTotal').textContent=fmtFull(alloc);
   const data=segs.map(x=>x.val),colors=segs.map(x=>x.color),labels=segs.map(x=>x.label);
@@ -1077,12 +1099,12 @@ function renderTargets(){
     const subs=SUBS.filter(s=>s.majorId===maj.id);
     const majCur=alloc>0?(byMaj[maj.id]/alloc*100).toFixed(1):'0.0';
     const majTgt=subs.reduce((a,s)=>a+targets[s.id],0).toFixed(1);
-    html+=`<div class="major-group"><div class="major-header"><div class="mhdot" style="background:${maj.color};"></div><div class="mhname">${maj.icon} ${maj.name}</div><div class="mhpct" style="color:${maj.color};">現在 ${majCur}% ／ 目標 <span style="color:var(--g900);">${majTgt}%</span></div></div>`;
+    html+=`<div class="major-group"><div class="major-header"><div class="mhdot" style="background:${maj.color};"></div><div class="mhname">${maj.icon} ${maj.name}</div><div class="mhpct" style="color:${maj.color};">ç¾å¨ ${majCur}% ï¼ ç®æ¨ <span style="color:var(--g900);">${majTgt}%</span></div></div>`;
     for(const sub of subs){
       const curPct=alloc>0?(bySub[sub.id]/alloc*100):0;const tgt=targets[sub.id];
       html+=`<div class="sub-row"><div class="sname">${sub.icon} ${sub.name}</div>
         <div class="sub-bar-wrap"><div class="sub-bar-bg"><div class="sub-bar" style="width:${Math.min(curPct,100)}%;background:${sub.color};opacity:.8;"></div></div>
-        <div class="sub-bar-labels"><span>現在 ${curPct.toFixed(1)}%</span><span>目標 ${tgt}%</span></div></div>
+        <div class="sub-bar-labels"><span>ç¾å¨ ${curPct.toFixed(1)}%</span><span>ç®æ¨ ${tgt}%</span></div></div>
         <div class="tinput-wrap"><input type="number" class="tinput" value="${tgt}" min="0" max="100" oninput="updateTarget(${sub.id},this.value)"><span class="tpct">%</span></div>
       </div>`;
     }
@@ -1095,7 +1117,7 @@ function renderTSum(){
   const s=targets.reduce((a,b)=>a+b,0);
   const el=document.getElementById('tsum');
   el.className='tsum '+(Math.round(s)===100?'ok':'err');
-  el.innerHTML=`合計: <span>${s.toFixed(1)}%</span>${Math.round(s)!==100?' ← 合計100%に設定してください':' ✓'}`;
+  el.innerHTML=`åè¨: <span>${s.toFixed(1)}%</span>${Math.round(s)!==100?' â åè¨100%ã«è¨­å®ãã¦ãã ãã':' â'}`;
 }
 function updateTarget(subId,val){
   const v=parseFloat(val);if(isNaN(v))return;
@@ -1105,24 +1127,24 @@ function updateTarget(subId,val){
   document.querySelectorAll('.sub-row').forEach((row,i)=>{
     const sub=SUBS[i];const curPct=alloc>0?(bySub[sub.id]/alloc*100):0;
     const bar=row.querySelector('.sub-bar');if(bar)bar.style.width=Math.min(curPct,100)+'%';
-    const lbl=row.querySelector('.sub-bar-labels');if(lbl)lbl.innerHTML=`<span>現在 ${curPct.toFixed(1)}%</span><span>目標 ${targets[sub.id]}%</span>`;
+    const lbl=row.querySelector('.sub-bar-labels');if(lbl)lbl.innerHTML=`<span>ç¾å¨ ${curPct.toFixed(1)}%</span><span>ç®æ¨ ${targets[sub.id]}%</span>`;
   });
   document.querySelectorAll('.major-header').forEach((hd,mi)=>{
     const maj=MAJORS[mi];const subs=SUBS.filter(s=>s.majorId===maj.id);
     const majCur=alloc>0?(byMaj[maj.id]/alloc*100).toFixed(1):'0.0';
     const majTgt=subs.reduce((a,s)=>a+targets[s.id],0).toFixed(1);
-    const p=hd.querySelector('.mhpct');if(p)p.innerHTML=`現在 ${majCur}% ／ 目標 <span style="color:var(--g900);">${majTgt}%</span>`;
+    const p=hd.querySelector('.mhpct');if(p)p.innerHTML=`ç¾å¨ ${majCur}% ï¼ ç®æ¨ <span style="color:var(--g900);">${majTgt}%</span>`;
   });
 }
 
 function renderRebalance(){
   const area=document.getElementById('rbArea'),alloc=totalAlloc(),tgtSum=targets.reduce((a,b)=>a+b,0);
-  if(!filteredHoldings(true).length||!alloc){area.innerHTML='<div class="empty"><div class="ei">⚖️</div><p>計算対象の銘柄を追加し目標配分を設定してください</p></div>';return;}
+  if(!filteredHoldings(true).length||!alloc){area.innerHTML='<div class="empty"><div class="ei">âï¸</div><p>è¨ç®å¯¾è±¡ã®éæãè¿½å ãç®æ¨éåãè¨­å®ãã¦ãã ãã</p></div>';return;}
   const filt=isFiltered();
   const ownerLabel=filterOwner!=='all'?filterOwner:'';
   const acctLabel=filterAcct!=='all'?(ACCT_LABELS[filterAcct]||''):'';
   const filtLabel=[ownerLabel,acctLabel].filter(Boolean).join(' / ');
-  const bySub=calcBySub(true);let html=(filt?`<div style="font-size:11px;color:var(--primary);background:#eff6ff;border-radius:5px;padding:5px 10px;margin-bottom:10px;">🔍 フィルター適用中: ${filtLabel} のデータで計算しています</div>`:''),anyAction=false;
+  const bySub=calcBySub(true);let html=(filt?`<div style="font-size:11px;color:var(--primary);background:#eff6ff;border-radius:5px;padding:5px 10px;margin-bottom:10px;">ð ãã£ã«ã¿ã¼é©ç¨ä¸­: ${filtLabel} ã®ãã¼ã¿ã§è¨ç®ãã¦ãã¾ã</div>`:''),anyAction=false;
   for(const maj of MAJORS){
     const subs=SUBS.filter(s=>s.majorId===maj.id);
     const majCurAmt=subs.reduce((a,s)=>a+bySub[s.id],0);
@@ -1131,19 +1153,19 @@ function renderRebalance(){
     const majCurPct=alloc>0?(majCurAmt/alloc*100).toFixed(1):'0.0';
     const majTgtPct=subs.reduce((a,s)=>a+targets[s.id],0).toFixed(1);
     const majStyle=Math.abs(majDiff)>100?(majDiff>0?'color:var(--success);':'color:var(--danger);'):'color:var(--g400);';
-    const majLabel=Math.abs(majDiff)<100?'変更なし':majDiff>0?'🟢 買い '+fmtFull(majDiff):'🔴 売り '+fmtFull(-majDiff);
+    const majLabel=Math.abs(majDiff)<100?'å¤æ´ãªã':majDiff>0?'ð¢ è²·ã '+fmtFull(majDiff):'ð´ å£²ã '+fmtFull(-majDiff);
     html+=`<div class="rb-major"><div class="rb-major-head">
       <div class="rh-dot" style="background:${maj.color};"></div>
       <div style="flex:1;">${maj.icon} ${maj.name}</div>
-      <div style="font-size:10px;color:var(--g500);">現在 ${majCurPct}% → 目標 ${majTgtPct}%</div>
+      <div style="font-size:10px;color:var(--g500);">ç¾å¨ ${majCurPct}% â ç®æ¨ ${majTgtPct}%</div>
       <div style="min-width:120px;text-align:right;font-size:11px;${majStyle}">${majLabel}</div>
     </div><div class="rb-sub-rows">
-    <div class="rb-row hd"><div>中カテゴリー</div><div style="text-align:right">現在金額</div><div style="text-align:right">目標金額</div><div style="text-align:right">売買金額</div></div>`;
+    <div class="rb-row hd"><div>ä¸­ã«ãã´ãªã¼</div><div style="text-align:right">ç¾å¨éé¡</div><div style="text-align:right">ç®æ¨éé¡</div><div style="text-align:right">å£²è²·éé¡</div></div>`;
     for(const sub of subs){
       const cur=bySub[sub.id],tgt=alloc*targets[sub.id]/100,diff=tgt-cur;
       const curPct=alloc>0?(cur/alloc*100).toFixed(1):'0.0';
-      let dCls='neutral',dLabel='— 変更なし';
-      if(Math.abs(diff)>100){anyAction=true;if(diff>0){dCls='buy';dLabel='🟢 買い '+fmtFull(diff);}else{dCls='sell';dLabel='🔴 売り '+fmtFull(-diff);}}
+      let dCls='neutral',dLabel='â å¤æ´ãªã';
+      if(Math.abs(diff)>100){anyAction=true;if(diff>0){dCls='buy';dLabel='ð¢ è²·ã '+fmtFull(diff);}else{dCls='sell';dLabel='ð´ å£²ã '+fmtFull(-diff);}}
       html+=`<div class="rb-row"><div class="rname">${sub.icon} ${sub.name}</div>
         <div class="ramount" style="color:var(--g700);">${fmtFull(cur)}<br><small>${curPct}%</small></div>
         <div class="ramount" style="color:var(--g700);">${fmtFull(tgt)}<br><small>${targets[sub.id]}%</small></div>
@@ -1151,22 +1173,22 @@ function renderRebalance(){
     }
     html+='</div></div>';
   }
-  if(!anyAction)html+='<div class="note">✅ 目標配分との乖離が小さく、リバランスは不要です！</div>';
-  else if(Math.round(tgtSum)!==100)html+=`<div class="note">⚠️ 目標配分の合計が${tgtSum.toFixed(1)}%です。100%になるよう調整してください。</div>`;
-  else html+='<div class="note">💡 上記の売買を行うことで目標配分に近づきます。税金・手数料も考慮してください。</div>';
+  if(!anyAction)html+='<div class="note">â ç®æ¨éåã¨ã®ä¹é¢ãå°ããããªãã©ã³ã¹ã¯ä¸è¦ã§ãï¼</div>';
+  else if(Math.round(tgtSum)!==100)html+=`<div class="note">â ï¸ ç®æ¨éåã®åè¨ã${tgtSum.toFixed(1)}%ã§ãã100%ã«ãªãããèª¿æ´ãã¦ãã ããã</div>`;
+  else html+='<div class="note">ð¡ ä¸è¨ã®å£²è²·ãè¡ããã¨ã§ç®æ¨éåã«è¿ã¥ãã¾ããç¨éã»ææ°æãèæ®ãã¦ãã ããã</div>';
   area.innerHTML=html;
 }
 
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 // HISTORY
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 function recordSnapshot(){
-  if(!holdings.length){alert('銘柄が登録されていません');return;}
+  if(!holdings.length){alert('éæãç»é²ããã¦ãã¾ãã');return;}
   const now=new Date();
-  const label=`${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日`;
+  const label=`${now.getFullYear()}å¹´${now.getMonth()+1}æ${now.getDate()}æ¥`;
   const dateKey=now.toISOString().slice(0,10);
   if(history.length>0&&history[history.length-1].dateKey===dateKey){
-    if(!confirm(`本日（${label}）の記録はすでに存在します。上書きしますか？`))return;
+    if(!confirm(`æ¬æ¥ï¼${label}ï¼ã®è¨é²ã¯ãã§ã«å­å¨ãã¾ããä¸æ¸ããã¾ããï¼`))return;
     history.pop();
   }
   const bySub=calcBySubRaw(true);
@@ -1174,10 +1196,10 @@ function recordSnapshot(){
   history.push({dateKey,label,total:totalAllRaw(),alloc:totalAllocRaw(),bySub:[...bySub],byMaj:[...byMaj]});
   save();
   showPage('history');
-  alert(`${label}の資産状況を記録しました！`);
+  alert(`${label}ã®è³ç£ç¶æ³ãè¨é²ãã¾ããï¼`);
 }
 function deleteSnapshot(i){
-  if(!confirm('この記録を削除しますか？'))return;
+  if(!confirm('ãã®è¨é²ãåé¤ãã¾ããï¼'))return;
   history.splice(i,1);save();renderHistory();
 }
 function setHistView(v){
@@ -1190,14 +1212,14 @@ function setHistView(v){
 function renderHistory(){renderHistChart();renderSnapshotList();}
 function renderHistChart(){
   const wrap=document.getElementById('histChartWrap');
-  if(history.length<1){wrap.innerHTML='<div class="empty"><div class="ei">📈</div><p>「現在の状況を記録する」ボタンを押すとここに推移グラフが表示されます</p></div>';return;}
+  if(history.length<1){wrap.innerHTML='<div class="empty"><div class="ei">ð</div><p>ãç¾å¨ã®ç¶æ³ãè¨é²ããããã¿ã³ãæ¼ãã¨ããã«æ¨ç§»ã°ã©ããè¡¨ç¤ºããã¾ã</p></div>';return;}
   if(!document.getElementById('histCanvas')){wrap.innerHTML='<div class="chart-area-hist"><canvas id="histCanvas"></canvas></div>';}
   const labels=history.map(h=>h.label);
   let datasets=[];
   if(histView==='total'){
     datasets=[
-      {label:'総資産',data:history.map(h=>h.total),borderColor:'#3b82f6',backgroundColor:'rgba(59,130,246,.1)',fill:true,tension:.3,pointRadius:4},
-      {label:'計算対象資産',data:history.map(h=>h.alloc),borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,.08)',fill:true,tension:.3,pointRadius:4,borderDash:[4,3]},
+      {label:'ç·è³ç£',data:history.map(h=>h.total),borderColor:'#3b82f6',backgroundColor:'rgba(59,130,246,.1)',fill:true,tension:.3,pointRadius:4},
+      {label:'è¨ç®å¯¾è±¡è³ç£',data:history.map(h=>h.alloc),borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,.08)',fill:true,tension:.3,pointRadius:4,borderDash:[4,3]},
     ];
   } else {
     datasets=MAJORS.map(m=>({
@@ -1216,7 +1238,7 @@ function renderHistChart(){
       plugins:{legend:{position:'top',labels:{font:{size:11},boxWidth:14}},
                tooltip:{callbacks:{label:c=>' '+fmtFull(c.parsed.y)}}},
       scales:{
-        y:{ticks:{callback:v=>v>=1e8?`${(v/1e8).toFixed(1)}億`:v>=1e4?`${Math.round(v/1e4)}万`:v.toLocaleString()+'円',font:{size:10}},grid:{color:'#f3f4f6'}},
+        y:{ticks:{callback:v=>v>=1e8?`${(v/1e8).toFixed(1)}å`:v>=1e4?`${Math.round(v/1e4)}ä¸`:v.toLocaleString()+'å',font:{size:10}},grid:{color:'#f3f4f6'}},
         x:{ticks:{font:{size:10}},grid:{display:false}}
       }
     }
@@ -1224,31 +1246,31 @@ function renderHistChart(){
 }
 function renderSnapshotList(){
   const el=document.getElementById('snapshotList');
-  if(!history.length){el.innerHTML='<div class="empty"><div class="ei">📂</div><p>まだ記録がありません</p></div>';return;}
+  if(!history.length){el.innerHTML='<div class="empty"><div class="ei">ð</div><p>ã¾ã è¨é²ãããã¾ãã</p></div>';return;}
   let html='<div class="snapshot-list">';
   for(let i=history.length-1;i>=0;i--){
     const h=history[i];
     const majBreak=MAJORS.map((m,mi)=>{
       if(!h.byMaj||!h.byMaj[mi])return'';
       const pct=h.alloc>0?(h.byMaj[mi]/h.alloc*100).toFixed(1):'0.0';
-      return `<span class="snapshot-maj">${m.icon} ${m.name}: ${pct}%（${fmtFull(h.byMaj[mi])}）</span>`;
+      return `<span class="snapshot-maj">${m.icon} ${m.name}: ${pct}%ï¼${fmtFull(h.byMaj[mi])}ï¼</span>`;
     }).join('');
     html+=`<div class="snapshot-item">
-      <span class="snapshot-date">📅 ${esc(h.label)}</span>
-      <span class="snapshot-total">総資産: <strong>${fmtFull(h.total)}</strong></span>
+      <span class="snapshot-date">ð ${esc(h.label)}</span>
+      <span class="snapshot-total">ç·è³ç£: <strong>${fmtFull(h.total)}</strong></span>
       <div class="snapshot-breakdown">${majBreak}</div>
-      <button class="btn btn-danger btn-sm" onclick="deleteSnapshot(${i})">削除</button>
+      <button class="btn btn-danger btn-sm" onclick="deleteSnapshot(${i})">åé¤</button>
     </div>`;
   }
   html+='</div>';
   el.innerHTML=html;
 }
 
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 
-// ═══════════════════════════════════════
-// AUTO SYNC（自動同期）
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
+// AUTO SYNCï¼èªååæï¼
+// âââââââââââââââââââââââââââââââââââââââ
 let _autoSyncTimer = null;
 let _lastGistUpdatedAt = null;
 let _pollTimer = null;
@@ -1285,7 +1307,7 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 // INIT
-// ═══════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââ
 updateSubSelect();
 document.getElementById('iAmt').addEventListener('keydown',e=>{if(e.key==='Enter')addHolding();});
 document.getElementById('iName').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('iAmt').focus();});
@@ -1294,7 +1316,7 @@ document.getElementById('importModal').addEventListener('click',e=>{if(e.target=
 document.getElementById('settingsModal').addEventListener('click',e=>{if(e.target===document.getElementById('settingsModal'))closeSettings();});
 render();
 
-// GitHubトークンがあれば起動時に自動読み込み
+// GitHubãã¼ã¯ã³ãããã°èµ·åæã«èªåèª­ã¿è¾¼ã¿
 
 function setTheme(name){
   document.body.setAttribute('data-theme',name);
