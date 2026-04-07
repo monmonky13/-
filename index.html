@@ -237,6 +237,21 @@ body[data-theme="mint"] .card{border-top:3px solid #059669;}
 .collapsible-body.open{max-height:500px;opacity:1;}
 body[data-theme="colorful"] .collapsible-toggle{border-top:3px solid #7c3aed;}
 body[data-theme="mint"] .collapsible-toggle{border-top:3px solid #059669;}
+
+/* 3D pie chart */
+.chart-3d{perspective:800px;}
+.chart-3d canvas{transform:rotateX(25deg);filter:drop-shadow(0 12px 8px rgba(0,0,0,.18));}
+/* Bigger bold numbers */
+.sum-value{font-size:26px!important;font-weight:800!important;letter-spacing:-.5px;}
+td{font-size:12px!important;}
+.lamt,.lpct{font-size:12px!important;font-weight:700!important;}
+/* Layout adjustment */
+.main-content-grid{display:grid;grid-template-columns:1fr 380px;gap:16px;align-items:start;}
+@media(max-width:1050px){.main-content-grid{grid-template-columns:1fr;}}
+.right-panel{position:sticky;top:16px;}
+/* Smooth slide transition for collapsible */
+.collapsible-body{transition:max-height .4s ease-out,opacity .4s;max-height:0;overflow:hidden;opacity:0;}
+.collapsible-body.open{max-height:600px;opacity:1;}
 </style>
 </head>
 <body>
@@ -272,14 +287,12 @@ body[data-theme="mint"] .collapsible-toggle{border-top:3px solid #059669;}
       <div class="sumcard"><div class="sum-label">目標との最大乖離</div><div class="sum-value" id="sDev">—</div></div>
     </div>
     <!-- Main grid -->
-    <div class="grid2 gap">
-      <!-- Left -->
-      <div style="display:flex;flex-direction:column;gap:16px;">
-        <!-- Add form -->
-                <div class="collapsible-toggle" id="addFormToggle" onclick="toggleAddForm()">
+    <div class="
+    <!-- Collapsible Add Form -->
+    <div class="collapsible-toggle" id="addFormToggle" onclick="toggleAddForm()">
           <span>➕ 鋘柄・資産を追加</span><span class="arrow">▼</span>
         </div>
-        <div class="collapsible-body" id="addFormBody">
+    <div class="collapsible-body" id="addFormBody">
         <div class="card">
           <div class="card-title">➕ 銘柄・資産を追加</div>
 
@@ -333,8 +346,10 @@ body[data-theme="mint"] .collapsible-toggle{border-top:3px solid #059669;}
             <div style="flex:0;"><button class="btn btn-primary" onclick="addHolding()">+ 追加</button></div>
           </div>
         </div>        </div>
-        </div>
-        <!-- Holdings list -->
+
+    <!-- Main content grid: Holdings left, Charts right -->
+    <div class="main-content-grid">
+      <div>
         <div class="card">
           <div class="flex-between" style="margin-bottom:10px;">
             <div class="card-title" style="margin-bottom:0;">📋 保有一覧</div>
@@ -349,9 +364,7 @@ body[data-theme="mint"] .collapsible-toggle{border-top:3px solid #059669;}
           </div>
         </div>
       </div>
-      <!-- Right -->
-      <div style="display:flex;flex-direction:column;gap:16px;">
-        <!-- Chart -->
+      <div class="right-panel">
         <div class="card">
           <div class="flex-between" style="margin-bottom:10px;">
             <div class="card-title" style="margin-bottom:0;">🍩 現在の資産配分</div>
@@ -364,12 +377,14 @@ body[data-theme="mint"] .collapsible-toggle{border-top:3px solid #059669;}
             <div class="empty"><div class="ei">📊</div><p>計算対象の銘柄を追加するとグラフが表示されます</p></div>
           </div>
         </div>
-        <!-- Target allocation -->
+        <div class="gap"></div>
         <div class="card">
           <div class="card-title">🎯 目標配分（中カテゴリー別）</div>
           <div id="targetArea"></div>
           <div class="tsum" id="tsum"></div>
         </div>
+      </div>
+    </div>
       </div>
     </div>
     <!-- Rebalance -->
@@ -1079,14 +1094,14 @@ function renderChart(){
   const acctLabel=filterAcct!=='all'?(ACCT_LABELS[filterAcct]||''):'';
   const filtLabel=[ownerLabel,acctLabel].filter(Boolean).join(' / ');
   const filtBanner=filt?`<div style="text-align:center;font-size:10px;color:var(--primary);background:#eff6ff;border-radius:5px;padding:3px 8px;margin-bottom:8px;">🔍 フィルター適用中: ${filtLabel}</div>`:'';
-  area.innerHTML=`${filtBanner}<div class="chart-container"><canvas id="donutChart" width="240" height="240"></canvas>
+  area.innerHTML=`${filtBanner}<div class="chart-container chart-3d"><canvas id="donutChart" width="240" height="240"></canvas>
     <div class="chart-center"><div class="ctotal">${filt?filtLabel:'計算対象'}</div><div class="camount" id="chartTotal"></div></div></div>
     <div class="legend" id="chartLegend"></div>`;
   document.getElementById('chartTotal').textContent=fmtFull(alloc);
   const data=segs.map(x=>x.val),colors=segs.map(x=>x.color),labels=segs.map(x=>x.label);
   const ctx=document.getElementById('donutChart').getContext('2d');
   chart=new Chart(ctx,{type:'doughnut',data:{labels,datasets:[{data,backgroundColor:colors,borderWidth:2,borderColor:'#fff'}]},
-    options:{cutout:'62%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{return ` ${fmtFull(c.parsed)} (${(c.parsed/alloc*100).toFixed(1)}%)`;}}}},animation:{duration:400}}});
+    options:{cutout:'30%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{return ` ${fmtFull(c.parsed)} (${(c.parsed/alloc*100).toFixed(1)}%)`;}}}},animation:{duration:400}}});
   let legend='';
   for(const seg of segs){const pct=(seg.val/alloc*100).toFixed(1);legend+=`<div class="legend-item"><div class="ldot" style="background:${seg.color};"></div><span class="lname">${seg.icon} ${seg.label}</span><span class="lpct" style="color:${seg.color};">${pct}%</span><span class="lamt">${fmtFull(seg.val)}</span></div>`;}
   document.getElementById('chartLegend').innerHTML=legend;
